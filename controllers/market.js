@@ -1,5 +1,3 @@
-const path = require('path');
-
 const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
@@ -23,7 +21,7 @@ exports.getProduct = (req, res, next) => {
   .then(product => {
     res.render('market/product-detail', {
       Product: product,
-      pageTitle: 'Product details',
+      pageTitle: product.title,
       path: '/products/:productId'
     });
   })
