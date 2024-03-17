@@ -17,17 +17,21 @@
   <main>
     <% if (Products.length > 0) { %>
       <% Products.forEach((Product) => { %>
-        <div><%= Product.title %></div>
-        <div>$<%= Product.price %></div>
-        <div> <img src="<%= Product.imageUrl %>" alt="<%= Product.title %>" width="300" height="300"> </div>
-        <div>
-          <a href="/products/<%= Product._id %>" class="btn">Details</a>
-          <a href="/my-product/<%= Product._id %>" class="btn">Delete</a>
-        </div>
+        <article>
+          <div><%= Product.title %></div>
+          <div>$<%= Product.price %></div>
+          <div> <img src="<%= Product.imageUrl %>" alt="<%= Product.title %>" width="300" height="300"> </div>
+          <div>
+            <a href="/edit-product/<%= Product._id %>?edit=true" class="btn">Edit</a>
+            <input type="hidden" value="<%= Product._id %>" name="productId">
+            <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
+          </div>
+        </article>
       <% }) %>
     <% } else { %>
       <h1>No products available!</h1>
     <% } %>
   </main>
+  <script src="/js/admin.js"></script>
 </body>
 </html>
