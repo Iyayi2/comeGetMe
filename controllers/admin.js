@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const fileHelper = require('../util/file');
 
 const Product = require('../models/product');
+const product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/add-product', {
@@ -22,7 +23,7 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: '65f006afebb3eee1aa2068dd'
+    userId: req.user
   });
   product.save()
   .then(result => {
@@ -75,7 +76,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
 
-  Product.find({userId: '65f006afebb3eee1aa2068dd'})
+  Product.find({userId: req.user._id})
   .then(product => {
     res.render('admin/my-product', {
       Products: product,
@@ -93,7 +94,7 @@ exports.deleteProduct = (req, res, next) => {
   Product.findById(id)
   .then(product => {
     fileHelper.deleteFile(product.imageUrl);
-    return product.deleteOne({_id: id, userId: '65f006afebb3eee1aa2068dd'})
+    return product.deleteOne({_id: id, userId: req.user._id})
   })
   .catch(err => {
     console.log(err);
