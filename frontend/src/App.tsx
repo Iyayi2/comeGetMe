@@ -1,15 +1,17 @@
-import './App.css'
+import { useRoutes } from 'react-router-dom';
+import HomePage from './pages/Home';
+import MarketPage from './pages/Market';
+import ErrorPage from './components/error/Error';
+import RootLayout from './pages/Root';
 
-function App() {
+export default function App() {
+  const element = useRoutes([
+    { path: '/', element: <HomePage /> },
+    { path: 'market', element: <MarketPage /> },
+    { path: '*', element: <ErrorPage /> },
+  ]);
 
-  return (
-    <>
-      <div>
-        <p>Hello</p>
-      </div>
+  if (!element) return null;
 
-    </>
-  )
+  return <RootLayout>{element}</RootLayout>;
 }
-
-export default App
