@@ -6,11 +6,13 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const multer = require('multer');
+const cors = require('cors');
 
 const User = require('./models/user');
 
 const MONGODB_URI = 'mongodb+srv://iyayi:SeicBp1HHMn4SHsS@cluster0.vcq9hrr.mongodb.net/comeGetMe?retryWrites=true&w=majority';
 const app = express();
+app.use(cors());
 
 const http = require('http');
 const server = http.createServer(app);
