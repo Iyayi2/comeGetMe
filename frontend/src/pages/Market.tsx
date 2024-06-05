@@ -1,19 +1,10 @@
-import { useEffect, useState } from "react";
+import Products from '../components/products/Products';
+import { useFetch } from '../hooks/useFetch';
 
 export default function MarketPage() {
-  const [data, setData] = useState(null);
+  const products = useFetch('products');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:3000/products');
-      const data = await response.json();
-      setData(data);
-    };
+  console.log(products);
 
-    fetchData();
-  }, []);
-
-  console.log(data)
-
-  return <h1>MARKET Page</h1>
+  return <Products products={products} />;
 }
