@@ -11,7 +11,7 @@ export const useFetch = (path: string) => {
     };
 
     fetchData();
-  }, []);
+  }, [path]);
 
   return data;
 }
