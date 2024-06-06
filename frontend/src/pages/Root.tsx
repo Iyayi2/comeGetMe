@@ -13,11 +13,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           key={pathname}
           initial={{ opacity: 0, y: '-100px' }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: '100px' }}
+          exit={{ opacity: 0, y: '100%' }}
           transition={{
-            type: 'spring',
+            type: 'tween',
             ease: 'linear',
-            duration: 0.2,
+            duration: 0.3,
           }}
         >
           {children}
