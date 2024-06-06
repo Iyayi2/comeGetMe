@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "dev": "concurrently \"npm run start\" \"cd ../my-react-app && npm start\""
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "connect-mongodb-session": "^5.0.0",
+    "cors": "^2.8.5",
     "ejs": "^3.1.9",
     "express": "^4.18.3",
     "express-session": "^1.18.0",

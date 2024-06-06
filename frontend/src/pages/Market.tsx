@@ -1,3 +1,10 @@
+import Products from '../components/products/Products';
+import { useFetch } from '../hooks/useFetch';
+
 export default function MarketPage() {
-  return <h1>MARKET Page</h1>
+  const products = useFetch('products');
+
+  console.log(products);
+
+  return <Products products={products} />;
 }
