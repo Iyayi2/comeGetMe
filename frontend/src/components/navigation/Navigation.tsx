@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
 import css from './Navigation.module.css';
+import NavButton from './NavButton';
 
 export default function Navigation() {
   return (
@@ -11,8 +11,8 @@ export default function Navigation() {
           transition: { duration: 0.8, ease: 'easeInOut' },
         }}
       >
-        <NavLink to='/'>Home</NavLink>
-        <NavLink to='/market'>Market</NavLink>
+        <NavButton path='/' label='Home' />
+        <NavButton path='/market' label='Market' />
       </motion.ul>
     </nav>
   );
