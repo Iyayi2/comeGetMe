@@ -13,6 +13,7 @@ export default function Navigation() {
       >
         <NavButton path='/' label='Home' />
         <NavButton path='/market' label='Market' />
+        <NavButton path='/account' label='Account' />
       </motion.ul>
     </nav>
   );

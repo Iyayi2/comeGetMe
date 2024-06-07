@@ -1,5 +1,3 @@
-import Form from '../components/form/Form';
-
 export default function HomePage() {
-  return <Form />;
+  return <h1 style={{ textAlign: 'center' }}>Come Get Me</h1>;
 }
