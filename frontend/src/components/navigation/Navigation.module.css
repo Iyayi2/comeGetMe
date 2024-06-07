@@ -1,15 +1,16 @@
 .nav {
   background: linear-gradient(to right, #232526, #414345);
   display: flex;
-  color: #FFFFFF;
+  color: #ffffff;
   gap: 4rem;
   align-items: center;
+  overflow: auto;
 }
 
 .nav h2 {
   margin: 0.5rem;
   margin-left: 2rem;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: 'Bebas Neue', sans-serif;
 }
 
 .nav ul {
@@ -20,14 +21,25 @@
   padding: 0.5rem;
 }
 
-.nav a {
-  color: #FFFFFF;
-  text-decoration: none;
+.nav li, .nav a {
   transition: 0.4s ease-in-out;
+}
+
+.nav li:hover {
+  transform: scale(1.05);
+}
+
+.nav a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: #beb8b8;
 }
 
 .active-tab {
   margin-top: 0.1rem;
-  border: 0.1rem solid #FFFFFF;
+  border: 0.1rem solid #d8cccc;
   clip-path: polygon(20% 0%, 80% 0%, 100% 50%, 80% 100%, 20% 100%, 0% 50%);
 }
