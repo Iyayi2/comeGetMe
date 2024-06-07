@@ -17,7 +17,7 @@ export default function Form() {
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
     const resData = await fetchData(formState, data);
-    console.log('data', data, '\n\n', 'response', resData, '\n\n', 'formState', formState);
+    console.log('form data', data, '\n\n', 'server response', resData);
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
@@ -52,7 +52,14 @@ export default function Form() {
           {formState === 'signup' && <Input id='username' />}
           <Input id='email' />
           <Input id='password' />
-          <button style={{ ...buttonProps }}>{formState.toUpperCase()}</button>
+          <motion.button
+            style={{ ...buttonProps }}
+            whileHover={{ y: -3, rotate: [-5, 5, 0] }}
+            whileTap={{ scale: 1.1 }}
+            transition={{ type: 'spring', bounce: 0.8 }}
+          >
+            {formState.toUpperCase()}
+          </motion.button>
         </motion.div>
       </AnimatePresence>
     </form>
