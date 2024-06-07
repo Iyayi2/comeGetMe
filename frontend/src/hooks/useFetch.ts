@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { fetchData } from "../util/fetchData";
 
 export const useFetch = (path: string) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/${path}`);
-      const data = await response.json();
+    const getData = async () => {
+      const data = await fetchData(path);
       setData(data);
     };
 
-    fetchData();
+    getData();
   }, [path]);
 
   return data;
