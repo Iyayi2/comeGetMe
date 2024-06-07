@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
+import { fetchData } from '../../util/fetchData';
 
 export default function Form() {
   const [formState, setFormState] = useState('signup');
@@ -14,18 +15,11 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-
-    const response = await fetch(`http://localhost:3000/${formState}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    const resData = await response.json();
+    const resData = await fetchData(formState, data)
     console.log('data', data, '\n\n', 'response', resData, '\n\n', 'formState', formState);
   };
+
+  const radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
 
   console.log('formState', formState);
 
