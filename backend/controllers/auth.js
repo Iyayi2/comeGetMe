@@ -17,13 +17,13 @@ exports.postLogin = (req, res, next) => {
   const password = req.body.password
   User.findOne({email: email})
   .then(user => {
-    res.status(200).json(user)
     if (!user) {
       res.render('auth/login');
     }
     req.session.user = user;
     req.session.save(user => {
-      return res.redirect('/products');
+      res.status(200).json(user)
+      // return res.redirect('/products');
     })
   })
   .catch(err => {
@@ -51,7 +51,7 @@ exports.postSignup = (req, res, next) => {
   user.save()
   .then(user => {
     res.status(200).json(user);
-    return res.redirect('/login');
+    // return res.redirect('/login');
   })
   .catch(err => {
     res.status(500).json(err)
@@ -61,6 +61,6 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     console.log(err);
-    res.redirect('/');
+    // res.redirect('/');
   })
 }
