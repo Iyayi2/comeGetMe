@@ -60,8 +60,8 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-app.set('views', 'views');
-app.set('view engine', 'ejs');
+// app.set('views', 'views');
+// app.set('view engine', 'ejs');
 
 const marketRoutes = require('../backend/routes/market');
 const adminRoutes = require('../backend/routes/admin');
