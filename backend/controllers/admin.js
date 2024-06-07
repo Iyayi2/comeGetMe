@@ -27,7 +27,7 @@ exports.postAddProduct = (req, res, next) => {
   product.save()
   .then(product => {
     res.status(200).json(product);
-    res.redirect('/products');
+    // res.redirect('/products');
   })
   .catch(err => {
     res.status(500).json(err);
