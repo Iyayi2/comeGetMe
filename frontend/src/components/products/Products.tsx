@@ -1,4 +1,4 @@
-import Product from '../../models/Product';
+import Product from '@/models/Product';
 import css from './Products.module.css';
 
 export default function Products({ products }: { products: Product[] }) {

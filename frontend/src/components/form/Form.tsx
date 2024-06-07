@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
-import { fetchData } from '../../util/fetchData';
+import { fetchData } from '@/util/fetchData';
 
 export default function Form() {
   const [formState, setFormState] = useState('signup');
