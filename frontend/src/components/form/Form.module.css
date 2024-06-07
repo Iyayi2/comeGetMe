@@ -14,3 +14,20 @@
   gap: 1rem;
   font-family: 'Bebas Neue', sans-serif;
 }
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs button {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: 0.5rem;
+  padding: 0.3rem;
+  border-radius: 3px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: larger;
+  font-weight: 100;
+}
+
