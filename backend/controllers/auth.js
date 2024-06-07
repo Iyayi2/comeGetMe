@@ -18,7 +18,8 @@ exports.postLogin = (req, res, next) => {
   User.findOne({email: email})
   .then(user => {
     if (!user) {
-      res.render('auth/login');
+      // res.render('auth/login');
+     return res.status(400).json({message: 'User not found!'})
     }
     req.session.user = user;
     req.session.save(user => {
