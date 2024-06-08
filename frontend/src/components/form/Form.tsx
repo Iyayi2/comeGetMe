@@ -17,7 +17,7 @@ export default function Form() {
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
     const resData = await fetchData(formState, data);
-    console.log('form data', data, '\n\n', 'server response', resData);
+    console.log('[form data]', data, '\n\n', '[server response]', resData);
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
@@ -28,7 +28,7 @@ export default function Form() {
     color: signup ? '#FFFFFF' : '',
   };
 
-  console.log('formState', formState);
+  console.log('[form state]', formState);
 
   return (
     <form className={css.form} onSubmit={submitHandler}>

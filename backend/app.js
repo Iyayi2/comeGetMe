@@ -7,10 +7,11 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const multer = require('multer');
 const cors = require('cors');
+require('dotenv').config();
 
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb+srv://iyayi:SeicBp1HHMn4SHsS@cluster0.vcq9hrr.mongodb.net/comeGetMe?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGO_KEY
 const app = express();
 app.use(cors());
 
