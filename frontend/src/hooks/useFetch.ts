@@ -6,7 +6,7 @@ export const useFetch = (path: string) => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchData(path);
+      const data = await fetchData({ path, method: 'GET' });
       setData(data);
     };
 

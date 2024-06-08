@@ -3,10 +3,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
 import { fetchData } from '@/util/fetchData';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '@/store/userSlice';
+import { RootState } from '@/store/types';
 
 export default function Form() {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
+  const dispatch = useDispatch();
+  const { current } = useSelector((state: RootState) => state.user)
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState(event.target.value);
@@ -16,7 +21,12 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const resData = await fetchData(formState, data);
+    const resData = await fetchData({ path: formState, method: 'POST', data });
+
+    if (!signup && resData.user) {
+      dispatch(setUser(resData.user));
+    }
+
     console.log('[form data]', data, '\n\n', '[server response]', resData);
   };
 
@@ -28,7 +38,7 @@ export default function Form() {
     color: signup ? '#FFFFFF' : '',
   };
 
-  console.log('[form state]', formState);
+  console.log('[form state]', formState, '\n\n', '[user]', current);
 
   return (
     <form className={css.form} onSubmit={submitHandler}>

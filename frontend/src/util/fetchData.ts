@@ -1,6 +1,12 @@
-export const fetchData = async (path: string, data?: object) => {
+interface DataProps {
+  path: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  data?: object;
+}
+
+export const fetchData = async ({ path, method, data }: DataProps) => {
   const response = await fetch(`http://localhost:3000/${path}`, {
-    method: data ? 'POST' : 'GET',
+    method,
     headers: {
       'Content-Type': 'application/json',
     },
