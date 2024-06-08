@@ -1,7 +1,7 @@
 import User from '@/models/User';
 
 interface UserState {
-  current: User | null;
+  loggedIn: User | null;
 }
 
 export interface RootState {
