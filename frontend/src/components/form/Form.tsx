@@ -3,13 +3,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
 import { fetchData } from '@/util/fetchData';
-import { useDispatch } from 'react-redux';
-import { setUser } from '@/store/userSlice';
 
 export default function Form() {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
-  const dispatch = useDispatch();
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState(event.target.value);
@@ -20,11 +17,6 @@ export default function Form() {
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
     const resData = await fetchData({ path: formState, method: 'POST', data });
-
-    if (!signup && resData.user) {
-      dispatch(setUser(resData.user));
-    }
-
     console.log('[form data]', data, '\n\n', '[server response]', resData);
   };
 

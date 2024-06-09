@@ -51,6 +51,7 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const { username, email, password } = req.body;
   const user = new User({ username, email, password });
+  req.session.user = user; // set new user as session user on creation
   user.save()
     .then((user) => {
      res.status(200).json(user);
