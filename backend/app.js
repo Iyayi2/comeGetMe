@@ -13,7 +13,11 @@ const User = require('./models/user');
 
 const MONGODB_URI = process.env.MONGO_KEY
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:5173', // configured to accept credentials from front end for session cookies to work
+  credentials: true,
+}));
 
 const http = require('http');
 const server = http.createServer(app);

@@ -7,7 +7,7 @@ exports.getLogin = (req, res, next) => {
   //   pageTitle: 'Login',
   //   path: '/login'
   // });
-  console.log('[GET Login locals / session]', res.locals, req.session); // LogData
+  console.log('[GET Login session]', req.session); // LogData
   if (req.session.user) {
     res.json({ user: req.session.user });
   } else {

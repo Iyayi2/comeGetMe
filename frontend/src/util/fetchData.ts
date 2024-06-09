@@ -5,11 +5,13 @@ interface DataProps {
 }
 
 export const fetchData = async ({ path, method, data }: DataProps) => {
+
   const response = await fetch(`http://localhost:3000/${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include', // send cookies to backend
     body: data ? JSON.stringify(data) : null,
   });
 
