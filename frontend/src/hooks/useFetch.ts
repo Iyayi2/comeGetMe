@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "../util/fetchData";
 
-export const useFetch = (path: string) => {
-  const [data, setData] = useState([]);
+export const useFetch = (path: string, initialState: object | []) => {
+  const [data, setData] = useState(initialState);
 
   useEffect(() => {
     const getData = async () => {

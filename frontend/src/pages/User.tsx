@@ -1,20 +1,24 @@
 import Form from '../components/form/Form';
 import Products from '@/components/products/Products';
 import { useFetch } from '@/hooks/useFetch';
+import { fetchData } from '@/util/fetchData';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import { fetchData } from '@/util/fetchData';
+
+interface ResData {
+  user?: User;
+  message?: string;
+}
 
 export default function UserPage() {
-  const items = useFetch('products');
-  const data = useFetch('login');
-
-  console.log('[data]', data); // logData
+  const items = useFetch('products', []) as Product[];
+  const { user, message } = useFetch('login', {}) as ResData;
+  console.log('[data]', user, message); // logData
 
   let content;
 
-  if (data.user) {
-    const userItems = items.filter((item: Product) => item.userId === data.user!._id);
+  if (user) {
+    const userItems = items.filter((item: Product) => item.userId === user._id);
     console.log('[user items]', userItems); // logData
 
     content = (
