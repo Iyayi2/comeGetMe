@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
-import { fetchData } from '@/util/fetchData';
+import { useHTTP } from '@/hooks/useHTTP';
 
 export default function Form() {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
+  const { isLoading, error, sendRequest } = useHTTP();
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState(event.target.value);
@@ -16,8 +17,8 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const resData = await fetchData({ path: formState, method: 'POST', data });
-    console.log('[form data]', data, '\n\n', '[server response]', resData);
+    await sendRequest({ path: formState, method: 'POST', data });
+    console.log('[form data]', data); // logData
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
@@ -50,13 +51,14 @@ export default function Form() {
           {formState === 'signup' && <Input id='username' />}
           <Input id='email' />
           <Input id='password' />
+          {error && <p>{error}</p>}
           <motion.button
             style={{ ...buttonProps }}
             whileHover={{ y: -3, rotate: [-5, 5, 0] }}
             whileTap={{ scale: 1.1 }}
             transition={{ type: 'spring', bounce: 0.8 }}
           >
-            {formState.toUpperCase()}
+            {isLoading ? 'sending...' : formState.toUpperCase()}
           </motion.button>
         </motion.div>
       </AnimatePresence>

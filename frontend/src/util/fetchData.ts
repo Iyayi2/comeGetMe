@@ -1,10 +1,10 @@
-interface DataProps {
+export interface Fetch {
   path: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   data?: object;
 }
 
-export const fetchData = async ({ path, method, data }: DataProps) => {
+export const fetchData = async ({ path, method, data }: Fetch) => {
   const response = await fetch(`http://localhost:3000/${path}`, {
     method,
     headers: {
@@ -15,6 +15,12 @@ export const fetchData = async ({ path, method, data }: DataProps) => {
   });
 
   const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || 'Something went wrong');
+  }
+
+  console.log('[Server Response]', resData); // logData
 
   return resData;
 };
