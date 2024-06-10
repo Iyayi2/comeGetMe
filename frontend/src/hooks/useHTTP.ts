@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Fetch, fetchData } from '../util/fetchData';
 
 export function useHTTP() {
@@ -6,7 +6,7 @@ export function useHTTP() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const sendRequest = async ({ path, method, data }: Fetch) => {
+  const sendRequest = useCallback(async ({ path, method, data }: Fetch) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -17,7 +17,7 @@ export function useHTTP() {
       setIsLoading(false);
       setError((err as Error).message);
     }
-  };
+  },[]);
 
   return { data, isLoading, error, sendRequest };
 }

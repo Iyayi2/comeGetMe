@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
-import { fetchData } from "../util/fetchData";
+import { useEffect } from "react";
+import { useHTTP } from "./useHTTP";
 
-export const useFetch = (path: string, initialState: object | []) => {
-  const [data, setData] = useState(initialState);
+export const useFetch = (path: string) => {
+  const { data, isLoading, error, sendRequest } = useHTTP();
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchData({ path, method: 'GET' });
-      setData(data);
+      await sendRequest({ path, method: 'GET' });
     };
 
     getData();
-  }, [path]);
+  }, [path, sendRequest]);
 
-  return data;
-}
+  return { data, isLoading, error };
+};

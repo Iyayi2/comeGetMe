@@ -5,20 +5,15 @@ import Product from '@/models/Product';
 import User from '@/models/User';
 import { useHTTP } from '@/hooks/useHTTP';
 
-interface ResData {
-  user?: User;
-  message?: string;
-}
-
 export default function UserPage() {
-  const items = useFetch('products', []) as Product[];
-  const { user } = useFetch('login', {}) as ResData;
+  const { data: products } = useFetch('products');
+  const { data: user } = useFetch('login');
   const { isLoading, sendRequest } = useHTTP();
 
   let content;
 
   if (user) {
-    const userItems = items.filter((item: Product) => item.userId === user._id);
+    const userItems = (products || []).filter((item: Product) => item.userId === (user as User)._id);
 
     content = (
       <>

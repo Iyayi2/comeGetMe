@@ -3,15 +3,11 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
-  // res.render('auth/login', {
-  //   pageTitle: 'Login',
-  //   path: '/login'
-  // });
   console.log('[GET Login session]', req.session); // LogData
   if (req.session.user) {
-    res.json({ user: req.session.user });
+    res.status(200).json({ ...req.session.user });
   } else {
-    res.json({ message: 'No user logged in' });
+    res.status(401).json({ message: 'No user logged in' });
   }
 };
 
@@ -55,7 +51,6 @@ exports.postSignup = (req, res, next) => {
   .then((user) => {
      req.session.user = user; // set new user as session user on creation
      res.status(200).json(user);
-     // return res.redirect('/login');
     })
     .catch((err) => {
       res.status(500).json(err);
@@ -67,7 +62,6 @@ exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
       console.log('[POST Logout session 2]', req.session); // LogData
-      //  res.redirect('/');
       return res.status(500).json({ message: 'Logout failed' });
     }
     console.log('[POST Logout session 3]', req.session); // LogData
