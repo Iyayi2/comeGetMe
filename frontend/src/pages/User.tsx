@@ -10,13 +10,20 @@ export default function UserPage() {
   const { data: products } = useFetch('products');
   const { data: user } = useFetch('login');
   const { isLoading, sendRequest } = useHTTP();
-  const [isLoggedIn, setIsLoggedIn] = useState(user);
+  const [isLoggedIn, setIsLoggedIn] = useState<User | null>(user || null);
 
   useEffect(() => {
     setIsLoggedIn(user);
   }, [user]);
 
   let content;
+
+  const handleLogin = (user: User) => {
+    setIsLoggedIn(user);
+    console.log('TEST 2', user)
+  };
+
+  console.log('TEST 3', isLoggedIn)
 
   const handleLogout = async () => {
     await sendRequest({ path: 'logout', method: 'POST' });
@@ -34,7 +41,7 @@ export default function UserPage() {
       </>
     );
   } else {
-    content = <Form />;
+    content = <Form onLogin={handleLogin} />;
   }
 
   return content;

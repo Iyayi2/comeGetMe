@@ -5,7 +5,7 @@ const User = require('../models/user');
 exports.getLogin = (req, res, next) => {
   console.log('[GET Login session]', req.session); // LogData
   if (req.session.user) {
-    res.status(200).json({ ...req.session.user });
+    res.status(200).json(req.session.user);
   } else {
     res.status(401).json({ message: 'No user logged in' });
   }
@@ -29,7 +29,7 @@ exports.postLogin = (req, res, next) => {
         if (err) {
           return res.status(500).json({ message: 'Session save failed' });
         }
-        res.status(200).json({ message: 'Login successful', user });
+        res.status(200).json(user);
       });
     })
     .catch((err) => {
@@ -38,10 +38,10 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-  res.render('auth/signup', {
-    pageTitle: 'Signup',
-    path: '/signup',
-  });
+  // res.render('auth/signup', {
+  //   pageTitle: 'Signup',
+  //   path: '/signup',
+  // });
 };
 
 exports.postSignup = (req, res, next) => {

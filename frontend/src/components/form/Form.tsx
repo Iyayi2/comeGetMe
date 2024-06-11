@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
 import { useHTTP } from '@/hooks/useHTTP';
+import User from '@/models/User';
 
-export default function Form() {
+export default function Form({ onLogin }: { onLogin: (user: User) => void }) {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
-  const { isLoading, error, sendRequest } = useHTTP();
+  const { data, isLoading, error, sendRequest } = useHTTP();
+
+  useEffect(() => {
+    if (data) {
+        onLogin(data as User);
+    }
+  }, [data, onLogin]);
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState(event.target.value);
@@ -17,9 +24,10 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    await sendRequest({ path: formState, method: 'POST', data });
+    await sendRequest({ path: formState, method: 'POST', data })
     console.log('[form data]', data); // logData
   };
+  console.log('TEST 1', data);
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
   const radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
