@@ -13,6 +13,7 @@ export function useHTTP(initialData = null) {
       const response = await fetchData({ path, method, data });
       setData(response);
       setIsLoading(false);
+      return response; 
     } catch (err) {
       setIsLoading(false);
       setError((err as Error).message);

@@ -4,16 +4,11 @@ import { useFetch } from '@/hooks/useFetch';
 import Product from '@/models/Product';
 import User from '@/models/User';
 import { useHTTP } from '@/hooks/useHTTP';
-import { useEffect } from 'react';
 
 export default function UserPage() {
-  const { data: products } = useFetch('products');
-  const { data: user } = useFetch('login');
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
-
-  useEffect(() => {
-    setData(user);
-  }, [user, setData]);
+  const { data:     user } = useFetch('login', setData);
+  const { data: products } = useFetch('products');
 
   let content;
 
@@ -35,8 +30,7 @@ export default function UserPage() {
       <>
         <p>{username} {email}</p>
         <Products products={userItems} />
-        <button onClick={() => sendRequest({ path: 'login', method: 'GET' })}>{isLoading ? 'sending...' : 'check login'}</button>
-        <button onClick={handleLogout}>{isLoading ? 'sending...' : 'check logout'}</button>
+        <button onClick={handleLogout}>{isLoading ? 'sending...' : 'logout'}</button>
       </>
     );
   } else {
