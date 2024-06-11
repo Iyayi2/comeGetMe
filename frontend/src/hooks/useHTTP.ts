@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { Fetch, fetchData } from '../util/fetchData';
 
-export function useHTTP() {
-  const [data, setData] = useState(null);
+export function useHTTP(initialData = null) {
+  const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,5 +19,5 @@ export function useHTTP() {
     }
   },[]);
 
-  return { data, isLoading, error, sendRequest };
+  return { data, setData, isLoading, error, sendRequest };
 }
