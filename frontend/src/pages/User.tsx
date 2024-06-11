@@ -4,16 +4,17 @@ import { useFetch } from '@/hooks/useFetch';
 import Product from '@/models/Product';
 import User from '@/models/User';
 import { useHTTP } from '@/hooks/useHTTP';
+import LoadingIndicator from '@/components/loading/LoadingIndicator';
 
 export default function UserPage() {
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
-  const { data:     user } = useFetch('login', setData);
+  const { data: user, isLoading: isFetching } = useFetch('login', setData);
   const { data: products } = useFetch('products');
 
   let content;
 
   const handleLogin = async (path: string, data: object) => {
-    await sendRequest({ path, method: 'POST', data })
+    await sendRequest({ path, method: 'POST', data });
   };
 
   const handleLogout = async () => {
@@ -23,12 +24,14 @@ export default function UserPage() {
   console.log('isLoggedIn', isLoggedIn, '\n\n', 'fetchedUser', user); // logData
 
   if (isLoggedIn) {
-    const { username, email, _id } = isLoggedIn as User
+    const { username, email, _id } = isLoggedIn as User;
     const userItems = (products || []).filter((item: Product) => item.userId === _id);
 
     content = (
       <>
-        <p>{username} {email}</p>
+        <p>
+          {username} {email}
+        </p>
         <Products products={userItems} />
         <button onClick={handleLogout}>{isLoading ? 'sending...' : 'logout'}</button>
       </>
@@ -37,5 +40,5 @@ export default function UserPage() {
     content = <Form isLoading={isLoading} error={error as string} onLogin={handleLogin} />;
   }
 
-  return content;
+  return isFetching ? <LoadingIndicator /> : content;
 }
