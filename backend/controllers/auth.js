@@ -2,10 +2,15 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 
+const userDetails = (user) => {
+   const { _id, username, email } = user;
+  return { _id, username, email };
+};
+
 exports.getLogin = (req, res, next) => {
   console.log('[GET Login session]', req.session); // LogData
   if (req.session.user) {
-    res.status(200).json(req.session.user);
+    res.status(200).json(userDetails(req.session.user));
   } else {
     res.status(401).json({ message: 'No user logged in' });
   }
@@ -29,7 +34,7 @@ exports.postLogin = (req, res, next) => {
         if (err) {
           return res.status(500).json({ message: 'Session save failed' });
         }
-        res.status(200).json(user);
+        res.status(200).json(userDetails(user));
       });
     })
     .catch((err) => {
@@ -47,10 +52,11 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const { username, email, password } = req.body;
   const user = new User({ username, email, password });
-  user.save()
-  .then((user) => {
-     req.session.user = user; // set new user as session user on creation
-     res.status(200).json(user);
+  user
+    .save()
+    .then((user) => {
+      req.session.user = user; // set new user as session user on creation
+      res.status(200).json(userDetails(user));
     })
     .catch((err) => {
       res.status(500).json(err);
