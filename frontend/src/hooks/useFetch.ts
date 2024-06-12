@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { fetchData } from "../util/fetchData";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { useHTTP } from "./useHTTP";
 
-export const useFetch = (path: string) => {
-  const [data, setData] = useState([]);
+export const useFetch = (path: string, setData?: Dispatch<SetStateAction<null>>) => {
+  const { data, isLoading, error, sendRequest } = useHTTP();
 
   useEffect(() => {
     const getData = async () => {
-      const data = await fetchData(path);
-      setData(data);
+      const response = await sendRequest({ path, method: 'GET' });
+      setData && setData(response); // allows to update another state with this data
     };
 
     getData();
-  }, [path]);
+  }, [path, sendRequest, setData]);
 
-  return data;
-}
+  return { data, isLoading, error };
+};

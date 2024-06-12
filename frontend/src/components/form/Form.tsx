@@ -2,9 +2,16 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
-import { fetchData } from '@/util/fetchData';
 
-export default function Form() {
+export default function Form({
+  onLogin,
+  isLoading,
+  error,
+}: {
+  onLogin: (path: string, data: object) => void;
+  isLoading: boolean;
+  error: string;
+}) {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
 
@@ -16,8 +23,8 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const resData = await fetchData(formState, data);
-    console.log('form data', data, '\n\n', 'server response', resData);
+    onLogin(formState, data);
+    console.log('[form data]', data); // logData
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
@@ -28,10 +35,14 @@ export default function Form() {
     color: signup ? '#FFFFFF' : '',
   };
 
-  console.log('formState', formState);
-
   return (
-    <form className={css.form} onSubmit={submitHandler}>
+    <motion.form
+      className={css.form}
+      onSubmit={submitHandler}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className={css['radio-buttons']}>
         <label>
           <input value='signup' {...radioProps} defaultChecked={signup} /> Sign Up
@@ -40,7 +51,7 @@ export default function Form() {
           <input value='login' {...radioProps} defaultChecked={!signup} /> Login
         </label>
       </div>
-      <AnimatePresence mode='wait'>
+      <AnimatePresence mode='wait' initial={false}>
         <motion.div
           key={formState}
           className={css.inputs}
@@ -52,16 +63,17 @@ export default function Form() {
           {formState === 'signup' && <Input id='username' />}
           <Input id='email' />
           <Input id='password' />
+          {error && <p>{error}</p>}
           <motion.button
             style={{ ...buttonProps }}
             whileHover={{ y: -3, rotate: [-5, 5, 0] }}
             whileTap={{ scale: 1.1 }}
             transition={{ type: 'spring', bounce: 0.8 }}
           >
-            {formState.toUpperCase()}
+            {isLoading ? 'sending...' : formState.toUpperCase()}
           </motion.button>
         </motion.div>
       </AnimatePresence>
-    </form>
+    </motion.form>
   );
 }
