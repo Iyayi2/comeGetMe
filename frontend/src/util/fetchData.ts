@@ -7,9 +7,7 @@ export interface Fetch {
 export const fetchData = async ({ path, method, data }: Fetch) => {
   const response = await fetch(`http://localhost:3000/${path}`, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     credentials: 'include', // send cookies to backend
     body: data ? JSON.stringify(data) : null,
   });

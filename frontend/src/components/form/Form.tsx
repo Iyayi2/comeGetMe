@@ -36,7 +36,13 @@ export default function Form({
   };
 
   return (
-    <form className={css.form} onSubmit={submitHandler}>
+    <motion.form
+      className={css.form}
+      onSubmit={submitHandler}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className={css['radio-buttons']}>
         <label>
           <input value='signup' {...radioProps} defaultChecked={signup} /> Sign Up
@@ -45,7 +51,7 @@ export default function Form({
           <input value='login' {...radioProps} defaultChecked={!signup} /> Login
         </label>
       </div>
-      <AnimatePresence mode='wait'>
+      <AnimatePresence mode='wait' initial={false}>
         <motion.div
           key={formState}
           className={css.inputs}
@@ -68,6 +74,6 @@ export default function Form({
           </motion.button>
         </motion.div>
       </AnimatePresence>
-    </form>
+    </motion.form>
   );
 }
