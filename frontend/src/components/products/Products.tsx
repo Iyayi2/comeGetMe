@@ -6,14 +6,14 @@ export default function Products({ products }: { products: Product[] }) {
   return (
     <AnimatePresence>
       {products.length > 0 && (
-        <motion.section
+        <motion.ul
           className={css.products}
           exit={{ opacity: 0, scale: 0 }}
         >
           <AnimatePresence>
             {products.map(({ _id, title, description, price, imageUrl }, index) => {
               return (
-                <motion.article
+                <motion.li
                   className={css.product}
                   key={_id}
                   initial={{ opacity: 0, scale: 0.5 }}
@@ -28,11 +28,11 @@ export default function Products({ products }: { products: Product[] }) {
                     </p>
                     <p style={{ color: '#7a7676' }}>{description}</p>
                   </div>
-                </motion.article>
+                </motion.li>
               );
             })}
           </AnimatePresence>
-        </motion.section>
+        </motion.ul>
       )}
     </AnimatePresence>
   );
