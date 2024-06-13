@@ -4,6 +4,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.portal h2,
+.portal h3,
+.email {
   font-family: 'Bebas Neue', sans-serif;
 }
 
@@ -15,7 +20,7 @@
 }
 
 .portal h3 {
-  margin-top: 1rem;
+  margin: 1rem 0 0.5rem;
   font-weight: 100;
   font-style: italic;
   border-bottom: 1px solid #000;
