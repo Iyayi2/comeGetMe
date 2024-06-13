@@ -2,15 +2,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import Form from '../components/form/Form';
-import Products from '@/components/products/Products';
 import LoadingIndicator from '@/components/loading/LoadingIndicator';
-import User from '@/models/User';
-import Product from '@/models/Product';
+import Portal from '@/components/user/Portal';
 
 export default function UserPage() {
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
   const { data: user, isLoading: isFetching } = useFetch('login', setData);
-  const { data: products } = useFetch('products');
 
   let content;
 
@@ -25,18 +22,7 @@ export default function UserPage() {
   console.log('isLoggedIn', isLoggedIn, '\n\n', 'fetchedUser', user); // logData
 
   if (isLoggedIn) {
-    const { username, email, _id } = isLoggedIn as User;
-    const userItems = (products || []).filter((item: Product) => item.userId === _id);
-
-    content = (
-      <>
-        <p>
-          {username} {email}
-        </p>
-        <Products products={userItems} />
-        <button onClick={handleLogout}>{isLoading ? 'sending...' : 'logout'}</button>
-      </>
-    );
+    content = <Portal user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />;
   } else {
     content = <Form isLoading={isLoading} error={error} onLogin={handleLogin} />;
   }
@@ -45,7 +31,7 @@ export default function UserPage() {
     <AnimatePresence mode='popLayout'>
       <motion.section
         key={isLoggedIn}
-        exit={{ y: 100, opacity: 0, transition: { duration: 0.6 } }}
+        exit={{ y: isFetching ? 0 : 100, scale: isFetching ? 0 : 1, opacity: 0, transition: { duration: 0.6 } }}
         style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
       >
         {isFetching ? <LoadingIndicator /> : content}
