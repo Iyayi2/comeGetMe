@@ -4,6 +4,7 @@ import Products from '@/components/products/Products';
 import User from '@/models/User';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import css from './Portal.module.css';
+import Button from '../button/Button';
 
 export default function Portal({
   user,
@@ -28,7 +29,7 @@ export default function Portal({
         {username} {email}
       </p>
       {isFetching ? <LoadingIndicator /> : <Products products={userItems || []} />}
-      <button onClick={onLogout}>{isLoading ? 'sending...' : 'logout'}</button>
+      <Button onClick={onLogout} isLoading={isLoading} type='logout' />
     </motion.div>
   );
 }
