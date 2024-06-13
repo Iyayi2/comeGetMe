@@ -10,7 +10,7 @@ export default function Form({
 }: {
   onLogin: (path: string, data: object) => void;
   isLoading: boolean;
-  error: string;
+  error: string | null;
 }) {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
@@ -28,11 +28,11 @@ export default function Form({
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
-  const radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
-  const buttonProps = {
+  const   radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
+  const buttonProps  = {
     background: signup ? '#538392' : '#ADD899',
     textShadow: signup ? '1px 1px 2px #000' : '',
-    color: signup ? '#FFFFFF' : '',
+         color: signup ? '#FFFFFF' : '',
   };
 
   return (
