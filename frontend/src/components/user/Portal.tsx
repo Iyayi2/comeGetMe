@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import Products from '@/components/products/Products';
-import Product from '@/models/Product';
 import User from '@/models/User';
 
 export default function Portal({
@@ -13,9 +12,8 @@ export default function Portal({
   onLogout: () => void;
   isLoading: boolean;
 }) {
-  const { data: products } = useFetch('products');
   const { username, email, _id } = user;
-  const userItems = (products || []).filter((item: Product) => item.userId === _id);
+  const { data: userItems } = useFetch('products/' + _id);
 
   return (
     <motion.div
@@ -26,7 +24,7 @@ export default function Portal({
       <p>
         {username} {email}
       </p>
-      <Products products={userItems} />
+      <Products products={userItems || []} />
       <button onClick={onLogout}>{isLoading ? 'sending...' : 'logout'}</button>
     </motion.div>
   );
