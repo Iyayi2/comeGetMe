@@ -16,18 +16,6 @@ exports.getProducts = (req, res, next) => {
   })
 };
 
-exports.getUserProducts = (req, res, next) => {
-  const userId = req.params.userId;
-
-  Product.find({ userId: userId }) 
-    .then(products => {
-      res.status(200).json(products);
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
-};
-
 exports.getProduct = (req, res, next) => {
   const Id = req.params.productId;
 

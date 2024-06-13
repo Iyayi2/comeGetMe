@@ -9,8 +9,6 @@ export default function UserPage() {
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
   const { data: user, isLoading: isFetching } = useFetch('login', setData);
 
-  let content;
-
   const handleLogin = async (path: string, data: object) => {
     await sendRequest({ path, method: 'POST', data });
   };
@@ -21,20 +19,25 @@ export default function UserPage() {
 
   console.log('isLoggedIn', isLoggedIn, '\n\n', 'fetchedUser', user); // logData
 
-  if (isLoggedIn) {
-    content = <Portal user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />;
-  } else {
-    content = <Form isLoading={isLoading} error={error} onLogin={handleLogin} />;
-  }
-
   return (
     <AnimatePresence mode='popLayout'>
       <motion.section
         key={isLoggedIn}
-        exit={{ y: isFetching ? 0 : 100, scale: isFetching ? 0 : 1, opacity: 0, transition: { duration: 0.6 } }}
+        exit={{
+          y: isFetching ? 0 : 100,
+          scale: isFetching ? 0 : 1,
+          opacity: 0,
+          transition: { duration: 0.6 },
+        }}
         style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
       >
-        {isFetching ? <LoadingIndicator /> : content}
+        {isFetching ? (
+          <LoadingIndicator />
+        ) : isLoggedIn ? (
+          <Portal user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />
+        ) : (
+          <Form isLoading={isLoading} error={error} onLogin={handleLogin} />
+        )}
       </motion.section>
     </AnimatePresence>
   );

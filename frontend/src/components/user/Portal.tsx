@@ -15,8 +15,11 @@ export default function Portal({
   onLogout: () => void;
   isLoading: boolean;
 }) {
-  const { username, email, _id } = user;
-  const { data: userItems, isLoading: isFetching } = useFetch('products/' + _id);
+  const { username, email } = user;
+  const { data: userItems, isLoading: isFetching } = useFetch('my-product');
+  const hasItems = userItems && (userItems as []).length > 0;
+
+  console.log('userItems', userItems); // logData
 
   return (
     <motion.div
@@ -25,9 +28,21 @@ export default function Portal({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <p>
-        {username} {email}
-      </p>
+      <motion.h2
+        initial={{ opacity: 0, x: -100, scaleY: 0 }}
+        animate={{ opacity: 1, x: 0, scaleY: 1 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+      >
+        Welcome {username}
+      </motion.h2>
+      <p className={css.email}>Your Email: {email}</p>
+      <motion.h3
+        key={hasItems}
+        initial={{ opacity: 0, scaleY: 0 }}
+        animate={{ opacity: 1, scaleY: 1 }}
+      >
+        {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
+      </motion.h3>
       {isFetching ? <LoadingIndicator /> : <Products products={userItems || []} />}
       <Button onClick={onLogout} isLoading={isLoading} type='logout' />
     </motion.div>

@@ -9,8 +9,6 @@ router.get('/', marketController.getIndex);
 
 router.get('/products', marketController.getProducts);
 
-router.get('/products/:userId', marketController.getUserProducts);
-
 router.get('/products/:productId', marketController.getProduct);
 
 
