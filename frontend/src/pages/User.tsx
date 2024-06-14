@@ -29,7 +29,7 @@ export default function UserPage() {
           opacity: 0,
           transition: { duration: 0.6 },
         }}
-        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+        style={{ display: 'flex', flexDirection: 'column' }}
       >
         {isFetching ? (
           <LoadingIndicator />

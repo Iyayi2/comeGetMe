@@ -25,7 +25,6 @@ export default function Form({
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
     onLogin(formState, data);
-    console.log('[form data]', data); // logData
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };

@@ -3,8 +3,9 @@ import { useFetch } from '@/hooks/useFetch';
 import Products from '@/components/products/Products';
 import User from '@/models/User';
 import LoadingIndicator from '../loading/LoadingIndicator';
-import css from './Portal.module.css';
 import Button from '../button/Button';
+import AddItemForm from '../form/AddItemForm';
+import css from './Portal.module.css';
 
 export default function Portal({
   user,
@@ -44,6 +45,7 @@ export default function Portal({
         {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
       </motion.h3>
       {isFetching ? <LoadingIndicator /> : <Products products={userItems || []} />}
+      <AddItemForm />
       <Button onClick={onLogout} isLoading={isLoading} type='logout' />
     </motion.div>
   );

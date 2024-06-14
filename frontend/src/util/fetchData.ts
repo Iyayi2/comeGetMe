@@ -5,11 +5,14 @@ export interface Fetch {
 }
 
 export const fetchData = async ({ path, method, data }: Fetch) => {
+  const isFormData = data instanceof FormData;
+  const body = data ? (isFormData ? data : JSON.stringify(data)) : null;
+
   const response = await fetch(`http://localhost:3000/${path}`, {
     method,
-    headers: { 'Content-Type': 'application/json' },
+    headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
     credentials: 'include', // send cookies to backend
-    body: data ? JSON.stringify(data) : null,
+    body,
   });
 
   const resData = await response.json();
