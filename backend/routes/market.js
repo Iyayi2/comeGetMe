@@ -9,7 +9,7 @@ router.get('/', marketController.getIndex);
 
 router.get('/products', marketController.getProducts);
 
-router.get('/products/:productId', marketController.getProduct);
+router.get('/products/populated', marketController.getPopulatedProducts);
 
 
 

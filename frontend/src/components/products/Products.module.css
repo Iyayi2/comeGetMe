@@ -29,6 +29,15 @@
   max-height: 1rem;
 }
 
+.username {
+  margin: 0;
+  padding: 0.25rem;
+  font-size: smaller;
+  background: linear-gradient(to right, #232526, #414345);
+  color: #f4f0f0;
+  border-bottom: 1px solid #f4f0f0be;
+}
+
 .product img {
   object-fit: cover;
   width: 100%;
