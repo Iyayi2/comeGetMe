@@ -3,6 +3,7 @@ import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import Products from '@/components/products/Products';
 import User from '@/models/User';
+import Product from '@/models/Product';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Button from '../button/Button';
 import AddItemForm from '../form/AddItemForm';
@@ -18,13 +19,14 @@ export default function Portal({
   isLoading: boolean;
 }) {
   const { username, email } = user;
-  const { data: userItems, setData, isLoading: isFetching } = useFetch('my-product');
   const { sendRequest } = useHTTP();
-  const hasItems = userItems && (userItems as []).length > 0;
+  const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-product');
+
+  const hasItems = userItems && userItems.length > 0;
 
   const submitHandler = async (data: object) => {
     const newItem = await sendRequest({ path: 'add-product', method: 'POST', data });
-    newItem && setData((items) => [...items, newItem]);
+    newItem && setData((items: Product[] | null) => items ? [...items, newItem] : [newItem]);
   };
 
   return (
@@ -43,7 +45,7 @@ export default function Portal({
       </motion.h2>
       <p className={css.email}>Your Email: {email}</p>
       <motion.h3
-        key={hasItems}
+        key={hasItems as null}
         initial={{ opacity: 0, scaleY: 0 }}
         animate={{ opacity: 1, scaleY: 1 }}
       >

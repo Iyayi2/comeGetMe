@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useHTTP } from "./useHTTP";
 
-export const useFetch = (path: string, setExternalData?: Dispatch<SetStateAction<null>>) => {
-  const { data, setData, isLoading, error, sendRequest } = useHTTP();
+export const useFetch =  <T = null>(path: string, setExternalData?: Dispatch<SetStateAction<null>>) => {
+  const { data, setData, isLoading, error, sendRequest } = useHTTP<T>();
 
   useEffect(() => {
     const getData = async () => {
