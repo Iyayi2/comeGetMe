@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
+import { useHTTP } from '@/hooks/useHTTP';
 import Products from '@/components/products/Products';
 import User from '@/models/User';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Button from '../button/Button';
 import AddItemForm from '../form/AddItemForm';
 import css from './Portal.module.css';
-import { useHTTP } from '@/hooks/useHTTP';
 
 export default function Portal({
   user,
@@ -18,16 +18,14 @@ export default function Portal({
   isLoading: boolean;
 }) {
   const { username, email } = user;
+  const { data: userItems, setData, isLoading: isFetching } = useFetch('my-product');
   const { sendRequest } = useHTTP();
-  const { data: userItems, isLoading: isFetching } = useFetch('my-product');
   const hasItems = userItems && (userItems as []).length > 0;
 
   const submitHandler = async (data: object) => {
     const newItem = await sendRequest({ path: 'add-product', method: 'POST', data });
-    newItem && userItems && (userItems as []).push(newItem as never);
+    newItem && setData((items) => [...items, newItem]);
   };
-
-  console.log('USER ITEMS', userItems);
 
   return (
     <motion.div
