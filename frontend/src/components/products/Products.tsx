@@ -12,13 +12,14 @@ export default function Products({
   return (
     <AnimatePresence>
       {products.length > 0 && (
-        <motion.ul className={css.products} exit={{ opacity: 0, scale: 0 }}>
+        <motion.ul className={css.products} layout exit={{ opacity: 0, scale: 0 }}>
           <AnimatePresence>
             {products.map(({ _id, title, description, price, imageUrl, userId }, index) => {
               return (
                 <motion.li
                   className={css.product}
                   key={_id}
+                  layout
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0 }}

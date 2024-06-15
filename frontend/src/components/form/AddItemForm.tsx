@@ -1,13 +1,11 @@
-import { useHTTP } from '@/hooks/useHTTP';
 import Input from './Input';
 
-export default function AddItemForm() {
-  const { sendRequest } = useHTTP();
+export default function AddItemForm({ onAddItem }: { onAddItem: (data: object) => void }) {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    await sendRequest({ path: 'add-product', method: 'POST', data });
+    onAddItem(data)
   };
 
   return (
