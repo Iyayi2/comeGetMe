@@ -20,8 +20,6 @@ export default function Portal({
   const { data: userItems, isLoading: isFetching } = useFetch('my-product');
   const hasItems = userItems && (userItems as []).length > 0;
 
-  console.log('userItems', userItems); // logData
-
   return (
     <motion.div
       className={css.portal}

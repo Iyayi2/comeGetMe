@@ -17,11 +17,12 @@ export const fetchData = async ({ path, method, data }: Fetch) => {
 
   const resData = await response.json();
 
+  console.log('[Server Response]', resData); // logData
+  
   if (!response.ok) {
     throw new Error(resData.message || 'Something went wrong');
   }
 
-  console.log('[Server Response]', resData); // logData
 
   return resData;
 };

@@ -8,7 +8,6 @@ export default function AddItemForm() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     await sendRequest({ path: 'add-product', method: 'POST', data });
-    console.log('[Item Data]', Object.fromEntries(data.entries())); // logData
   };
 
   return (

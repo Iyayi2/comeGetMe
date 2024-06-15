@@ -7,7 +7,7 @@ import Portal from '@/components/user/Portal';
 
 export default function UserPage() {
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
-  const { data: user, isLoading: isFetching } = useFetch('login', setData);
+  const { isLoading: isFetching } = useFetch('login', setData);
 
   const handleLogin = async (path: string, data: object) => {
     await sendRequest({ path, method: 'POST', data });
@@ -16,8 +16,6 @@ export default function UserPage() {
   const handleLogout = async () => {
     await sendRequest({ path: 'logout', method: 'POST' });
   };
-
-  console.log('isLoggedIn', isLoggedIn, '\n\n', 'fetchedUser', user); // logData
 
   return (
     <AnimatePresence mode='popLayout'>
