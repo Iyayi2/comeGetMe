@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const User = require('../models/user');
+const { trimWhiteSpace } = require('../util/trimWhiteSpace');
 
 const userDetails = (user) => {
    const { _id, username, email } = user;
@@ -50,7 +51,7 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password } = trimWhiteSpace(req.body);
   const user = new User({ username, email, password });
   user
     .save()

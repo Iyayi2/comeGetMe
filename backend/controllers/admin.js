@@ -5,6 +5,7 @@ const fs = require('fs');
 const fileHelper = require('../util/file');
 
 const Product = require('../models/product');
+const { trimWhiteSpace } = require('../util/trimWhiteSpace');
 
 exports.getAddProduct = (req, res, next) => {
   // res.render('admin/add-product', {
@@ -14,11 +15,9 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title       = req.body.title.trim();
-  const price       = req.body.price.trim();
-  const description = req.body.description.trim();
-  const userId      = req.user._id;
-  const imageUrl    = req.file && req.file.path;
+  const { title, price, description } = trimWhiteSpace(req.body);
+  const userId   = req.user._id;
+  const imageUrl = req.file && req.file.path;
 
   const product = new Product({ title, price, description, imageUrl, userId });
   product
