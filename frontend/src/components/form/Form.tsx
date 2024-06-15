@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import css from './Form.module.css';
+import Button, { ButtonType } from '../button/Button';
 
 export default function Form({
   onLogin,
@@ -10,13 +11,13 @@ export default function Form({
 }: {
   onLogin: (path: string, data: object) => void;
   isLoading: boolean;
-  error: string;
+  error: string | null;
 }) {
-  const [formState, setFormState] = useState('signup');
+  const [formState, setFormState] = useState<ButtonType>('signup');
   const signup = formState === 'signup';
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState(event.target.value);
+    setFormState(event.target.value as ButtonType);
   };
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,16 +25,10 @@ export default function Form({
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
     onLogin(formState, data);
-    console.log('[form data]', data); // logData
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
   const radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
-  const buttonProps = {
-    background: signup ? '#538392' : '#ADD899',
-    textShadow: signup ? '1px 1px 2px #000' : '',
-    color: signup ? '#FFFFFF' : '',
-  };
 
   return (
     <motion.form
@@ -60,18 +55,11 @@ export default function Form({
           exit={{ ...animateProps }}
           transition={{ ease: 'easeIn', duration: 0.3 }}
         >
-          {formState === 'signup' && <Input id='username' />}
+          {signup && <Input id='username' />}
           <Input id='email' />
           <Input id='password' />
           {error && <p>{error}</p>}
-          <motion.button
-            style={{ ...buttonProps }}
-            whileHover={{ y: -3, rotate: [-5, 5, 0] }}
-            whileTap={{ scale: 1.1 }}
-            transition={{ type: 'spring', bounce: 0.8 }}
-          >
-            {isLoading ? 'sending...' : formState.toUpperCase()}
-          </motion.button>
+          <Button isLoading={isLoading} type={formState} />
         </motion.div>
       </AnimatePresence>
     </motion.form>

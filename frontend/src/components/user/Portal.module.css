@@ -1,0 +1,26 @@
+.portal {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.portal h2,
+.portal h3,
+.email {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 100;
+}
+
+.portal h2,
+.email {
+  margin: 0;
+  color: rgb(79, 79, 79);
+}
+
+.portal h3 {
+  margin: 1rem 0 0.5rem;
+  font-style: italic;
+  border-bottom: 1px solid #000;
+}

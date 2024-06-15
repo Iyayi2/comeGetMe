@@ -1,13 +1,16 @@
 .products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
   padding: 1rem;
+  margin: 0;
 }
 
 .product {
   display: flex;
   flex-direction: column;
+  width: 200px;
   color: #000000;
   background: #f4f0f0;
   border: 1px solid #9CAFAA;
@@ -15,17 +18,38 @@
 
 .text {
   margin: 0.5rem auto;
+  height: 2rem;
 }
 
 .text p {
-  margin: 0;
+  margin: 0 0.5rem;
   font-size: smaller;
   text-align: center;
+  overflow: auto;
+  max-height: 1rem;
+}
+
+.username {
+  margin: 0;
+  padding: 0.25rem;
+  font-size: smaller;
+  background: linear-gradient(to right, #232526, #414345);
+  color: #f4f0f0;
+  border-bottom: 1px solid #f4f0f0be;
 }
 
 .product img {
   object-fit: cover;
   width: 100%;
   height: 100%;
-  border-bottom: 1px solid #9CAFAA;
+  border-bottom: 1px solid #9cafaa;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .product {
+    width: 140px;
+  }
+  .text p {
+    font-size: x-small;
+  }
 }

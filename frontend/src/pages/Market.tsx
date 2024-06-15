@@ -3,7 +3,8 @@ import Products from '@/components/products/Products';
 import { useFetch } from '@/hooks/useFetch';
 
 export default function MarketPage() {
-  const { data: products, isLoading } = useFetch('products');
+  const { data: user } = useFetch('login');
+  const { data: products, isLoading } = useFetch('products' + (user ? '/populated' : ''));
 
-  return isLoading ? <LoadingIndicator /> : <Products products={products || []} />;
+  return isLoading ? <LoadingIndicator /> : <Products expanded={user} products={products || []} />;
 }

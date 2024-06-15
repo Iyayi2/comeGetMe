@@ -1,55 +1,48 @@
 const mongoose = require('mongoose');
 
+const fs = require('fs');
+
 const fileHelper = require('../util/file');
 
 const Product = require('../models/product');
+const { trimWhiteSpace } = require('../util/trimWhiteSpace');
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('admin/add-product', {
-    pageTitle: 'Add product',
-    path: '/add-product'
-  });
+  // res.render('admin/add-product', {
+  //   pageTitle: 'Add product',
+  //   path: '/add-product',
+  // });
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const price = req.body.price;
-  const description = req.body.description;
-  const imageUrl = req.file.path;
+  const { title, price, description } = trimWhiteSpace(req.body);
+  const userId   = req.user._id;
+  const imageUrl = req.file && req.file.path;
 
-  const product = new Product({
-    title: title,
-    price: price,
-    description: description,
-    imageUrl: imageUrl,
-    userId: req.user
-  });
-  product.save()
-  .then(product => {
-    res.status(200).json(product);
-    // res.redirect('/products');
-  })
-  .catch(err => {
-    res.status(500).json(err);
-  })
+  const product = new Product({ title, price, description, imageUrl, userId });
+  product
+    .save()
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((err) => {
+      if (req.file) {
+        fs.unlinkSync(req.file.path); // Remove the uploaded file if form validation fails
+      }
+      res.status(500).json(err);
+    });
 };
 
 exports.putEditProduct = (req, res, next) => {
   const id = req.params.productId;
 
   Product.findById(id)
-  .then(product => {
-    product.updateOne({$set: req.body});
-    // res.render('admin/edit-product', {
-    //   Product: product,
-    //   pageTitle: 'Edit Product',
-    //   path: '/edit-product/:productId'
-    // });
-  })
-  .catch(err => {
-    res.status(500).json(err);
-    // console.log(err);
-  })
+    .then((product) => {
+      product.updateOne({ $set: req.body });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 };
 
 // exports.postEditProduct = (req, res, next) => {
@@ -77,31 +70,24 @@ exports.putEditProduct = (req, res, next) => {
 // };
 
 exports.getProducts = (req, res, next) => {
-
-  Product.find({userId: req.user._id})
-  .then(product => {
-    res.status(200).json(product);
-    // res.render('admin/my-product', {
-    //   Products: product,
-    //   pageTitle: 'My products',
-    //   path: '/my-product'
-    // });
-  })
-  .catch(err => {
-    res.status(500).json(err);
-    // console.log(err);
-  })
+  Product.find({ userId: req.user._id })
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 };
 
 exports.deleteProduct = (req, res, next) => {
-  const id = req.params.productId
+  const id = req.params.productId;
   Product.findById(id)
-  .then(product => {
-    fileHelper.deleteFile(product.imageUrl);
-    product.deleteOne({_id: id, userId: req.user._id})
-    res.status(200).json('Product deleted!')
-  })
-  .catch(err => {
-    res.status(500).json(err);
-  });
+    .then((product) => {
+      fileHelper.deleteFile(product.imageUrl);
+      product.deleteOne({ _id: id, userId: req.user._id });
+      res.status(200).json('Product deleted!');
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
 };
