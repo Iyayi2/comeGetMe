@@ -28,7 +28,6 @@ export default function Products({
                   <img
                     src={`http://localhost:3000/${imageUrl}`}
                     alt='product'
-                    style={{ borderBottom: expanded ? 'none' : '' }}
                   />
                   {expanded && <p className={css.username}>Posted by {userId.username}</p>}
                   <div className={css.text}>

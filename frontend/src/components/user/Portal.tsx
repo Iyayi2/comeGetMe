@@ -1,14 +1,14 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
-import Products from '@/components/products/Products';
 import User from '@/models/User';
 import Product from '@/models/Product';
+import Products from '../products/Products';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Button from '../button/Button';
 import ItemForm from '../form/ItemForm';
 import css from './Portal.module.css';
-import { useState } from 'react';
 
 export default function Portal({
   user,
@@ -22,7 +22,7 @@ export default function Portal({
   const { username, email } = user;
   const { sendRequest } = useHTTP();
   const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-product');
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
 
   const hasItems = userItems && userItems.length > 0;
 
@@ -34,6 +34,7 @@ export default function Portal({
   return (
     <motion.div
       className={css.portal}
+      layout
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
@@ -47,12 +48,21 @@ export default function Portal({
           >
             Welcome {username}
           </motion.h2>
-          <p className={css.email}>Your Email: {email}</p>
-          <p className={css.email}>Ads Online: {(userItems || []).length}</p>
+          <p>Your Email: {email}</p>
+          <p>Ads Online: {(userItems || []).length}</p>
         </div>
         <div className={css.buttons}>
-          <Button onClick={onLogout} isLoading={isLoading} type='logout' />
-          <Button onClick={() => setExpanded(toggle => !toggle)} type='new ad' />
+          <Button
+            text='logout'
+            style={{ background: '#cd4f25' }}
+            onClick={onLogout}
+            isLoading={isLoading}
+          />
+          <Button
+            text={expanded ? 'cancel' : 'new ad'}
+            style={{ background: expanded ? '#747272' : '#538392' }}
+            onClick={() => setExpanded((toggle) => !toggle)}
+          />
         </div>
       </div>
       {expanded && <ItemForm onAddItem={submitHandler} />}
@@ -60,6 +70,7 @@ export default function Portal({
         key={hasItems as null}
         initial={{ opacity: 0, scaleY: 0 }}
         animate={{ opacity: 1, scaleY: 1 }}
+        style={{ marginBottom: hasItems ? '0' : '' }}
       >
         {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
       </motion.h3>

@@ -17,12 +17,14 @@
 }
 
 .text {
-  margin: 0.5rem auto;
-  height: 2rem;
+  border-top: 1px solid #9cafaa;
+  margin: 0;
+  padding: 0.5rem;
+  height: 3rem;
 }
 
 .text p {
-  margin: 0 0.5rem;
+  margin: 0;
   font-size: smaller;
   text-align: center;
   overflow: auto;
@@ -35,14 +37,15 @@
   font-size: smaller;
   background: linear-gradient(to right, #232526, #414345);
   color: #f4f0f0;
-  border-bottom: 1px solid #f4f0f0be;
+  border-right: 15px solid #414345;
+  overflow-x: auto;
+  text-wrap: nowrap;
 }
 
 .product img {
   object-fit: cover;
   width: 100%;
   height: 250px;
-  border-bottom: 1px solid #9cafaa;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -52,7 +55,10 @@
   .product img {
     height: 120px;
   }
-  .text p {
+  .text {
+    height: 2.5rem;
+  }
+  .text p, .username {
     font-size: x-small;
   }
 }

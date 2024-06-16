@@ -1,39 +1,22 @@
 .portal {
+  min-width: 282px;
+  max-width: 800px;
   margin: 1rem auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1rem 0;
   border: 1px solid #000;
   border-radius: 3px;
   background: #ede7e7;
-}
-
-.portal h2,
-.portal h3,
-.email {
-  font-family: 'Bebas Neue', sans-serif;
-  font-weight: 100;
-}
-
-.portal h2,
-.email {
-  margin: 0;
-  color: rgb(79, 79, 79);
-}
-
-.portal h3 {
-  margin: 1rem 0 0.5rem;
-  font-style: italic;
-  border-bottom: 1px solid #000;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 1rem;
+  gap: 1rem;
+  padding: 1rem;
   width: 100%;
   margin: 0;
 }
@@ -41,6 +24,25 @@
 .buttons {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+}
+
+.portal h3,
+.info h2,
+.info p {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 100;
+}
+
+.info h2,
+.info p {
+  margin: 0;
+  color: rgb(79, 79, 79);
+}
+
+.portal h3 {
+  font-style: italic;
+  border-bottom: 1px solid #000;
 }
 
 @media (min-width: 320px) and (max-width: 768px) {
