@@ -1,0 +1,16 @@
+.image-picker {
+  display: block;
+  width: fit-content;
+  padding: 0.3rem;
+  background: #bfbebf;
+  border-radius: 3px;
+  border: 2px solid #000;
+  font-size: small;
+  font-weight: 100;
+  text-shadow: 1px 1px 2px #b1adad;
+  cursor: pointer;
+}
+
+.image-picker input {
+  display: none;
+}

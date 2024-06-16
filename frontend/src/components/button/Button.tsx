@@ -5,7 +5,7 @@ interface ButtonProps {
   text: string;
   isLoading?: boolean;
   onClick?: () => void;
-  style: object;
+  style: { background: string };
 }
 
 export default function Button({ text, isLoading, ...props }: ButtonProps) {

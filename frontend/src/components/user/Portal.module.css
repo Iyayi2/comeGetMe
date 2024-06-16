@@ -50,3 +50,9 @@
     margin: 1rem;
   }
 }
+
+@media (min-width: 864px) {
+  .portal {
+    width: 800px;
+  }
+}

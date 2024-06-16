@@ -20,7 +20,7 @@ export default function Portal({
   isLoading: boolean;
 }) {
   const { username, email } = user;
-  const { sendRequest } = useHTTP();
+  const { sendRequest, isLoading: sendingData, error } = useHTTP();
   const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-product');
   const [expanded, setExpanded] = useState(false);
 
@@ -32,13 +32,7 @@ export default function Portal({
   };
 
   return (
-    <motion.div
-      className={css.portal}
-      layout
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div className={css.portal} initial={{ height: 0 }} animate={{ height: 'auto' }}>
       <div className={css.row}>
         <div className={css.info}>
           <motion.h2
@@ -65,7 +59,12 @@ export default function Portal({
           />
         </div>
       </div>
-      {expanded && <ItemForm onAddItem={submitHandler} />}
+      <ItemForm
+        expanded={expanded}
+        onAddItem={submitHandler}
+        isLoading={sendingData}
+        error={error}
+      />
       <motion.h3
         key={hasItems as null}
         initial={{ opacity: 0, scaleY: 0 }}
@@ -74,7 +73,7 @@ export default function Portal({
       >
         {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
       </motion.h3>
-      {isFetching ? <LoadingIndicator /> : <Products products={userItems || []} />}
+      {isFetching ? <LoadingIndicator style={{ margin: '0 0 5rem' }} /> : <Products products={userItems || []} />}
     </motion.div>
   );
 }
