@@ -15,6 +15,7 @@ export default function Button({ text, isLoading, ...props }: ButtonProps) {
       whileHover={{ y: -2, rotate: [-5, 5, 0] }}
       whileTap={{ scale: 1.1 }}
       transition={{ type: 'spring', bounce: 0.8 }}
+      disabled={isLoading}
       {...props}
     >
       {isLoading ? 'sending...' : text.toUpperCase()}

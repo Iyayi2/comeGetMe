@@ -34,10 +34,12 @@ export default function ItemForm({
           <div className={css.inputs}>
             <Input id='title' />
             <Input id='price' />
+            <Input id='description' text />
           </div>
-          <Input id='description' text />
-          <ImagePicker />
-          <Button text='Add Item' style={{ background: '#538392' }} isLoading={isLoading} />
+          <div className={css.controls}>
+            <ImagePicker />
+            <Button text='Add Item' style={{ background: '#538392' }} isLoading={isLoading} />
+          </div>
           {error && <p>{error}</p>}
         </motion.form>
       )}
