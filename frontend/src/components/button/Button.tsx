@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import css from './Button.module.css';
 
-export type ButtonType = 'signup' | 'login' | 'logout';
+export type ButtonType = 'signup' | 'login' | 'logout' | 'new ad';
 
 interface ButtonProps {
   type: ButtonType;
@@ -12,8 +12,9 @@ interface ButtonProps {
 export default function Button({ type, isLoading, ...props }: ButtonProps) {
   const styles = {
     signup: { background: '#538392' },
-    login:  { background: '#ADD899', textShadow: 'none', color: '#000' },
+     login: { background: '#ADD899', textShadow: 'none', color: '#000' },
     logout: { background: '#cd4f25', margin: '0.5rem auto' },
+  'new ad': { background: '#538392' }
   }[type];
 
   return (

@@ -10,7 +10,7 @@
 .product {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 250px;
   color: #000000;
   background: #f4f0f0;
   border: 1px solid #9CAFAA;
@@ -41,13 +41,16 @@
 .product img {
   object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: 250px;
   border-bottom: 1px solid #9cafaa;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
   .product {
-    width: 140px;
+    width: 120px;
+  }
+  .product img {
+    height: 120px;
   }
   .text p {
     font-size: x-small;

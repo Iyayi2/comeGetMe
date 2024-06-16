@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
-import css from './Form.module.css';
 import Button, { ButtonType } from '../button/Button';
+import css from './SignInForm.module.css';
 
-export default function Form({
+export default function SignInForm({
   onLogin,
   isLoading,
   error,
