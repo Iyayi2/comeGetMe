@@ -1,10 +1,12 @@
 import css from './Input.module.css'
 
-export default function Input({ id }: { id: string }) {
+export default function Input({ id, text }: { id: string, text?: boolean }) {
+  const Element = text ? 'textarea' : 'input'
+
   return (
     <p className={css.input}>
       <label htmlFor={id}>{id}</label>
-      <input id={id} name={id} />
+      <Element id={id} name={id} />
     </p>
   );
 }

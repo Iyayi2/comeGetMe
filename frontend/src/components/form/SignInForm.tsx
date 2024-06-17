@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
-import css from './Form.module.css';
-import Button, { ButtonType } from '../button/Button';
+import Button from '../button/Button';
+import css from './SignInForm.module.css';
 
-export default function Form({
+export default function SignInForm({
   onLogin,
   isLoading,
   error,
@@ -13,11 +13,11 @@ export default function Form({
   isLoading: boolean;
   error: string | null;
 }) {
-  const [formState, setFormState] = useState<ButtonType>('signup');
+  const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormState(event.target.value as ButtonType);
+    setFormState(event.target.value);
   };
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,13 @@ export default function Form({
   };
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
-  const radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
+  const   radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
+  const  buttonProps = {
+    ...{ alignSelf: 'end', marginRight: '0.5rem' },
+    ...(signup
+      ? { background: '#538392' }
+      : { background: '#ADD899', textShadow: 'none', color: '#000' }),
+  };
 
   return (
     <motion.form
@@ -59,7 +65,7 @@ export default function Form({
           <Input id='email' />
           <Input id='password' />
           {error && <p>{error}</p>}
-          <Button isLoading={isLoading} type={formState} />
+          <Button isLoading={isLoading} text={formState} style={buttonProps} />
         </motion.div>
       </AnimatePresence>
     </motion.form>

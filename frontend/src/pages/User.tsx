@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
-import Form from '../components/form/Form';
+import SignInForm from '../components/form/SignInForm';
 import LoadingIndicator from '@/components/loading/LoadingIndicator';
 import Portal from '@/components/user/Portal';
 
@@ -34,7 +34,7 @@ export default function UserPage() {
         ) : isLoggedIn ? (
           <Portal user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />
         ) : (
-          <Form isLoading={isLoading} error={error} onLogin={handleLogin} />
+          <SignInForm isLoading={isLoading} error={error} onLogin={handleLogin} />
         )}
       </motion.section>
     </AnimatePresence>

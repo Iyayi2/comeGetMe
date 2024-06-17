@@ -1,7 +1,6 @@
 .button {
   width: fit-content;
-  margin-left: auto;
-  margin-right: 0.5rem;
+  height: fit-content;
   padding: 0.3rem;
   border-radius: 3px;
   font-family: 'Bebas Neue', sans-serif;

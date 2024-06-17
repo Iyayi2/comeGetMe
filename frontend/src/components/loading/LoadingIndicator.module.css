@@ -1,7 +1,9 @@
 .lds-ring {
-  margin: 20% auto;
+  margin: 5% auto;
   width: 80px;
   height: 80px;
+  display: flex;
+  justify-content: center;
 }
 .lds-ring div {
   position: absolute;
