@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import Button from '../button/Button';
 import css from './SignInForm.module.css';
+import { APIError } from '@/hooks/useHTTP';
 
 export default function SignInForm({
   onLogin,
@@ -11,7 +12,7 @@ export default function SignInForm({
 }: {
   onLogin: (path: string, data: object) => void;
   isLoading: boolean;
-  error: string | null;
+  error: APIError;
 }) {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
@@ -61,10 +62,9 @@ export default function SignInForm({
           exit={{ ...animateProps }}
           transition={{ ease: 'easeIn', duration: 0.3 }}
         >
-          {signup && <Input id='username' />}
-          <Input id='email' />
-          <Input id='password' />
-          {error && <p>{error}</p>}
+          {signup && <Input id='username' error={error} />}
+          <Input id='email' error={error} />
+          <Input id='password' error={error} />
           <Button isLoading={isLoading} text={formState} style={buttonProps} />
         </motion.div>
       </AnimatePresence>

@@ -23,10 +23,10 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ errors: { email: 'denied' } });
       }
       if (user.password !== password) {
-        return res.status(401).json({ message: 'Incorrect password' });
+        return res.status(401).json({ errors: { password: 'denied' } });
       }
 
       req.session.user = user;

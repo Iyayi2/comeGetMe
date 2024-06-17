@@ -3,6 +3,7 @@ import Input from './Input';
 import ImagePicker from './ImagePicker';
 import Button from '../button/Button';
 import css from './ItemForm.module.css';
+import { APIError } from '@/hooks/useHTTP';
 
 export default function ItemForm({
   expanded,
@@ -13,7 +14,7 @@ export default function ItemForm({
   expanded: boolean;
   onAddItem: (data: object) => void;
   isLoading: boolean;
-  error: string | null;
+  error: APIError;
 }) {
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,15 +33,14 @@ export default function ItemForm({
           exit={{ opacity: 0, height: 0 }}
         >
           <div className={css.inputs}>
-            <Input id='title' />
-            <Input id='price' />
-            <Input id='description' text />
+            <Input id='title' error={error} />
+            <Input id='price' error={error} />
+            <Input id='description' error={error} text />
           </div>
           <div className={css.controls}>
-            <ImagePicker />
+            <ImagePicker error={error} />
             <Button text='Add Item' style={{ background: '#538392' }} isLoading={isLoading} />
           </div>
-          {error && <p>{error}</p>}
         </motion.form>
       )}
     </AnimatePresence>

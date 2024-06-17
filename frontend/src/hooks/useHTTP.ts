@@ -1,12 +1,15 @@
 import { useCallback, useState } from 'react';
 import { Fetch, fetchData } from '../util/fetchData';
 
+export type APIError = { errors: object; keyPattern: object; } | null;
+
 export function useHTTP<T = null>(initialData = null) {
   const [data, setData] = useState<T | null>(initialData);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<APIError>(null);
 
   const sendRequest = useCallback(async ({ path, method, data }: Fetch) => {
+    console.clear(); // logData
     setIsLoading(true);
     setError(null);
     try {
@@ -16,7 +19,7 @@ export function useHTTP<T = null>(initialData = null) {
       return response;
     } catch (err) {
       setIsLoading(false);
-      setError((err as Error).message);
+      setError(err as APIError);
     }
   }, []);
 
