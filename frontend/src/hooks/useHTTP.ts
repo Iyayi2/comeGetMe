@@ -7,6 +7,7 @@ export function useHTTP<T = null>(initialData = null) {
   const [error, setError] = useState<string | null>(null);
 
   const sendRequest = useCallback(async ({ path, method, data }: Fetch) => {
+    console.clear(); // logData
     setIsLoading(true);
     setError(null);
     try {

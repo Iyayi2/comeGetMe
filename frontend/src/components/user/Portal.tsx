@@ -28,7 +28,10 @@ export default function Portal({
 
   const submitHandler = async (data: object) => {
     const newItem = await sendRequest({ path: 'add-product', method: 'POST', data });
-    newItem && setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
+    if (newItem) {
+      setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
+      setExpanded(false);
+    }
   };
 
   return (
@@ -73,7 +76,11 @@ export default function Portal({
       >
         {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
       </motion.h3>
-      {isFetching ? <LoadingIndicator style={{ margin: '0 0 5rem' }} /> : <Products products={userItems || []} />}
+      {isFetching ? (
+        <LoadingIndicator style={{ margin: '0 0 5rem' }} />
+      ) : (
+        <Products products={userItems || []} />
+      )}
     </motion.div>
   );
 }

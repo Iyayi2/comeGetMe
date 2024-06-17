@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
 
-  console.clear(); // ClearConsole
+  console.clear(); // logData
 
   return (
     <>
