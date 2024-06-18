@@ -24,11 +24,13 @@
 }
 
 .text p {
+  max-height: 1rem;
   margin: 0;
   font-size: smaller;
   text-align: center;
-  overflow: auto;
-  max-height: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .username {

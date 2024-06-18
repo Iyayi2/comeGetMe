@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Product from '@/models/Product';
 import css from './Products.module.css';
@@ -9,6 +10,8 @@ export default function Products({
   products: Product[];
   expanded?: boolean | null;
 }) {
+  const navigate = useNavigate();
+
   return (
     <AnimatePresence>
       {products.length > 0 && (
@@ -24,6 +27,7 @@ export default function Products({
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0 }}
                   transition={{ type: 'tween', delay: 0.2 * index }}
+                  onClick={() => navigate('/market/' + _id)}
                 >
                   <img
                     src={`http://localhost:3000/${imageUrl}`}

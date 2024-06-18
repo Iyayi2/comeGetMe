@@ -17,7 +17,7 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { title, price, description } = trimWhiteSpace(req.body);
   const userId   = req.user._id;
-  const imageUrl = req.file && req.file.path;
+  const imageUrl = req.file?.path;
 
   const product = new Product({ title, price, description, imageUrl, userId });
   product
