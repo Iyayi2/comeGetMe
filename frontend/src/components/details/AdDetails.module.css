@@ -1,0 +1,36 @@
+.ad {
+  display: flex;
+  align-self: center;
+  flex-wrap: wrap;
+  margin: 1rem auto;
+  background: #ede7e7;
+  border: 1px solid #000;
+  border-radius: 3px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.details img {
+  max-width: 400px;
+  /* width: fit-content; */
+  height: 100%;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+  .details img {
+    width: 100%;
+    /* height: 100%; */
+  }
+}
+
+@media (min-width: 864px) {
+  .ad {
+    width: 800px;
+  }
+  .details {
+    width: 400px;
+  }
+}
