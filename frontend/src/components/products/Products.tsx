@@ -25,14 +25,16 @@ export default function Products({
                   layout
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
+                     exit={{ opacity: 0, scale: 0 }}
+                  whileHover={{
+                    borderColor:  '#000',
+                    y: -5,
+                    transition: { type: 'elastic', duration: 0.2 },
+                  }}
                   transition={{ type: 'tween', delay: 0.2 * index }}
                   onClick={() => navigate('/market/' + _id)}
                 >
-                  <img
-                    src={`http://localhost:3000/${imageUrl}`}
-                    alt='product'
-                  />
+                  <img src={`http://localhost:3000/${imageUrl}`} alt='product' />
                   {expanded && <p className={css.username}>Posted by {userId.username}</p>}
                   <div className={css.text}>
                     <p>

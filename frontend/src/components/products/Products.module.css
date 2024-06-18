@@ -8,12 +8,19 @@
 }
 
 .product {
+  position: relative;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   width: 250px;
   color: #000000;
   background: #f4f0f0;
   border: 1px solid #9CAFAA;
+  cursor: pointer;
+}
+
+.product:hover {
+  z-index: 1;
 }
 
 .text {

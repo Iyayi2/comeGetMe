@@ -12,7 +12,7 @@ export default function Button({ text, isLoading, ...props }: ButtonProps) {
   return (
     <motion.button
       className={css.button}
-      whileHover={{ y: -2, rotate: [-5, 5, 0] }}
+      whileHover={{ y: -2, x: [-1, 1] }}
       whileTap={{ scale: 1.1 }}
       transition={{ type: 'spring', bounce: 0.8 }}
       disabled={isLoading}
