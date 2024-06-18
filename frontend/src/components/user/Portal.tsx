@@ -86,7 +86,12 @@ export default function Portal({
       ) : (
         <Products products={userItems || []} />
       )}
-      {!hasItems && <p>Your ads can be managed here</p>}
+      {!hasItems && (
+        <>
+          <p>Your ads can be managed here</p>
+          <img src='signpost.png' alt='logo' style={{ width: '125px', marginBottom: '1rem' }} />
+        </>
+      )}
     </motion.div>
   );
 }
