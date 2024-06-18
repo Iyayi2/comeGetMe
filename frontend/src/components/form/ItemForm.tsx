@@ -30,16 +30,16 @@ export default function ItemForm({
           className={css.form}
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
+             exit={{ opacity: 0, height: 0 }}
         >
           <div className={css.inputs}>
-            <Input id='title' error={error} />
-            <Input id='price' error={error} />
+            <Input id='title'       error={error} />
+            <Input id='price'       error={error} />
             <Input id='description' error={error} text />
           </div>
           <div className={css.controls}>
             <ImagePicker error={error} />
-            <Button text='Add Item' style={{ background: '#538392' }} isLoading={isLoading} />
+            <Button text='Add +' style={{ background: '#538392' }} isLoading={isLoading} />
           </div>
         </motion.form>
       )}

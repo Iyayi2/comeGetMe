@@ -21,12 +21,7 @@ export default function Input({
 
   return (
     <p className={css.input}>
-      <label
-        htmlFor={id}
-        style={{
-          color: hasError ? 'red' : '',
-        }}
-      >
+      <label htmlFor={id} style={{ color: hasError ? 'red' : '' }}>
         {id} {hasError}
       </label>
       <Element id={id} name={id} />

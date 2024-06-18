@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import User from '@/models/User';
@@ -45,8 +46,12 @@ export default function Portal({
           >
             Welcome {username}
           </motion.h2>
-          <p>Your Email: {email}</p>
-          <p>Ads Online: {(userItems || []).length}</p>
+          <p>
+            <FontAwesomeIcon icon='envelope' /> Your Email: {email}
+          </p>
+          <p>
+            <FontAwesomeIcon icon='signs-post' /> Ads Online: {(userItems || []).length}
+          </p>
         </div>
         <div className={css.buttons}>
           <Button
@@ -81,6 +86,7 @@ export default function Portal({
       ) : (
         <Products products={userItems || []} />
       )}
+      {!hasItems && <p>Your ads can be managed here</p>}
     </motion.div>
   );
 }
