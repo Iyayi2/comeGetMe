@@ -7,20 +7,20 @@ export default function AdDetails({ user, product }: { user: User | null; produc
 
   return (
     <section className={css.ad}>
-      <div className={css.details}>
+      <article className={css.article}>
         <img src={`http://localhost:3000/${imageUrl}`} alt='product' />
-        <div className={css.title}>
+        <div>
           <h2>{title}</h2>
           <p>${price.toFixed(2)}</p>
         </div>
-        <div className={css.desc}>
+        <div>
           <h2>Description</h2>
           <p>{description}</p>
         </div>
-      </div>
-      <div className={css.actions}>
-        <p>COLUMN 2</p>
-      </div>
+      </article>
+      <aside className={css.aside}>
+        <div>COLUMN 2</div>
+      </aside>
     </section>
   );
 }
