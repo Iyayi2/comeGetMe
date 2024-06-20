@@ -1,10 +1,12 @@
 .ad {
-  width: 400px;
+  max-width: 100%;
+  overflow: auto;
   display: flex;
   align-self: center;
   flex-wrap: wrap;
   gap: 1rem;
-  margin: 1rem auto;
+  margin: auto;
+  padding: 1rem;
 
   .article,
   .aside {
@@ -21,9 +23,11 @@
 }
 
 .article {
+  max-width: inherit;
+
   img {
-    max-width: 400px;
-    height: 100%;
+    max-width: 100%;
+    height: auto;
     border-radius: 3px;
   }
 
@@ -60,25 +64,15 @@
       max-height: 5rem;
       overflow: auto;
       margin: 0.5rem 0;
-      text-wrap: stable;
     }
   }
 }
 
-@media (min-width: 320px) and (max-width: 768px) {
-  .ad {
-    width: 100%;
-    padding: 0 1rem;
-  }
-  .article img {
-    max-width: 100%;
-  }
-}
+/* @media (min-width: 320px) and (max-width: 768px) {
 
-@media (min-width: 864px) {
-  .ad {
-    width: 800px;
-  }
+} */
+
+@media (min-width: 800px) {
   .article {
     width: 400px;
   }
