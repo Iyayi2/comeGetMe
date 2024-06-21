@@ -16,7 +16,7 @@ export default function ItemForm({
   isLoading: boolean;
   error: APIError;
 }) {
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     onAddItem(data);

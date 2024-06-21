@@ -63,7 +63,10 @@ exports.putEditProduct = (req, res, next) => {
 
   Product.findById(id)
     .then((product) => {
-      product.updateOne({ $set: req.body });
+      return product.updateOne({ $set: req.body }).exec();
+    })
+    .then((result) => {
+      res.status(200).json(result);
     })
     .catch((err) => {
       res.status(500).json(err);
