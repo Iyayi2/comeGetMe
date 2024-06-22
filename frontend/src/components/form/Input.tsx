@@ -5,10 +5,12 @@ export default function Input({
   id,
   error,
   text,
+  ...props
 }: {
   id: string;
   error: APIError;
   text?: boolean;
+  defaultValue?: string | number;
 }) {
   const Element = text ? 'textarea' : 'input';
   let hasError;
@@ -24,7 +26,7 @@ export default function Input({
       <label htmlFor={id} style={{ color: hasError ? 'red' : '' }}>
         {id} {hasError}
       </label>
-      <Element id={id} name={id} />
+      <Element id={id} name={id} {...props} />
     </p>
   );
 }

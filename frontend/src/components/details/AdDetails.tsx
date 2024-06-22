@@ -66,9 +66,9 @@ export default function AdDetails({
         {/* <ItemForm expanded={expanded} /> */}
         {expanded && (
           <form onSubmit={submitHandler}>
-            <Input id='title' error={error} />
-            <Input id='price' error={error} />
-            <Input id='description' error={error} text />
+            <Input id='title'       error={error} defaultValue={title} />
+            <Input id='price'       error={error} defaultValue={price} />
+            <Input id='description' error={error} defaultValue={description} text />
             <button>Update</button>
           </form>
         )}
