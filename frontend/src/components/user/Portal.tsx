@@ -30,13 +30,15 @@ export default function Portal({
   const submitHandler = async (data: object) => {
     const newItem = await sendRequest({ path: 'add-product', method: 'POST', data });
     if (newItem) {
-      setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
       setExpanded(false);
+      setTimeout(() => {
+        setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
+      }, 500);
     }
   };
 
   return (
-    <motion.div className={css.portal} initial={{ height: 0 }} animate={{ height: 'auto' }}>
+    <motion.div className={css.portal} layout initial={{ height: 0 }} animate={{ height: 'auto' }}>
       <div className={css.row}>
         <div className={css.info}>
           <motion.h2

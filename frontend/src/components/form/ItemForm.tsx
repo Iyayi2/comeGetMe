@@ -23,7 +23,7 @@ export default function ItemForm({
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode='wait'>
       {expanded && (
         <motion.form
           onSubmit={submitHandler}
