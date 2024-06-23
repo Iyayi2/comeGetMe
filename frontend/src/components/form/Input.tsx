@@ -19,6 +19,8 @@ export default function Input({
     hasError = 'required';
   } else if (error?.keyPattern?.[id as keyof APIError]) {
     hasError = 'exists';
+  } else if (error?.path === id) {
+    hasError = 'non numeric';
   }
 
   return (

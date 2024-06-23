@@ -63,7 +63,7 @@ exports.putEditProduct = (req, res, next) => {
 
   Product.findById(id)
     .then((product) => {
-      return product.updateOne({ $set: req.body }).exec();
+      return product.updateOne({ $set: req.body }, { runValidators: true }).exec();
     })
     .then(() => {
       return Product.findById(id).populate('userId', 'username');
@@ -79,11 +79,14 @@ exports.putEditProduct = (req, res, next) => {
 // '/delete-product/:productId'
 exports.deleteProduct = (req, res, next) => {
   const id = req.params.productId;
+
   Product.findById(id)
     .then((product) => {
       fileHelper.deleteFile(product.imageUrl);
-      product.deleteOne({ _id: id, userId: req.user._id });
-      res.status(200).json('Product deleted!');
+      return Product.deleteOne({ _id: id, userId: req.user._id });
+    })
+    .then(() => {
+      res.status(200).json(null); // must be empty for frontend response
     })
     .catch((err) => {
       res.status(500).json(err);

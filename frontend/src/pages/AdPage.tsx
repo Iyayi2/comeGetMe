@@ -15,10 +15,16 @@ export default function AdPage() {
     await sendRequest({ path: 'edit-product/' + productId, method: 'PUT', data });
   };
 
+  const deleteItem = async () => {
+    await sendRequest({ path: 'delete-product/' + productId, method: 'DELETE' });
+  };
+
+  console.log('PRODUCT', product)
+
   return isLoading ? (
     <LoadingIndicator />
   ) : product ? (
-    <AdDetails user={user} product={product} onEdit={updateItem} error={error} />
+    <AdDetails user={user} product={product} onEdit={updateItem} onDelete={deleteItem} error={error} />
   ) : (
     <ErrorPage />
   );

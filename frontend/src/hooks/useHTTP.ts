@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Fetch, fetchData } from '../util/fetchData';
 
-export type APIError = { errors: object; keyPattern: object; } | null;
+export type APIError = { errors: object; keyPattern: object; path: string; } | null;
 
 export function useHTTP<T = null>(initialData = null) {
   const [data, setData] = useState<T | null>(initialData);

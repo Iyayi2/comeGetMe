@@ -15,11 +15,13 @@ export default function AdDetails({
   user,
   product,
   onEdit,
+  onDelete,
   error,
 }: {
   user: User | null;
   product: Product;
   onEdit: (data: object) => void;
+  onDelete: () => void;
   error: APIError;
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
@@ -44,6 +46,11 @@ export default function AdDetails({
     onEdit(data);
   }
 
+  function deleteHandler() {
+    onDelete();
+    navigate('/account');
+  }
+
   return (
     <section className={css.ad}>
       <article className={css.article}>
@@ -66,10 +73,13 @@ export default function AdDetails({
         {/* <ItemForm expanded={expanded} /> */}
         {expanded && (
           <form onSubmit={submitHandler}>
-            <Input id='title'       error={error} defaultValue={title} />
-            <Input id='price'       error={error} defaultValue={price} />
+            <Input id='title' error={error} defaultValue={title} />
+            <Input id='price' error={error} defaultValue={price} />
             <Input id='description' error={error} defaultValue={description} text />
             <button>Update</button>
+            <button type='button' onClick={deleteHandler}>
+              DELETE
+            </button>
           </form>
         )}
         <Box>Hello</Box>
