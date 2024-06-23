@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import ItemForm from '../form/ItemForm';
+import ItemForm from '../form/ItemForm';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import css from './AdDetails.module.css';
-import Input from '../form/Input';
 import { APIError } from '@/hooks/useHTTP';
-import ImagePicker from '../form/ImagePicker';
+import css from './AdDetails.module.css';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>
@@ -17,13 +15,15 @@ export default function AdDetails({
   product,
   onEdit,
   onDelete,
+  isLoading,
   error,
 }: {
-  user: User | null;
-  product: Product;
-  onEdit: (data: object) => void;
-  onDelete: () => void;
-  error: APIError;
+       user: User | null;
+    product: Product;
+     onEdit: (data: object) => void;
+   onDelete: () => void;
+  isLoading: boolean;
+      error: APIError;
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
@@ -38,13 +38,6 @@ export default function AdDetails({
     } else {
       console.log('SEND MESSAGE');
     }
-  }
-
-  function submitHandler(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    // const data = Object.fromEntries(formData.entries());
-    onEdit(formData);
   }
 
   function deleteHandler() {
@@ -70,20 +63,19 @@ export default function AdDetails({
           <p>Ad ID {_id}</p>
           {user && <p>Posted by {userId.username}</p>}
           <button onClick={clickHandler}>{myAd ? 'Edit Listing' : 'Send Message'}</button>
-        </Box>
-        {/* <ItemForm expanded={expanded} /> */}
-        {expanded && (
-          <form onSubmit={submitHandler}>
-            <Input id='title' error={error} defaultValue={title} />
-            <Input id='price' error={error} defaultValue={price} />
-            <Input id='description' error={error} defaultValue={description} text />
-            <ImagePicker error={error} />
-            <button>Update</button>
+          {myAd && (
             <button type='button' onClick={deleteHandler}>
-              DELETE
+              Delete Listing
             </button>
-          </form>
-        )}
+          )}
+        </Box>
+        <ItemForm
+          expanded={expanded}
+          dataFn={onEdit}
+          isLoading={isLoading}
+          error={error}
+          product={product}
+        />
         <Box>Hello</Box>
       </aside>
     </section>

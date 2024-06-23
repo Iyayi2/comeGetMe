@@ -71,7 +71,7 @@ export default function Portal({
       </div>
       <ItemForm
         expanded={expanded}
-        onAddItem={submitHandler}
+        dataFn={submitHandler}
         isLoading={sendingData}
         error={error}
       />
