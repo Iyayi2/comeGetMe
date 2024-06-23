@@ -21,7 +21,7 @@ export default function SignInForm({
     setFormState(event.target.value);
   };
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());

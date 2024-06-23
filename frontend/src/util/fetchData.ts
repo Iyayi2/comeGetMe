@@ -23,6 +23,5 @@ export const fetchData = async ({ path, method, data }: Fetch) => {
     throw resData;
   }
 
-
   return resData;
 };

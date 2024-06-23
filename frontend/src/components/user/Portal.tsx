@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import User from '@/models/User';
@@ -21,7 +22,7 @@ export default function Portal({
 }) {
   const { username, email } = user;
   const { sendRequest, isLoading: sendingData, error } = useHTTP();
-  const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-product');
+  const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-products');
   const [expanded, setExpanded] = useState(false);
 
   const hasItems = userItems && userItems.length > 0;
@@ -29,13 +30,15 @@ export default function Portal({
   const submitHandler = async (data: object) => {
     const newItem = await sendRequest({ path: 'add-product', method: 'POST', data });
     if (newItem) {
-      setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
       setExpanded(false);
+      setTimeout(() => {
+        setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
+      }, 500);
     }
   };
 
   return (
-    <motion.div className={css.portal} initial={{ height: 0 }} animate={{ height: 'auto' }}>
+    <motion.div className={css.portal} layout initial={{ height: 0 }} animate={{ height: 'auto' }}>
       <div className={css.row}>
         <div className={css.info}>
           <motion.h2
@@ -45,8 +48,12 @@ export default function Portal({
           >
             Welcome {username}
           </motion.h2>
-          <p>Your Email: {email}</p>
-          <p>Ads Online: {(userItems || []).length}</p>
+          <p>
+            <FontAwesomeIcon icon='envelope' /> Your Email: {email}
+          </p>
+          <p>
+            <FontAwesomeIcon icon='signs-post' /> Ads Online: {(userItems || []).length}
+          </p>
         </div>
         <div className={css.buttons}>
           <Button
@@ -80,6 +87,12 @@ export default function Portal({
         <LoadingIndicator style={{ margin: '0 0 5rem' }} />
       ) : (
         <Products products={userItems || []} />
+      )}
+      {!hasItems && (
+        <>
+          <p>Your ads can be managed here</p>
+          <img src='signpost.png' alt='logo' style={{ width: '125px', marginBottom: '1rem' }} />
+        </>
       )}
     </motion.div>
   );

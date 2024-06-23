@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
-import css from './ImagePicker.module.css';
 import { APIError } from '@/hooks/useHTTP';
+import css from './ImagePicker.module.css';
 
 export default function ImagePicker({ error }: { error: APIError }) {
   const [image, setImage] = useState<string | null>(null);
