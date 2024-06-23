@@ -6,6 +6,7 @@ import User from '@/models/User';
 import css from './AdDetails.module.css';
 import Input from '../form/Input';
 import { APIError } from '@/hooks/useHTTP';
+import ImagePicker from '../form/ImagePicker';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>
@@ -42,8 +43,8 @@ export default function AdDetails({
   function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    onEdit(data);
+    // const data = Object.fromEntries(formData.entries());
+    onEdit(formData);
   }
 
   function deleteHandler() {
@@ -76,6 +77,7 @@ export default function AdDetails({
             <Input id='title' error={error} defaultValue={title} />
             <Input id='price' error={error} defaultValue={price} />
             <Input id='description' error={error} defaultValue={description} text />
+            <ImagePicker error={error} />
             <button>Update</button>
             <button type='button' onClick={deleteHandler}>
               DELETE

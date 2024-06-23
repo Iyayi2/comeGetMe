@@ -33,14 +33,14 @@ exports.getProductById = (req, res, next) => {
 
   Product.findById(id)
     .populate('userId', 'username')
-    .then(product => {
+    .then((product) => {
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }
 
       res.status(200).json(product);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       res.status(500).json({ message: 'Server error' });
     });
@@ -60,20 +60,28 @@ exports.getProducts = (req, res, next) => {
 // '/edit-product/:productId'
 exports.putEditProduct = (req, res, next) => {
   const id = req.params.productId;
+  const { title, price, description } = trimWhiteSpace(req.body);
+  const imageUrl = req.file?.path;
 
-  Product.findById(id)
-    .then((product) => {
-      return product.updateOne({ $set: req.body }, { runValidators: true }).exec();
-    })
-    .then(() => {
-      return Product.findById(id).populate('userId', 'username');
-    })
-    .then((product) => {
-      res.status(200).json(product);
-    })
-    .catch((err) => {
+  Product.findById(id).then(async (product) => {
+    const oldImageUrl = product.imageUrl;
+
+    try {
+      await product
+        .updateOne({ $set: { title, price, description, imageUrl } }, { runValidators: true })
+        .exec();
+      if (imageUrl && oldImageUrl !== imageUrl) {
+        fs.unlinkSync(oldImageUrl);
+      }
+      const product_1 = await Product.findById(id).populate('userId', 'username');
+      res.status(200).json(product_1);
+    } catch (err) {
+      if (imageUrl) {
+        fs.unlinkSync(imageUrl);
+      }
       res.status(500).json(err);
-    });
+    }
+  });
 };
 
 // '/delete-product/:productId'

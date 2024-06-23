@@ -21,7 +21,7 @@ export default function Products({
           initial='hidden'
           animate='visible'
           exit={{ opacity: 0, scale: 0 }}
-          transition={{ staggerChildren: 0.2 }}
+          transition={{ staggerChildren: 0.15 }}
         >
           <AnimatePresence>
             {products.map(({ _id, title, description, price, imageUrl, userId }) => {
@@ -36,7 +36,7 @@ export default function Products({
                   }}
                   exit={{ opacity: 0, scale: 0 }}
                   whileHover={{ borderColor: '#000', y: -5 }}
-                  transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
+                  transition={{ type: 'tween', ease: 'easeInOut', duration: 0.2 }}
                   onClick={() => navigate('/market/' + _id)}
                 >
                   <img src={`http://localhost:3000/${imageUrl}`} alt='product' />
