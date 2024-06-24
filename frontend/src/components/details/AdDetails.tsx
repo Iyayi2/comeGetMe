@@ -60,8 +60,11 @@ export default function AdDetails({
       </article>
       <aside className={css.aside}>
         <Box>
-          <p>Ad ID {_id}</p>
-          {user && <p>Posted by {userId.username}</p>}
+          <p>
+            <span>Ad ID</span>
+            <span>{_id}</span>
+          </p>
+          {user && <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
           <button onClick={clickHandler}>{myAd ? 'Edit Listing' : 'Send Message'}</button>
           {myAd && (
             <button type='button' onClick={deleteHandler}>
