@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ItemForm from '../form/ItemForm';
@@ -45,17 +46,45 @@ export default function AdDetails({
     navigate('/account');
   }
 
+  const animationProps = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y:   0 },
+       exit: { opacity: 0, y:  10 },
+  };
+
   return (
     <section className={css.ad}>
       <article className={css.article}>
-        <img src={`http://localhost:3000/${imageUrl}`} alt='product' />
+        <AnimatePresence mode='wait' initial={false}>
+          <motion.img
+            key={imageUrl}
+            initial={{ opacity: 0, height: 0,      width: 0      }}
+            animate={{ opacity: 1, height: 'auto', width: 'auto' }}
+               exit={{ opacity: 0, height: 0,      width: 0      }}
+            transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
+            src={`http://localhost:3000/${imageUrl}`}
+            alt='product'
+          />
+        </AnimatePresence>
         <Box>
-          <h2>{title}</h2>
-          <p>${price.toFixed(2)}</p>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.h2 key={title} {...animationProps}>
+              {title}
+            </motion.h2>
+          </AnimatePresence>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.p key={price} {...animationProps}>
+              ${price.toFixed(2)}
+            </motion.p>
+          </AnimatePresence>
         </Box>
         <Box>
           <h2>Description</h2>
-          <p>{description}</p>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.p key={description} {...animationProps}>
+              {description}
+            </motion.p>
+          </AnimatePresence>
         </Box>
       </article>
       <aside className={css.aside}>
@@ -74,10 +103,10 @@ export default function AdDetails({
         </Box>
         <ItemForm
           expanded={expanded}
-          dataFn={onEdit}
-          isLoading={isLoading}
-          error={error}
-          product={product}
+            dataFn={onEdit}
+         isLoading={isLoading}
+             error={error}
+           product={product}
         />
         <Box>Hello</Box>
       </aside>
