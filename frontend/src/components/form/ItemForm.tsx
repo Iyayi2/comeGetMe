@@ -13,11 +13,11 @@ export default function ItemForm({
   error,
   product,
 }: {
-  expanded: boolean;
-  dataFn: (data: object) => void;
+   expanded: boolean;
+     dataFn: (data: object) => void;
   isLoading: boolean;
-  error: APIError;
-  product?: Product;
+      error: APIError;
+   product?: Product;
 }) {
   const { title = '', price = '', description = '' } = product || {};
 
@@ -35,7 +35,8 @@ export default function ItemForm({
           className={css.form}
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
+             exit={{ opacity: 0, height: 0 }}
+          transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
         >
           <div className={css.inputs}>
             <Input id='title'       error={error} defaultValue={title} />

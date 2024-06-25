@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ItemForm from '../form/ItemForm';
 import Product from '@/models/Product';
@@ -18,6 +17,8 @@ export default function AdDetails({
   onDelete,
   isLoading,
   error,
+  expanded,
+  toggleForm,
 }: {
        user: User | null;
     product: Product;
@@ -25,17 +26,18 @@ export default function AdDetails({
    onDelete: () => void;
   isLoading: boolean;
       error: APIError;
+   expanded: boolean;
+ toggleForm: () => void;
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
-  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
   function clickHandler() {
     if (!user) {
       navigate('/account');
     } else if (myAd) {
-      setExpanded((toggle) => !toggle);
+      toggleForm();
     } else {
       console.log('SEND MESSAGE');
     }

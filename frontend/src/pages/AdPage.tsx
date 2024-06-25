@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import AdDetails from '@/components/details/AdDetails';
@@ -10,9 +11,11 @@ export default function AdPage() {
   const { data: product, setData, sendRequest, isLoading, error } = useHTTP();
   const { isLoading: isFetching } = useFetch('product/' + productId, setData);
   const { data: user }            = useFetch('login');
+  const [expanded, setExpanded]   = useState(false);
 
   const updateItem = async (data: object) => {
-    await sendRequest({ path: 'edit-product/' + productId, method: 'PUT', data });
+    const didUpdate = await sendRequest({ path: 'edit-product/' + productId, method: 'PUT', data });
+    didUpdate && setExpanded(false);
   };
 
   const deleteItem = async () => {
@@ -23,12 +26,14 @@ export default function AdPage() {
     <LoadingIndicator />
   ) : product ? (
     <AdDetails
-         user={user}
-      product={product}
-       onEdit={updateItem}
-     onDelete={deleteItem}
-    isLoading={isLoading}
-        error={error}
+      user      ={user}
+      product   ={product}
+      onEdit    ={updateItem}
+      onDelete  ={deleteItem}
+      isLoading ={isLoading}
+      error     ={error}
+      expanded  ={expanded}
+      toggleForm={() => setExpanded((toggle) => !toggle)}
     />
   ) : (
     <ErrorPage />
