@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import ItemForm from '../form/ItemForm';
 import Product from '@/models/Product';
 import User from '@/models/User';
 import { APIError } from '@/hooks/useHTTP';
 import css from './AdDetails.module.css';
+import Button from '../button/Button';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>
@@ -32,6 +34,7 @@ export default function AdDetails({
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
   const navigate = useNavigate();
+  const [confirmation, setConfirmation] = useState(false);
 
   function clickHandler() {
     if (!user) {
@@ -41,6 +44,10 @@ export default function AdDetails({
     } else {
       console.log('SEND MESSAGE');
     }
+  }
+
+  function confirmHandler() {
+    setConfirmation((toggle) => !toggle);
   }
 
   function deleteHandler() {
@@ -98,9 +105,43 @@ export default function AdDetails({
           {user && <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
           <button onClick={clickHandler}>{myAd ? 'Edit Listing' : 'Send Message'}</button>
           {myAd && (
-            <button type='button' onClick={deleteHandler}>
-              Delete Listing
-            </button>
+            <AnimatePresence mode='wait' initial={false}>
+              {!confirmation ? (
+                <motion.button
+                  type='button'
+                  key={'a' + confirmation}
+                  onClick={confirmHandler}
+                  initial={{ opacity: 0, scaleX: 0.5 }}
+                  animate={{ opacity: 1, scaleX: 1 }}
+                     exit={{ opacity: 0, scaleX: 0.5 }}
+                  transition={{ duration: 0.2, type: 'tween', ease: 'linear'}}
+                >
+                  Delete Listing
+                </motion.button>
+              ) : (
+                <motion.div
+                  className={css['confirm-dialog']}
+                  key={'b' + confirmation}
+                  initial={{ opacity: 0, x: -100, height: 0 }}
+                  animate={{ opacity: 1, x:    0, height: 'auto' }}
+                     exit={{ opacity: 0, x:  100, height: 35 }}
+                >
+                  <h5>Are you sure you want to delete the listing?</h5>
+                  <div>
+                    <Button
+                      text='Delete'
+                      onClick={deleteHandler}
+                      style={{ background: '#d04121cd' }}
+                    />
+                    <Button
+                      text='Cancel'
+                      onClick={confirmHandler}
+                      style={{ background: '#457bdfb7' }}
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           )}
         </Box>
         <ItemForm

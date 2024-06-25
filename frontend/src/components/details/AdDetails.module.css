@@ -70,7 +70,6 @@
 }
 
 .aside {
-
   .box:first-of-type {
     display: flex;
     flex-direction: column;
@@ -92,7 +91,7 @@
       border-bottom: 1px solid #000;
     }
 
-    button {
+    > button {
       width: 150px;
       padding: 0.5rem;
       align-self: center;
@@ -101,16 +100,31 @@
       transition: 0.5s ease;
     }
 
-    button:last-of-type {
+    > button:last-of-type {
       background: #d04121cd;
     }
 
-    button:first-of-type {
+    > button:first-of-type {
       background: #88df45b7;
     }
 
-    button:hover {
+    > button:hover {
       filter: brightness(120%);
+    }
+
+    .confirm-dialog {
+      h5 {
+        text-align: center;
+        margin: 0 0 1rem;
+        background: #eae6e1;
+        border-radius: 3px;
+        padding: 0.5rem;
+      }
+      div {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+      }
     }
   }
 }
