@@ -1,0 +1,14 @@
+.confirm-dialog {
+  h5 {
+    text-align: center;
+    margin: 0 0 1rem;
+    background: #eae6e1;
+    border-radius: 3px;
+    padding: 0.5rem;
+  }
+  div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
