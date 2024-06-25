@@ -112,6 +112,25 @@
       filter: brightness(120%);
     }
   }
+
+  .box:last-of-type {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    p {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin: 0;
+
+      a {
+        text-decoration: none;
+        font-family: 'Bebas Neue', sans-serif;
+        color: #000;
+      }
+    }
+  }
 }
 
 @media (min-width: 800px) {

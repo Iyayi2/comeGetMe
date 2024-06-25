@@ -1,14 +1,24 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ItemForm from '../form/ItemForm';
+import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
 import { APIError } from '@/hooks/useHTTP';
 import css from './AdDetails.module.css';
-import DeletePrompt from './DeletePrompt';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>
+);
+
+const GitLink = ({ link, name }: { link: string; name: string }) => (
+  <p>
+    <FontAwesomeIcon icon={['fab', 'github']} />
+    <a href={`https://github.com/${link}`} target='_blank' rel='noopener noreferrer'>
+      {name}
+    </a>
+  </p>
 );
 
 export default function AdDetails({
@@ -102,7 +112,10 @@ export default function AdDetails({
              error={error}
            product={product}
         />
-        <Box>Hello</Box>
+        <Box>
+          <GitLink link='Iyayi2'        name='Iyayi Roland' />
+          <GitLink link='thegroosalugg' name='Victor Loginov' />
+        </Box>
       </aside>
     </section>
   );
