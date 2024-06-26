@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
@@ -38,8 +38,8 @@ export default function Portal({
   };
 
   return (
-    <motion.div className={css.portal} layout initial={{ height: 0 }} animate={{ height: 'auto' }}>
-      <div className={css.row}>
+    <motion.div className={css.portal} initial={{ y: -100 }} animate={{ y: 0 }}>
+      <section>
         <div className={css.info}>
           <motion.h2
             initial={{ opacity: 0, x: -100, scaleY: 0 }}
@@ -68,32 +68,28 @@ export default function Portal({
             onClick={() => setExpanded((toggle) => !toggle)}
           />
         </div>
-      </div>
-      <ItemForm
-        expanded={expanded}
-        dataFn={submitHandler}
-        isLoading={sendingData}
-        error={error}
-      />
+      </section>
+
+      <ItemForm expanded={expanded} dataFn={submitHandler} isLoading={sendingData} error={error} />
       <motion.h3
         key={hasItems as null}
         initial={{ opacity: 0, scaleY: 0 }}
         animate={{ opacity: 1, scaleY: 1 }}
-        style={{ marginBottom: hasItems ? '0' : '' }}
       >
         {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
       </motion.h3>
-      {isFetching ? (
-        <LoadingIndicator style={{ margin: '0 0 5rem' }} />
-      ) : (
-        <Products products={userItems || []} />
-      )}
-      {!hasItems && (
-        <>
-          <p>Your ads can be managed here</p>
-          <img src='signpost.png' alt='logo' style={{ width: '125px', marginBottom: '1rem' }} />
-        </>
-      )}
+      <AnimatePresence mode='wait'>
+        {isFetching ? (
+          <LoadingIndicator scale={0.5} />
+        ) : hasItems ? (
+          <Products products={userItems} />
+        ) : (
+          <motion.div className={css.logo} exit={{ opacity: 0, scale: 0, transition: { duration: 0.5 } }}>
+            <p>Your ads can be managed here</p>
+            <img src='signpost.png' alt='logo' />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
