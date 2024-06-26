@@ -10,6 +10,7 @@ import Products from '../products/Products';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Button from '../button/Button';
 import ItemForm from '../form/ItemForm';
+import Logo from './Logo';
 import css from './Portal.module.css';
 
 export default function Portal({
@@ -87,14 +88,11 @@ export default function Portal({
       </motion.h3>
       <AnimatePresence mode='wait'>
         {isFetching ? (
-          <LoadingIndicator scale={0.5} />
+          <LoadingIndicator key='1' scale={0.5} />
         ) : hasItems ? (
-          <Products products={userItems} />
+          <Products key='2' products={userItems} />
         ) : (
-          <motion.div className={css.logo} exit={{ opacity: 0, scale: 0, transition: { duration: 0.5 } }}>
-            <p>Your ads can be managed here</p>
-            <img src='signpost.png' alt='logo' />
-          </motion.div>
+          <Logo key='3' />
         )}
       </AnimatePresence>
     </motion.div>

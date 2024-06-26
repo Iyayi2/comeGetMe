@@ -43,21 +43,6 @@
     font-style: italic;
     border-bottom: 1px solid #000;
   }
-
-  .logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    p {
-      margin: 1rem 0 0;
-    }
-
-    img {
-      width: 125px;
-      margin: 1rem;
-    }
-  }
 }
 
 @media (min-width: 320px) and (max-width: 768px) {
