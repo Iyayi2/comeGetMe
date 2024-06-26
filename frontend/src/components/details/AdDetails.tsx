@@ -50,7 +50,7 @@ export default function AdDetails({
     } else if (myAd) {
       toggleForm();
     } else {
-      console.log('SEND MESSAGE');
+      navigate('/inbox');
     }
   }
 

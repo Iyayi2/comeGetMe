@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import User from '@/models/User';
@@ -24,6 +25,7 @@ export default function Portal({
   const { sendRequest, isLoading: sendingData, error } = useHTTP();
   const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-products');
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const hasItems = userItems && userItems.length > 0;
 
@@ -61,6 +63,11 @@ export default function Portal({
             style={{ background: '#cd4f25' }}
             onClick={onLogout}
             isLoading={isLoading}
+          />
+          <Button
+            text={'inbox'}
+            style={{ background: '#94ca7c' }}
+            onClick={() => navigate('/inbox')}
           />
           <Button
             text={expanded ? 'cancel' : 'new ad'}

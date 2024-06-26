@@ -4,7 +4,7 @@ import css from './Navigation.module.css'
 
 export default function NavButton({ path, label }: { path: string; label: string }) {
   const { pathname } = useLocation();
-  const isActive = pathname === path || (pathname.startsWith(path) && path !== '/');
+  const isActive = pathname === path || (pathname.startsWith(path) && path !== '/') || (pathname === '/inbox' && path === '/account');
 
   return (
     <li>

@@ -3,6 +3,7 @@ import HomePage from './pages/Home';
 import MarketPage from './pages/Market';
 import AdPage from './pages/AdPage';
 import UserPage from './pages/User';
+import Inbox from './pages/Inbox';
 import ErrorPage from './components/error/Error';
 import RootLayout from './pages/Root';
 
@@ -19,6 +20,7 @@ export default function App() {
     { path: 'market', element: <MarketPage /> },
     { path: 'market/:productId', element: <AdPage /> },
     { path: 'account', element: <UserPage /> },
+    { path: 'inbox', element: <Inbox /> },
     { path: '*', element: <ErrorPage /> },
   ]);
 

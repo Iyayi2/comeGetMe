@@ -7,8 +7,8 @@ export default function LoadingIndicator({scale = 1, ...props}: { scale?: number
       className={css['lds-ring']}
       {...props}
       initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale, opacity: 1 }}
-      transition={{ duration: 1 }}
+      animate={{ scale,    opacity: 1 }}
+         exit={{ scale: 0, opacity: 0 }}
     >
       <div></div>
       <div></div>
