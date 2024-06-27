@@ -36,6 +36,6 @@ export default function AdPage() {
       toggleForm={() => setExpanded((toggle) => !toggle)}
     />
   ) : (
-    <ErrorPage />
+    <ErrorPage type='ad' />
   );
 }

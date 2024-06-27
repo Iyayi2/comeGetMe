@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import signpost from '@/assets/pngs/signpost.png'
 import css from './Logo.module.css';
 
 export default function Logo() {
@@ -11,7 +12,7 @@ export default function Logo() {
          exit={{ opacity: 0, scale: 0 }}
     >
       <p>Your ads can be managed here</p>
-      <img src='signpost.png' alt='logo' />
+      <img src={signpost} alt='logo' />
     </motion.div>
   );
 }

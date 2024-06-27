@@ -12,6 +12,6 @@ export default function MarketPage() {
   ) : products ? (
     <Products expanded={user} products={products} />
   ) : (
-    <ErrorPage />
+    <ErrorPage type='market' />
   );
 }
