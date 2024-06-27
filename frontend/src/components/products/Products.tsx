@@ -18,7 +18,6 @@ export default function Products({
       layout
       initial='hidden'
       animate='visible'
-      exit={{ opacity: 0, scale: 0 }}
       transition={{ staggerChildren: 0.15 }}
     >
       <AnimatePresence>
