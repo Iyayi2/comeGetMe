@@ -1,14 +1,24 @@
-import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-// import ItemForm from '../form/ItemForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ItemForm from '../form/ItemForm';
+import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import css from './AdDetails.module.css';
-import Input from '../form/Input';
 import { APIError } from '@/hooks/useHTTP';
+import css from './AdDetails.module.css';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>
+);
+
+const GitLink = ({ link, name }: { link: string; name: string }) => (
+  <p>
+    <FontAwesomeIcon icon={['fab', 'github']} />
+    <a href={`https://github.com/${link}`} target='_blank' rel='noopener noreferrer'>
+      {name}
+    </a>
+  </p>
 );
 
 export default function AdDetails({
@@ -16,73 +26,96 @@ export default function AdDetails({
   product,
   onEdit,
   onDelete,
+  isLoading,
   error,
+  expanded,
+  toggleForm,
 }: {
-  user: User | null;
-  product: Product;
-  onEdit: (data: object) => void;
-  onDelete: () => void;
-  error: APIError;
+       user: User | null;
+    product: Product;
+     onEdit: (data: object) => void;
+   onDelete: () => void;
+  isLoading: boolean;
+      error: APIError;
+   expanded: boolean;
+ toggleForm: () => void;
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
-  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
   function clickHandler() {
     if (!user) {
       navigate('/account');
     } else if (myAd) {
-      setExpanded((toggle) => !toggle);
+      toggleForm();
     } else {
-      console.log('SEND MESSAGE');
+      navigate('/inbox');
     }
   }
 
-  function submitHandler(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    onEdit(data);
-  }
-
-  function deleteHandler() {
-    onDelete();
-    navigate('/account');
-  }
+  const animationProps = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y:   0 },
+       exit: { opacity: 0, y:  10 },
+  };
 
   return (
     <section className={css.ad}>
       <article className={css.article}>
-        <img src={`http://localhost:3000/${imageUrl}`} alt='product' />
+        <AnimatePresence mode='wait' initial={false}>
+          <motion.img
+            key={imageUrl}
+            initial={{ opacity: 0, height: 0,      width: 0      }}
+            animate={{ opacity: 1, height: 'auto', width: 'auto' }}
+               exit={{ opacity: 0, height: 0,      width: 0      }}
+            transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
+            src={`http://localhost:3000/${imageUrl}`}
+            alt='product'
+          />
+        </AnimatePresence>
         <Box>
-          <h2>{title}</h2>
-          <p>${price.toFixed(2)}</p>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.h2 key={title} {...animationProps}>
+              {title}
+            </motion.h2>
+          </AnimatePresence>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.p key={price} {...animationProps}>
+              ${price.toFixed(2)}
+            </motion.p>
+          </AnimatePresence>
         </Box>
         <Box>
           <h2>Description</h2>
-          <p>{description}</p>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.p key={description} {...animationProps}>
+              {description}
+            </motion.p>
+          </AnimatePresence>
         </Box>
       </article>
       <aside className={css.aside}>
         <Box>
-          <p>Ad ID {_id}</p>
-          {user && <p>Posted by {userId.username}</p>}
+          <p>
+            <span>Ad ID</span>
+            <span>{_id}</span>
+          </p>
+          {user && <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
           <button onClick={clickHandler}>{myAd ? 'Edit Listing' : 'Send Message'}</button>
+          {myAd && <DeletePrompt onDelete={onDelete} />}
         </Box>
-        {/* <ItemForm expanded={expanded} /> */}
-        {expanded && (
-          <form onSubmit={submitHandler}>
-            <Input id='title' error={error} defaultValue={title} />
-            <Input id='price' error={error} defaultValue={price} />
-            <Input id='description' error={error} defaultValue={description} text />
-            <button>Update</button>
-            <button type='button' onClick={deleteHandler}>
-              DELETE
-            </button>
-          </form>
-        )}
-        <Box>Hello</Box>
+        <ItemForm
+          expanded={expanded}
+            dataFn={onEdit}
+         isLoading={isLoading}
+             error={error}
+           product={product}
+        />
+        <Box>
+          <GitLink link='Iyayi2'        name='Iyayi Roland' />
+          <GitLink link='thegroosalugg' name='Victor Loginov' />
+        </Box>
       </aside>
     </section>
   );

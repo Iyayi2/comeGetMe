@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import User from '@/models/User';
@@ -9,6 +10,7 @@ import Products from '../products/Products';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Button from '../button/Button';
 import ItemForm from '../form/ItemForm';
+import Logo from './Logo';
 import css from './Portal.module.css';
 
 export default function Portal({
@@ -24,6 +26,7 @@ export default function Portal({
   const { sendRequest, isLoading: sendingData, error } = useHTTP();
   const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-products');
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const hasItems = userItems && userItems.length > 0;
 
@@ -38,8 +41,8 @@ export default function Portal({
   };
 
   return (
-    <motion.div className={css.portal} layout initial={{ height: 0 }} animate={{ height: 'auto' }}>
-      <div className={css.row}>
+    <motion.div className={css.portal} initial={{ y: -100 }} animate={{ y: 0 }}>
+      <section>
         <div className={css.info}>
           <motion.h2
             initial={{ opacity: 0, x: -100, scaleY: 0 }}
@@ -63,37 +66,35 @@ export default function Portal({
             isLoading={isLoading}
           />
           <Button
+            text={'inbox'}
+            style={{ background: '#94ca7c' }}
+            onClick={() => navigate('/inbox')}
+          />
+          <Button
             text={expanded ? 'cancel' : 'new ad'}
             style={{ background: expanded ? '#747272' : '#538392' }}
             onClick={() => setExpanded((toggle) => !toggle)}
           />
         </div>
-      </div>
-      <ItemForm
-        expanded={expanded}
-        onAddItem={submitHandler}
-        isLoading={sendingData}
-        error={error}
-      />
+      </section>
+
+      <ItemForm expanded={expanded} dataFn={submitHandler} isLoading={sendingData} error={error} />
       <motion.h3
         key={hasItems as null}
         initial={{ opacity: 0, scaleY: 0 }}
         animate={{ opacity: 1, scaleY: 1 }}
-        style={{ marginBottom: hasItems ? '0' : '' }}
       >
         {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
       </motion.h3>
-      {isFetching ? (
-        <LoadingIndicator style={{ margin: '0 0 5rem' }} />
-      ) : (
-        <Products products={userItems || []} />
-      )}
-      {!hasItems && (
-        <>
-          <p>Your ads can be managed here</p>
-          <img src='signpost.png' alt='logo' style={{ width: '125px', marginBottom: '1rem' }} />
-        </>
-      )}
+      <AnimatePresence mode='wait'>
+        {isFetching ? (
+          <LoadingIndicator key='1' scale={0.5} />
+        ) : hasItems ? (
+          <Products key='2' products={userItems} />
+        ) : (
+          <Logo key='3' />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

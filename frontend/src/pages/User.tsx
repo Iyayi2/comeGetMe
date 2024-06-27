@@ -22,10 +22,9 @@ export default function UserPage() {
       <motion.section
         key={isLoggedIn}
         exit={{
-          y: isFetching ? 0 : 100,
-          scale: isFetching ? 0 : 1,
+          y: 100,
           opacity: 0,
-          transition: { duration: 0.6 },
+          transition: { duration: 0.5 },
         }}
         style={{ display: 'flex', flexDirection: 'column' }}
       >
