@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const socket = require('socket.io');
 const multer = require('multer');
 const cors = require('cors');
 require('dotenv').config();
@@ -14,30 +15,51 @@ const User = require('./models/user');
 const MONGODB_URI = process.env.MONGO_KEY
 const app = express();
 
-app.use(cors({
-  origin: 'http://localhost:5173', // configured to accept credentials from front end for session cookies to work
-  credentials: true,
-}));
 
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require('socket.io');
-const io = new Server(server, {
-  connectionStateRecovery: {}
-});
+const io = socket(server);
 
-io.on('connection', (socket) => {
+let users = [];
 
-  const socketId = socket.id
-  console.log('user logged in:' + ' ' + socketId);
-  // socket.on('disconnect', () => {
-  //   console.log('user disconnected:', socketId)
-  // });
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+  users.push({ userId, socketId });
+};
 
-  socket.on('content', (msg) => {
-    io.emit('content', msg);
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (userId) => {
+  return users.find((user) => user.userId === userId);
+};
+
+io.on("connection", (socket) => {
+  //when connect
+  console.log("a user connected.");
+
+  //take userId and socketId from user
+  socket.on("addUser", (userId) => {
+    addUser(userId, socket.id);
+    io.emit("getUsers", users);
   });
 
+  //send and get message
+  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+    const user = getUser(receiverId);
+    io.to(user.socketId).emit("getMessage", {
+      senderId,
+      text,
+    });
+  });
+
+  //when disconnect
+  socket.on("disconnect", () => {
+    console.log("a user disconnected!");
+    removeUser(socket.id);
+    io.emit("getUsers", users);
+  });
 });
 
 const store = new MongoDBStore({
@@ -60,21 +82,25 @@ const fileFilter = (req, file, cb) => {
     file.mimetype === 'image/jpg' ||
     file.mimetype === 'image/jpeg') {
       cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+    } else {
+      cb(null, false);
+    }
+  };
 
-// app.set('views', 'views');
-// app.set('view engine', 'ejs');
+  app.set('views', 'views');
+  app.set('view engine', 'ejs');
 
-const marketRoutes = require('../backend/routes/market');
-const adminRoutes = require('../backend/routes/admin');
-const authRoutes = require('../backend/routes/auth');
+  const marketRoutes = require('../backend/routes/market');
+  const adminRoutes = require('../backend/routes/admin');
+  const authRoutes = require('../backend/routes/auth');
 const messageRoutes = require('../backend/routes/message');
 const user = require('../backend/models/user');
-const { Socket } = require('dgram');
+// const { Socket } = require('dgram');
 
+app.use(cors({
+origin: 'http://localhost:5173', // configured to accept credentials from front end for session cookies to work
+credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(multer({ storage: storage, fileFilter: fileFilter }).single('image'));
