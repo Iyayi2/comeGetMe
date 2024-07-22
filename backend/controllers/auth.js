@@ -9,7 +9,7 @@ const userDetails = (user) => {
 };
 
 exports.getLogin = (req, res, next) => {
-  console.log('[GET Login session]', req.session); // LogData
+  // console.log('[GET Login session]', req.session); // LogData
   if (req.session.user) {
     res.status(200).json(userDetails(req.session.user));
   } else {
@@ -30,7 +30,7 @@ exports.postLogin = (req, res, next) => {
       }
 
       req.session.user = user;
-      console.log('[POST Login session]', req.session); // LogData
+      // console.log('[POST Login session]', req.session); // LogData
       req.session.save((err) => {
         if (err) {
           return res.status(500).json({ message: 'Session save failed' });
@@ -65,13 +65,13 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
-  console.log('[POST Logout session 1]', req.session); // LogData
+  // console.log('[POST Logout session 1]', req.session); // LogData
   req.session.destroy((err) => {
     if (err) {
       console.log('[POST Logout session 2]', req.session); // LogData
       return res.status(500).json({ message: 'Logout failed' });
     }
-    console.log('[POST Logout session 3]', req.session); // LogData
+    // console.log('[POST Logout session 3]', req.session); // LogData
     res.status(200).json(null); // clear state in frontend
   });
 };
