@@ -41,7 +41,7 @@ export default function Portal({
   };
 
   return (
-    <motion.div className={css.portal} layout initial={{ y: -100 }} animate={{ y: 0 }}>
+    <motion.div className={css.portal} initial={{ y: -100 }} animate={{ y: 0 }}>
       <section>
         <div className={css.info}>
           <motion.h2
