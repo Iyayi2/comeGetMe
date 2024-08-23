@@ -5,7 +5,7 @@ import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import { APIError } from '@/hooks/useHTTP';
+import { APIError, useHTTP } from '@/hooks/useHTTP';
 import css from './AdDetails.module.css';
 import { useContext } from 'react';
 import { Context } from '@/store/Context';
@@ -46,6 +46,7 @@ export default function AdDetails({
   const myAd = user?._id === userId._id;
   const navigate = useNavigate();
   const { setUserId } = useContext(Context);
+  const { sendRequest } = useHTTP();
 
   function clickHandler() {
     if (!user) {
@@ -53,7 +54,12 @@ export default function AdDetails({
     } else if (myAd) {
       toggleForm();
     } else {
-      setUserId(userId._id);
+      setUserId(user._id);
+      sendRequest({
+        path: 'conversation',
+        method: 'POST',
+        data: { senderId: user._id, receiverId: userId._id },
+      });
       navigate('/inbox');
     }
   }
