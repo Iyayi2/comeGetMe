@@ -7,6 +7,8 @@ import Product from '@/models/Product';
 import User from '@/models/User';
 import { APIError } from '@/hooks/useHTTP';
 import css from './AdDetails.module.css';
+import { useContext } from 'react';
+import { Context } from '@/store/Context';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>
@@ -43,6 +45,7 @@ export default function AdDetails({
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
   const navigate = useNavigate();
+  const { setUserId } = useContext(Context);
 
   function clickHandler() {
     if (!user) {
@@ -50,6 +53,7 @@ export default function AdDetails({
     } else if (myAd) {
       toggleForm();
     } else {
+      setUserId(userId._id);
       navigate('/inbox');
     }
   }

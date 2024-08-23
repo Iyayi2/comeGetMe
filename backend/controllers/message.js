@@ -1,13 +1,6 @@
 const mongoose = require('mongoose');
 const Message = require('../models/message');
 
-exports.getMessage = (req, res, next) => {
-  res.render('message/chat', {
-    pageTitle: 'Message',
-    path: '/message'
-  });
-};
-
 exports.postMessage = (req, res, next) => {
   const newMessage = new Message(req.body);
 
