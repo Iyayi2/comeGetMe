@@ -1,8 +1,18 @@
 .conversations {
+  flex: 1 0;
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  list-style: none;
+  background: linear-gradient(to right, #232526, #414345);
   padding: 1rem;
-  margin: 0;
+
+  > ul {
+    flex: 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    overflow: auto;
+    padding: 0.5rem;
+    margin: 0;
+    list-style: none;
+    background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
+  }
 }

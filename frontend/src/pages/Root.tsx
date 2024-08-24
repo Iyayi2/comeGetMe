@@ -12,6 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Navigation />
       <AnimatePresence mode='popLayout'>
         <motion.main
+          id='main'
           key={pathname}
           initial={{ opacity: 0, y: '-100px' }}
           animate={{ opacity: 1, y: 0 }}
