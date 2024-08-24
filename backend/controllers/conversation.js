@@ -1,8 +1,10 @@
 const Conversation = require('../models/conversation');
+const { userDetails } = require('../util/userDetails');
 
 exports.postConversation = (req, res, next) => {
+  const user = userDetails(req.session.user);
   const newConversation = new Conversation({
-    members: [req.body.senderId, req.body.receiverId]
+    members: [user, req.body.seller]
   });
 
   newConversation.save()
@@ -15,7 +17,8 @@ exports.postConversation = (req, res, next) => {
 };
 
 exports.getConversation = (req, res, next) => {
-  Conversation.find({members: { $in: [req.params.userId] }})
+  const user = userDetails(req.session.user);
+  Conversation.find({members: { $in: [user] }})
   .then(conversation => {
     res.status(200).json(conversation);
   })

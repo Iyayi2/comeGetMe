@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
 
 const User = require('../models/user');
+const { userDetails } = require('../util/userDetails');
 const { trimWhiteSpace } = require('../util/trimWhiteSpace');
-
-const userDetails = (user) => {
-   const { _id, username, email } = user;
-  return { _id, username, email };
-};
 
 exports.getLogin = (req, res, next) => {
   // console.log('[GET Login session]', req.session); // LogData
@@ -41,13 +37,6 @@ exports.postLogin = (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ message: 'Server error', error: err });
     });
-};
-
-exports.getSignup = (req, res, next) => {
-  // res.render('auth/signup', {
-  //   pageTitle: 'Signup',
-  //   path: '/signup',
-  // });
 };
 
 exports.postSignup = (req, res, next) => {
