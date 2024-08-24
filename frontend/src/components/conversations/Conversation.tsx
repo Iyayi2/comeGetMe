@@ -1,16 +1,30 @@
+import { motion } from 'framer-motion';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
 
-export default function ConversationItem({ conversation }: { conversation: Conversation }) {
-  const { _id, sessionId, members } = conversation;
+export default function ConversationItem({
+  conversation,
+  isActive,
+  setActive,
+}: {
+  conversation: Conversation;
+  isActive: Conversation[] | null;
+  setActive: (conversation: Conversation[]) => void;
+}) {
+  const { sessionId, members } = conversation;
   const { _id: userId, username } = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
 
   return (
-    <li className={css['conversation']}>
-      <img src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
+    <motion.li
+      className={css['conversation']}
+      layout
+      exit={{ opacity: 0, x: 100 }}
+      onClick={() => setActive([conversation])}
+    >
+      <motion.img layout src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
       <Messages />
       <div className={css['recipient']}>
         <h2>
@@ -21,6 +35,6 @@ export default function ConversationItem({ conversation }: { conversation: Conve
           <span>${product.price.toFixed(2)}</span>
         </p>
       </div>
-    </li>
+    </motion.li>
   );
 }
