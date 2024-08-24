@@ -1,51 +1,48 @@
 .conversation {
-  height: 100px;
   display: flex;
   justify-content: space-between;
   border: 1px solid #000;
   border-radius: 3px;
-  overflow: auto;
-
-  img {
-    min-width: 100px;
-    max-width: 100px;
-    height: 100%;
-    object-fit: cover;
-  }
+  /* overflow: auto; */
 
   .recipient {
-    flex: 1 0 250px;
     display: flex;
-    flex-direction: column;
-    /* width: 300px; */
+    gap: 1rem;
     padding: 0;
     padding-bottom: 0;
-    background: linear-gradient(to right, #e0dedb, #3c3f41);
+    height: 120px;
 
-    h2, p {
-      margin: 0;
+    img {
+      width: 120px;
+      object-fit: cover;
     }
 
-    h2 {
-      flex: 1 0;
-      padding-right: 1rem;
-      text-align: end;
-      text-transform: uppercase;
-      font-family: 'Bebas Neue', sans-serif;
-      font-style: italic;
-      font-weight: 100;
-      font-size: 2.5rem;
-      color: #ebbf7d;
-      text-shadow: 1px 1px 2px #181818b4;
-    }
-
-    p {
+    > div {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      padding: 0.2rem;
-      text-transform: capitalize;
-      color: #ffffff;
-      background: linear-gradient(to bottom, #232526, #414345);
+
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h2 {
+        text-transform: uppercase;
+        font-family: 'Bebas Neue', sans-serif;
+        font-style: italic;
+        font-weight: 100;
+        font-size: 2.5rem;
+        color: #4b4a47;
+        text-shadow: 1px 1px 2px #181818b4;
+      }
+
+      p {
+        display: flex;
+        flex-direction: column;
+        text-transform: capitalize;
+        font-weight: 300;
+      }
     }
   }
 }

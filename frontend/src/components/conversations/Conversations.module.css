@@ -7,6 +7,7 @@
 
   > ul {
     flex: 1 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     gap: 0.2rem;

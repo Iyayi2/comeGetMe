@@ -20,21 +20,22 @@ export default function ConversationItem({
   return (
     <motion.li
       className={css['conversation']}
+      style={{ flex: isActive ? 1 : 0 }}
       layout
       exit={{ opacity: 0, x: 100 }}
       onClick={() => setActive([conversation])}
     >
-      <motion.img layout src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
+      <section className={css['recipient']}>
+        <motion.img layout src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
+        <div>
+          <motion.h2 layout>{recipient}</motion.h2>
+          <motion.p layout>
+            <span>{product.title}</span>
+            <span>${product.price.toFixed(2)}</span>
+          </motion.p>
+        </div>
+      </section>
       <Messages />
-      <div className={css['recipient']}>
-        <h2>
-          <span>{recipient}</span>
-        </h2>
-        <p>
-          <span>{product.title}</span>
-          <span>${product.price.toFixed(2)}</span>
-        </p>
-      </div>
     </motion.li>
   );
 }
