@@ -6,8 +6,8 @@ export default function Conversations({ conversations }: { conversations: Conver
   return (
     <div className={css['conversations']}>
       <ul>
-        {conversations.map(({ _id, sessionId, members }) => (
-          <ConversationItem key={_id} user={members[0]} seller={members[1]} sessionId={sessionId} />
+        {conversations.map((conversation) => (
+          <ConversationItem key={conversation._id} conversation={conversation} />
         ))}
       </ul>
     </div>

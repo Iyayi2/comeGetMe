@@ -1,20 +1,12 @@
 import Messages from './Messages';
-import User from '@/models/User';
-import Seller from '@/models/Seller';
+import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
 
-export default function Conversation({
-  user,
-  seller,
-  sessionId,
-}: {
-       user: User;
-     seller: Seller;
-  sessionId: string;
-}) {
-  const { _id, username } = user;
-  const { username: sellerName, product } = seller;
-  const recipient = sessionId === _id ? sellerName : username;
+export default function ConversationItem({ conversation }: { conversation: Conversation }) {
+  const { _id, sessionId, members } = conversation;
+  const { _id: userId, username } = members[0];
+  const { username: sellerName, product } = members[1];
+  const recipient = sessionId === userId ? sellerName : username;
 
   return (
     <li className={css['conversation']}>
