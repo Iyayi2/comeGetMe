@@ -1,14 +1,10 @@
-import { useFetch } from "@/hooks/useFetch";
+import Conversations from '@/components/conversations/Conversations';
+import { useFetch } from '@/hooks/useFetch';
 
 export default function Inbox() {
-  const { data } = useFetch('conversation');
+  const { data: conversations } = useFetch('conversation');
 
-  console.log(data);
+  console.log(conversations);
 
-  return (
-    <div>
-      <input />
-      <button>Send</button>
-    </div>
-  );
+  return <Conversations conversations={conversations || []} />
 }
