@@ -1,4 +1,4 @@
-import Messages from './Messages';
+import ConversationItem from './Conversation';
 import Conversation from '@/models/Conversation';
 import css from './Conversations.module.css';
 
@@ -8,7 +8,7 @@ export default function Conversations({ conversations }: { conversations: Conver
       <ul>
         {conversations.map(({ _id, members }) => {
           const seller = members[1];
-          return <Messages key={_id} seller={seller} />;
+          return <ConversationItem key={_id} seller={seller} />;
         })}
       </ul>
     </div>
