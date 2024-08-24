@@ -1,3 +1,5 @@
 .messages {
   flex: 1 0 60%;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
 }

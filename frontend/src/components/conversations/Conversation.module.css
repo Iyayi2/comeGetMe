@@ -1,4 +1,5 @@
 .conversation {
+  height: 100px;
   display: flex;
   justify-content: space-between;
   border: 1px solid #000;
@@ -6,10 +7,10 @@
   overflow: auto;
 
   img {
-    width: 100px;
-    height: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    height: 100%;
     object-fit: cover;
-    border-right: 1px solid #000;
   }
 
   .recipient {
@@ -19,48 +20,32 @@
     /* width: 300px; */
     padding: 0;
     padding-bottom: 0;
-    border-left: 1px solid #000;
     background: linear-gradient(to right, #f1f1f1, #e0dedb);
 
+    h2, p {
+      margin: 0;
+    }
+
     h2 {
-      align-self: end;
-      width: 66%;
-      margin: 0.5rem 0;
+      flex: 1 0;
+      padding-right: 1rem;
       text-align: end;
       text-transform: uppercase;
-      font-style: italic;
       font-family: 'Bebas Neue', sans-serif;
+      font-style: italic;
       font-weight: 100;
+      font-size: 2.5rem;
       color: #a3a2a2;
       text-shadow: 1px 1px 2px #181818b4;
-      border-radius: 3px 0 0 3px;
-      border: 1px solid #000;
-      border-right: 0;
-      background: linear-gradient(to right, #e0dedb, #f1f1f1);
-
-      span {
-        margin-right: 1rem;
-      }
     }
 
     p {
-      flex: 1 0;
       display: flex;
-      align-items: end;
       justify-content: space-between;
-      margin: 0;
+      padding: 0.2rem;
       text-transform: capitalize;
-      color: #FFFFFF;
-
-      span {
-        background: linear-gradient(to bottom, #232526, #414345);
-        padding: 0.2rem;
-
-      }
-
-      span:first-of-type {
-        flex: 1;
-      }
+      color: #ffffff;
+      background: linear-gradient(to bottom, #232526, #414345);
     }
   }
 }
