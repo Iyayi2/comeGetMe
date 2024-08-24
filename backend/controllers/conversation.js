@@ -24,11 +24,13 @@ exports.postConversation = (req, res, next) => {
 
 exports.getConversation = (req, res, next) => {
   const { _id } = req.session.user;
+
   Conversation.find({
     members: { $elemMatch: { _id } },
   })
-    .then((conversation) => {
-      res.status(200).json(conversation);
+    .then((conversations) => {
+      const conversationsWithSessionId = conversations.map((convo) => ({ ...convo._doc, sessionId: _id }));
+      res.status(200).json(conversationsWithSessionId);
     })
     .catch((err) => {
       res.status(500).json(err);

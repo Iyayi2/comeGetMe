@@ -1,17 +1,28 @@
+import Messages from './Messages';
+import User from '@/models/User';
 import Seller from '@/models/Seller';
 import css from './Conversation.module.css';
-import Messages from './Messages';
 
-export default function Conversation({ seller }: { seller: Seller }) {
-  const { username, product } = seller;
+export default function Conversation({
+  user,
+  seller,
+  sessionId,
+}: {
+       user: User;
+     seller: Seller;
+  sessionId: string;
+}) {
+  const { _id, username } = user;
+  const { username: sellerName, product } = seller;
+  const recipient = sessionId === _id ? sellerName : username;
 
   return (
     <li className={css['conversation']}>
       <img src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
       <Messages />
-      <div className={css['seller-info']}>
+      <div className={css['recipient']}>
         <h2>
-          <span>{username}</span>
+          <span>{recipient}</span>
         </h2>
         <p>
           <span>{product.title}</span>

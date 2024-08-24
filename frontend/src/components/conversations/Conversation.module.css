@@ -7,10 +7,12 @@
 
   img {
     width: 100px;
+    height: 100px;
+    object-fit: cover;
     border-right: 1px solid #000;
   }
 
-  .seller-info {
+  .recipient {
     flex: 1 0 250px;
     display: flex;
     flex-direction: column;

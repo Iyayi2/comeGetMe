@@ -1,12 +1,15 @@
+import User from './User';
 import Seller from './Seller';
 
 export default class Conversation {
-      _id: string;
-  members: [{ email: string; username: string; _id: string }, seller: Seller];
+        _id: string;
+  sessionId: string;
+    members: [user: User, seller: Seller];
 
   constructor() {
-    this._id     = '';
-    this.members = [
+    this._id       = '';
+    this.sessionId = '';
+    this.members   = [
       { _id: '', username: '', email: '' },
       { _id: '', username: '', product: { _id: '', title: '', price: 0, imageUrl: '' } },
     ];
