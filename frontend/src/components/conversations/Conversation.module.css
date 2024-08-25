@@ -1,13 +1,14 @@
 .conversation {
   display: flex;
   flex-direction: column;
+  min-height: 120px;
   border: 1px solid #000;
   border-radius: 3px;
-  /* overflow: auto; */
+  overflow-x: auto;
+  background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
 
   .recipient {
     display: flex;
-    /* gap: 1rem; */
     padding: 0;
     padding-bottom: 0;
     height: 120px;

@@ -1,7 +1,4 @@
-import {
-  // LayoutGroup,
-  motion,
-} from 'framer-motion';
+import { motion } from 'framer-motion';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
@@ -29,7 +26,7 @@ export default function ConversationItem({
   return (
     <motion.li
       className={css['conversation']}
-      style={{ flex: isActive ? 1 : 0 }}
+      style={{ flex: isActive ? 1 : 0, overflowY: isActive ? 'auto' : 'hidden' }}
       layout
       transition={{ layout: { duration: 0.5 } }}
       initial={{ opacity: 0, x: 100 }}
@@ -37,7 +34,6 @@ export default function ConversationItem({
       exit={{ opacity: 0, x: 100 }}
       onClick={clickHandler}
     >
-      {/* <LayoutGroup> */}
       <section className={css['recipient']}>
         <motion.img layout src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
         <div className={css['product']}>
@@ -54,7 +50,6 @@ export default function ConversationItem({
         )}
       </section>
       {isActive && <Messages />}
-      {/* </LayoutGroup> */}
     </motion.li>
   );
 }

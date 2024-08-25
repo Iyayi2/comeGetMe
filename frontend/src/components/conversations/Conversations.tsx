@@ -8,8 +8,7 @@ export default function Conversations({ conversations }: { conversations: Conver
   const [isActive, setIsActive] = useState<Conversation[] | null>(null);
 
   return (
-    <div className={css['conversations']}>
-      <ul>
+    <ul className={css['conversations']}>
         <LayoutGroup>
           <AnimatePresence>
             {(isActive ? isActive : conversations).map((conversation) => (
@@ -22,7 +21,6 @@ export default function Conversations({ conversations }: { conversations: Conver
             ))}
           </AnimatePresence>
         </LayoutGroup>
-      </ul>
-    </div>
+    </ul>
   );
 }
