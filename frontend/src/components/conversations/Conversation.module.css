@@ -1,17 +1,12 @@
 .conversation {
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  /* Alternate Layout: FLEX-BASED */
-  /* min-height: 121px; */
-  /* Alternate Layout: HEIGHT-BASED */
-  margin: 0.2rem 0;
-  /* END */
   border: 1px solid #000;
   background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
 
   .recipient {
     display: flex;
+    overflow: auto;
 
     img {
       object-fit: cover;

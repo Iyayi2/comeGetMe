@@ -30,13 +30,8 @@ export default function ConversationItem({
   return (
     <motion.li
       className={css['conversation']}
-      style={{
-        /* Alternate Layout: */
-          // flex: isActive ? 1 : 0,        // FLEX-BASED
-        height: isActive ? '100%' : '',  // HEIGHT-BASED
-        cursor: isActive ? '' : 'pointer',
-      }}
       layout
+      style={{ flex: isActive ? 1 : 0, cursor: isActive ? '' : 'pointer' }}
       transition={{ layout: { duration: 0.5 } }}
       whileHover={{ filter: `brightness(${isActive ? 1 : 0.7})` }}
       initial={{ opacity: 0, x: 100 }}
