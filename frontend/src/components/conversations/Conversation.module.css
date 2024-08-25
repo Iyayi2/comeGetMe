@@ -11,11 +11,10 @@
     display: flex;
     padding: 0;
     padding-bottom: 0;
-    height: 120px;
 
     img {
-      width: 120px;
       object-fit: cover;
+      border-right: 1px solid #000;
     }
 
     .product {

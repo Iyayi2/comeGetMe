@@ -26,7 +26,10 @@ export default function ConversationItem({
   return (
     <motion.li
       className={css['conversation']}
-      style={{ flex: isActive ? 1 : 0, overflowY: isActive ? 'auto' : 'hidden' }}
+      style={{
+        flex: isActive ? 1 : 0,
+        overflowY: isActive ? 'auto' : 'hidden',
+      }}
       layout
       transition={{ layout: { duration: 0.5 } }}
       initial={{ opacity: 0, x: 100 }}
@@ -34,21 +37,35 @@ export default function ConversationItem({
       exit={{ opacity: 0, x: 100 }}
       onClick={clickHandler}
     >
-      <section className={css['recipient']}>
-        <motion.img layout src={`http://localhost:3000/${product.imageUrl}`} alt={product.title} />
+      <motion.section
+        className={css['recipient']}
+        layout
+        animate={{ height: isActive ? 180 : 120, transition: { delay: 0.1, duration: 0.5 } }}
+      >
+        <motion.img
+          src={`http://localhost:3000/${product.imageUrl}`}
+          alt={product.title}
+          style={{ borderBottom: isActive ? '1px solid #000' : '' }}
+          initial={{ width: 120, height: 120 }}
+          animate={{
+            width: isActive ? 180 : 120,
+            height: isActive ? 180 : 120,
+            transition: { delay: 0.1, duration: 0.5 },
+          }}
+        />
         <div className={css['product']}>
-          <motion.h2 layout>{recipient}</motion.h2>
-          <motion.p layout>
+          <h2>{recipient}</h2>
+          <p>
             <span>{product.title}</span>
             <span>${product.price.toFixed(2)}</span>
-          </motion.p>
+          </p>
         </div>
         {isActive && (
           <motion.button layout onClick={() => setActive(null)}>
             Back
           </motion.button>
         )}
-      </section>
+      </motion.section>
       {isActive && <Messages />}
     </motion.li>
   );
