@@ -1,11 +1,10 @@
 .conversation {
   display: flex;
   flex-direction: column;
-  /* Alternate Layout: FLEX-BASED */
-  /* min-height: 120px; */
-  /* overflow-x: auto; */
-  /* Alternate Layout: HEIGHT-BASED */
   overflow: auto;
+  /* Alternate Layout: FLEX-BASED */
+  /* min-height: 121px; */
+  /* Alternate Layout: HEIGHT-BASED */
   margin: 0.2rem 0;
   /* END */
   border: 1px solid #000;

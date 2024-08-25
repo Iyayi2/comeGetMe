@@ -30,9 +30,8 @@ export default function ConversationItem({
       className={css['conversation']}
       style={{
         /* Alternate Layout: */
-            //  flex: isActive ? 1 : 0,             // FLEX-BASED
-        // overflowY: isActive ? 'auto' : 'hidden', // FLEX-BASED
-           height: isActive ? '100%' : '',       // HEIGHT-BASED
+          // flex: isActive ? 1 : 0,        // FLEX-BASED
+        height: isActive ? '100%' : '',  // HEIGHT-BASED
       }}
       layout
       transition={{ layout: { duration: 0.5 } }}
