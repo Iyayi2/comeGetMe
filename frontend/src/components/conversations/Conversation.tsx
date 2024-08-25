@@ -24,6 +24,8 @@ export default function ConversationItem({
   }
 
   const height = isActive ? 180 : 120;
+  const width = height;
+  const transparent = 'linear-gradient(to right, #d4dbe000, #E9E4F000)';
 
   return (
     <motion.li
@@ -36,6 +38,7 @@ export default function ConversationItem({
       }}
       layout
       transition={{ layout: { duration: 0.5 } }}
+      whileHover={{ filter: `brightness(${isActive ? 1 : 0.7})` }}
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0, transition: { delay: 0.5 } }}
          exit={{ opacity: 0, x: 100 }}
@@ -44,22 +47,22 @@ export default function ConversationItem({
       <motion.section
         className={css['recipient']}
         layout
-        animate={{ height, transition: { delay: 0.1, duration: 0.5 } }}
+        style={{ borderBottom: isActive ? '1px solid black' : '' }}
+        initial={{ background: transparent }}
+        animate={{
+          background: isActive ? 'linear-gradient(to right, #d4dbe0, #E9E4F0)' : transparent,
+          transition: { delay: 0.1, duration: 0.5 },
+        }}
       >
         <motion.img
           src={`http://localhost:3000/${product.imageUrl}`}
           alt={product.title}
-          style={{ borderBottom: isActive ? '1px solid black' : '' }}
-          initial={{ width: height, height }}
-          animate={{
-            width: height,
-            height,
-            transition: { delay: 0.1, duration: 0.5 },
-          }}
+          initial={{ width, height }}
+          animate={{ width, height, transition: { delay: 0.1, duration: 0.5 } }}
         />
         <div className={css['product']}>
           <h2>{recipient}</h2>
-          <p>
+          <p style={{ fontWeight: isActive ? 400 : 300 }}>
             <span>{product.title}</span>
             <span>${product.price.toFixed(2)}</span>
           </p>
@@ -71,7 +74,7 @@ export default function ConversationItem({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
                  exit={{ opacity: 0 }}
-              whileHover={{ backgroundColor: '#000', color: '#FFFFFF' }}
+              whileHover={{ backgroundColor: '#e4d8f4', color: '#4b4a47', textShadow: 'none' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               onClick={() => setActive(null)}
             >

@@ -44,7 +44,6 @@
         flex-direction: column;
         padding: 0.2rem 1rem;
         text-transform: capitalize;
-        font-weight: 300;
         font-size: 0.8rem;
       }
     }
@@ -52,13 +51,19 @@
     button {
       margin-left: auto;
       padding: 0 1.5rem;
-      border: 1px solid #000;
-      border-top: none;
-      border-right: none;
-      border-bottom-left-radius: 3px;
+      border: none;
+      border-left: 1px solid #000;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.5rem;
       cursor: pointer;
+      color: #ffffff;
+      background: #e9e4f0;
+      /* prettier-ignore */
+      text-shadow:
+      -0.5px -0.5px 0 #000,
+       0.5px -0.5px 0 #000,
+      -0.5px  0.5px 0 #000,
+       0.5px  0.5px 0 #000;
     }
   }
 }
