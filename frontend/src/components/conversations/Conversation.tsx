@@ -9,11 +9,11 @@ export default function ConversationItem({
   setActive,
 }: {
   conversation: Conversation;
-  isActive: Conversation[] | null;
-  setActive: (conversation: Conversation[] | null) => void;
+      isActive: Conversation[] | null;
+     setActive: (conversation: Conversation[] | null) => void;
 }) {
-  const { sessionId, members } = conversation;
-  const { _id: userId, username } = members[0];
+  const { sessionId, members }            = conversation;
+  const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
 
@@ -23,33 +23,35 @@ export default function ConversationItem({
     }
   }
 
+  const height = isActive ? 180 : 120;
+
   return (
     <motion.li
       className={css['conversation']}
       style={{
-        flex: isActive ? 1 : 0,
+             flex: isActive ?      1 : 0,
         overflowY: isActive ? 'auto' : 'hidden',
       }}
       layout
       transition={{ layout: { duration: 0.5 } }}
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0, transition: { delay: 0.5 } }}
-      exit={{ opacity: 0, x: 100 }}
+         exit={{ opacity: 0, x: 100 }}
       onClick={clickHandler}
     >
       <motion.section
         className={css['recipient']}
         layout
-        animate={{ height: isActive ? 180 : 120, transition: { delay: 0.1, duration: 0.5 } }}
+        animate={{ height, transition: { delay: 0.1, duration: 0.5 } }}
       >
         <motion.img
           src={`http://localhost:3000/${product.imageUrl}`}
           alt={product.title}
-          style={{ borderBottom: isActive ? '1px solid #000' : '' }}
-          initial={{ width: 120, height: 120 }}
+          style={{ borderBottomColor: isActive ? '#000' : '' }}
+          initial={{ width: height, height }}
           animate={{
-            width: isActive ? 180 : 120,
-            height: isActive ? 180 : 120,
+            width: height,
+            height,
             transition: { delay: 0.1, duration: 0.5 },
           }}
         />

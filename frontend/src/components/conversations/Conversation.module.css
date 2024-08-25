@@ -3,7 +3,6 @@
   flex-direction: column;
   min-height: 120px;
   border: 1px solid #000;
-  border-radius: 3px;
   overflow-x: auto;
   background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
 
@@ -15,6 +14,7 @@
     img {
       object-fit: cover;
       border-right: 1px solid #000;
+      border-bottom: 1px solid transparent;
     }
 
     .product {
@@ -25,6 +25,7 @@
       h2,
       p {
         margin: 0;
+        color: #4b4a47;
       }
 
       h2 {
@@ -34,7 +35,6 @@
         font-style: italic;
         font-weight: 100;
         font-size: 2.5rem;
-        color: #4b4a47;
         text-shadow: 1px 1px 2px #181818b4;
       }
 
@@ -44,6 +44,7 @@
         padding: 0.2rem 1rem;
         text-transform: capitalize;
         font-weight: 300;
+        font-size: 0.8rem;
       }
     }
 
