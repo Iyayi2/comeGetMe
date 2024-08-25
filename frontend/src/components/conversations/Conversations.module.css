@@ -1,7 +1,9 @@
 .conversations {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
+  /* Alternate Layout: FLEX-BASED */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: 0.2rem; */
+  /* END */
   padding: 1rem;
   padding-top: 0;
   margin: 0;

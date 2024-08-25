@@ -29,8 +29,10 @@ export default function ConversationItem({
     <motion.li
       className={css['conversation']}
       style={{
-             flex: isActive ?      1 : 0,
-        overflowY: isActive ? 'auto' : 'hidden',
+        /* Alternate Layout: */
+            //  flex: isActive ? 1 : 0,             // FLEX-BASED
+        // overflowY: isActive ? 'auto' : 'hidden', // FLEX-BASED
+           height: isActive ? '100%' : '',       // HEIGHT-BASED
       }}
       layout
       transition={{ layout: { duration: 0.5 } }}
@@ -47,7 +49,7 @@ export default function ConversationItem({
         <motion.img
           src={`http://localhost:3000/${product.imageUrl}`}
           alt={product.title}
-          style={{ borderBottomColor: isActive ? '#000' : '' }}
+          style={{ borderBottom: isActive ? '1px solid black' : '' }}
           initial={{ width: height, height }}
           animate={{
             width: height,

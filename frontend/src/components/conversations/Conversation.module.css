@@ -1,20 +1,22 @@
 .conversation {
   display: flex;
   flex-direction: column;
-  min-height: 120px;
+  /* Alternate Layout: FLEX-BASED */
+  /* min-height: 120px; */
+  /* overflow-x: auto; */
+  /* Alternate Layout: HEIGHT-BASED */
+  overflow: auto;
+  margin: 0.2rem 0;
+  /* END */
   border: 1px solid #000;
-  overflow-x: auto;
   background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
 
   .recipient {
     display: flex;
-    padding: 0;
-    padding-bottom: 0;
 
     img {
       object-fit: cover;
       border-right: 1px solid #000;
-      border-bottom: 1px solid transparent;
     }
 
     .product {
