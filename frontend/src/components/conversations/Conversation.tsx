@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
@@ -32,6 +32,7 @@ export default function ConversationItem({
         /* Alternate Layout: */
           // flex: isActive ? 1 : 0,        // FLEX-BASED
         height: isActive ? '100%' : '',  // HEIGHT-BASED
+        cursor: isActive ? '' : 'pointer',
       }}
       layout
       transition={{ layout: { duration: 0.5 } }}
@@ -63,11 +64,21 @@ export default function ConversationItem({
             <span>${product.price.toFixed(2)}</span>
           </p>
         </div>
-        {isActive && (
-          <motion.button layout onClick={() => setActive(null)}>
-            Back
-          </motion.button>
-        )}
+        <AnimatePresence>
+          {isActive && (
+            <motion.button
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+                 exit={{ opacity: 0 }}
+              whileHover={{ backgroundColor: '#000', color: '#FFFFFF' }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              onClick={() => setActive(null)}
+            >
+              BACK
+            </motion.button>
+          )}
+        </AnimatePresence>
       </motion.section>
       {isActive && <Messages />}
     </motion.li>
