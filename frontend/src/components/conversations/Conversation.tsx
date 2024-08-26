@@ -13,16 +13,21 @@ export default function ConversationItem({
       isActive: Conversation[] | null;
      setActive: (conversation: Conversation[] | null) => void;
 }) {
-  const { sessionId, members }            = conversation;
+  const { _id, sessionId, members }       = conversation;
   const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
   const navigate = useNavigate();
 
-  function clickHandler() {
+  function expand() {
     if (!isActive) {
-      setActive([conversation]);
+      navigate(`/inbox/${_id}`);
     }
+  }
+
+  function collapse() {
+    navigate('/inbox');
+    setActive(null);
   }
 
   const height = isActive ? 180 : 120;
@@ -39,7 +44,7 @@ export default function ConversationItem({
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0, transition: { delay: 0.5 } }}
          exit={{ opacity: 0, x: 100 }}
-      onClick={clickHandler}
+      onClick={expand}
     >
       <motion.section
         className={css['recipient']}
@@ -76,7 +81,7 @@ export default function ConversationItem({
                  exit={{ opacity: 0 }}
               whileHover={{ backgroundColor: '#e4d8f4', color: '#4b4a47', textShadow: 'none' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
-              onClick={() => setActive(null)}
+              onClick={collapse}
             >
               BACK
             </motion.button>

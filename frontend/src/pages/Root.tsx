@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <AnimatePresence mode='popLayout'>
         <motion.main
           id='main'
-          key={pathname}
+          key={pathname.startsWith('/inbox') ? 'inbox' : pathname}
           initial={{ opacity: 0, y: '-100px' }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: '100%' }}

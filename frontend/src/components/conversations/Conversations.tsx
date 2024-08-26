@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { AnimatePresence, LayoutGroup } from 'framer-motion';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import Conversation from '@/models/Conversation';
 import ConversationItem from './Conversation';
 import ErrorPage from '../error/Error';
@@ -28,7 +28,7 @@ export default function Conversations({ conversations }: { conversations: Conver
   }
 
   return (
-    <ul className={css['conversations']}>
+    <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={css['conversations']}>
       <LayoutGroup>
         <AnimatePresence>
           {(isActive ? isActive : conversations).map((conversation) => (
@@ -41,6 +41,6 @@ export default function Conversations({ conversations }: { conversations: Conver
           ))}
         </AnimatePresence>
       </LayoutGroup>
-    </ul>
+    </motion.ul>
   );
 }
