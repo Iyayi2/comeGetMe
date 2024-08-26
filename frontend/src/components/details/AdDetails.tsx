@@ -56,8 +56,7 @@ export default function AdDetails({
         method: 'GET',
       });
       if (conversation) {
-        sessionStorage.setItem('conversation', JSON.stringify(conversation));
-        navigate('/inbox');
+        navigate('/inbox/' + conversation._id);
       } else {
         const newConversation = await sendRequest({
           path: 'conversation',
@@ -71,8 +70,7 @@ export default function AdDetails({
           },
         });
         if (newConversation) {
-          sessionStorage.setItem('conversation', JSON.stringify(newConversation));
-          navigate('/inbox');
+          navigate('/inbox/' + newConversation._id);
         }
       }
     }
