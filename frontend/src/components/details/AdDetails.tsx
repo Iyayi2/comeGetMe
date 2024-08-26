@@ -1,5 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '@/store/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
@@ -44,6 +46,7 @@ export default function AdDetails({
   const myAd = user?._id === userId._id;
   const navigate = useNavigate();
   const { sendRequest } = useHTTP();
+  const { setConversation } = useContext(Context);
 
   async function clickHandler() {
     if (!user) {
@@ -51,19 +54,29 @@ export default function AdDetails({
     } else if (myAd) {
       toggleForm();
     } else {
-      const response = await sendRequest({
-        path: 'conversation',
-        method: 'POST',
-        data: {
-          seller: {
-                 _id: userId._id,
-            username: userId.username,
-             product: { _id, title, price, imageUrl },
-          },
-        },
+      const conversationExists = await sendRequest({
+        path: `conversation/${userId._id}/${_id}`,
+        method: 'GET',
       });
-      if (response) {
+      console.log('conversationExists', conversationExists); // logData
+      if (conversationExists) {
+        setConversation(conversationExists);
         navigate('/inbox');
+      } else {
+        const response = await sendRequest({
+          path: 'conversation',
+          method: 'POST',
+          data: {
+            seller: {
+              _id: userId._id,
+              username: userId.username,
+              product: { _id, title, price, imageUrl },
+            },
+          },
+        });
+        if (response) {
+          navigate('/inbox');
+        }
       }
     }
   }

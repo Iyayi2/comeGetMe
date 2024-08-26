@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 const Conversation = require('../models/conversation');
 const { userDetails } = require('../util/userDetails');
 
+const toObjectId = (id) => new mongoose.Types.ObjectId(String(id));
+
 exports.postConversation = (req, res, next) => {
   const user = userDetails(req.session.user);
   const seller = {
     ...req.body.seller,
-    _id: new mongoose.Types.ObjectId(String(req.body.seller._id)), // Convert to ObjectId
-  }; // seller.product._id is non ObjectId, convert later if needed
+    _id: toObjectId(req.body.seller._id), // Convert to ObjectId
+    product: {
+      ...req.body.seller.product,
+      _id: toObjectId(req.body.seller.product._id),
+    },
+  };
   const newConversation = new Conversation({
     members: [user, seller],
   });
@@ -22,7 +28,7 @@ exports.postConversation = (req, res, next) => {
     });
 };
 
-exports.getConversation = (req, res, next) => {
+exports.getConversations = (req, res, next) => {
   if (!req.session || !req.session.user) {
     return res.status(403).json({ error: 'Unauthorized access' }); // Return 403 status with an error message
   }
@@ -45,12 +51,24 @@ exports.getConversation = (req, res, next) => {
     });
 };
 
-exports.getConversations = (req, res, next) => {
+exports.findConversation = (req, res, next) => {
+  const userId = req.session.user._id;
+  const { sellerId, productId } = req.params;
+
   Conversation.findOne({
-    members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+    members: {
+      $all: [
+        { $elemMatch: { _id: userId } },
+        { $elemMatch: { _id: toObjectId(sellerId), 'product._id': toObjectId(productId) } },
+      ],
+    },
   })
-    .then((conversations) => {
-      res.status(200).json(conversations);
+    .then((conversation) => {
+      if (conversation) {
+        res.status(200).json(conversation);
+      } else {
+        res.status(404).json({ message: 'Conversation not found' });
+      }
     })
     .catch((err) => {
       res.status(500).json(err);
