@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
@@ -16,6 +17,7 @@ export default function ConversationItem({
   const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
+  const navigate = useNavigate();
 
   function clickHandler() {
     if (!isActive) {
@@ -24,7 +26,7 @@ export default function ConversationItem({
   }
 
   const height = isActive ? 180 : 120;
-  const width = height;
+  const  width = height;
   const transparent = 'linear-gradient(to right, #d4dbe000, #E9E4F000)';
 
   return (
@@ -54,6 +56,9 @@ export default function ConversationItem({
           alt={product.title}
           initial={{ width, height }}
           animate={{ width, height, transition: { delay: 0.1, duration: 0.5 } }}
+          onClick={() => isActive && navigate('/market/' + product._id)}
+          style={{ cursor: isActive ? 'pointer' : '' }}
+          whileHover={{ scale: isActive ? 1.05 : 1 }}
         />
         <div className={css['product']}>
           <h2>{recipient}</h2>
