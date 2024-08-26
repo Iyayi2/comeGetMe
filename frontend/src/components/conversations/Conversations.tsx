@@ -11,7 +11,7 @@ export default function Conversations({ conversations }: { conversations: Conver
     <ul className={css['conversations']}>
         <LayoutGroup>
           <AnimatePresence>
-            {(isActive ? isActive : conversations).reverse().map((conversation) => (
+            {(isActive ? isActive : conversations).map((conversation) => (
               <ConversationItem
                 key={conversation._id}
                 conversation={conversation}

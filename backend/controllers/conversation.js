@@ -23,7 +23,6 @@ exports.postConversation = (req, res, next) => {
 };
 
 exports.getConversation = (req, res, next) => {
-
   if (!req.session || !req.session.user) {
     return res.status(403).json({ error: 'Unauthorized access' }); // Return 403 status with an error message
   }
@@ -33,8 +32,12 @@ exports.getConversation = (req, res, next) => {
   Conversation.find({
     members: { $elemMatch: { _id } },
   })
+    .sort({ createdAt: -1 })
     .then((conversations) => {
-      const conversationsWithSessionId = conversations.map((convo) => ({ ...convo._doc, sessionId: _id }));
+      const conversationsWithSessionId = conversations.map((convo) => ({
+        ...convo._doc,
+        sessionId: _id,
+      }));
       res.status(200).json(conversationsWithSessionId);
     })
     .catch((err) => {
