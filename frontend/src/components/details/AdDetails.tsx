@@ -45,13 +45,13 @@ export default function AdDetails({
   const navigate = useNavigate();
   const { sendRequest } = useHTTP();
 
-  function clickHandler() {
+  async function clickHandler() {
     if (!user) {
       navigate('/account');
     } else if (myAd) {
       toggleForm();
     } else {
-      sendRequest({
+      const response = await sendRequest({
         path: 'conversation',
         method: 'POST',
         data: {
@@ -62,7 +62,9 @@ export default function AdDetails({
           },
         },
       });
-      navigate('/inbox');
+      if (response) {
+        navigate('/inbox');
+      }
     }
   }
 
