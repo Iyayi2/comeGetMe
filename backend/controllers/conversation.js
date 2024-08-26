@@ -23,6 +23,11 @@ exports.postConversation = (req, res, next) => {
 };
 
 exports.getConversation = (req, res, next) => {
+
+  if (!req.session || !req.session.user) {
+    return res.status(403).json({ error: 'Unauthorized access' }); // Return 403 status with an error message
+  }
+
   const { _id } = req.session.user;
 
   Conversation.find({

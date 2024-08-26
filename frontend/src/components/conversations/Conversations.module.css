@@ -2,11 +2,16 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  padding: 1rem;
-  padding-top: 0;
+  padding: 0 2rem 2rem;
   margin: 0;
   height: 100vh;
   overflow: auto;
   list-style: none;
   background: linear-gradient(to right, #232526, #414345);
+}
+
+@media screen and (max-width: 440px) {
+  .conversations {
+    padding: 0 1rem 1rem;
+  }
 }

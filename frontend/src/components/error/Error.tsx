@@ -1,6 +1,7 @@
 import ghost from '@/assets/pngs/ghost.png'
 import man from '@/assets/pngs/man-with-gift.png'
 import yardsale from '@/assets/pngs/yardsale.png'
+import denied from '@/assets/pngs/access-denied.png'
 import css from './Error.module.css';
 
 export default function ErrorPage({ type = 'default' }: { type?: string }) {
@@ -8,12 +9,14 @@ export default function ErrorPage({ type = 'default' }: { type?: string }) {
     default: 'Unable to find the page you\'re looking for...',
          ad: 'Looks like this item cannot be found...',
      market: 'Looks like slim pickings, come back another day',
+      inbox: 'Access Denied. Please Log In',
   }[type]
 
   const image = {
     default: ghost,
          ad: man,
      market: yardsale,
+      inbox: denied,
   }[type]
 
   return (
