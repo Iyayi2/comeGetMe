@@ -1,13 +1,24 @@
-import { useContext, useState } from 'react';
-import { Context } from '@/store/Context';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, LayoutGroup } from 'framer-motion';
 import Conversation from '@/models/Conversation';
 import ConversationItem from './Conversation';
 import css from './Conversations.module.css';
 
 export default function Conversations({ conversations }: { conversations: Conversation[] }) {
-  const { conversation } = useContext(Context);
-  const [isActive, setIsActive] = useState<Conversation[] | null>(conversation ? [conversation] : null);
+  const [isActive, setIsActive] = useState<Conversation[] | null>(null);
+
+  useEffect(() => {
+    const conversation = sessionStorage.getItem('conversation');
+    console.log('conversation', conversation)
+    if (conversation) {
+      setIsActive([JSON.parse(conversation)]);
+        setTimeout(() => {
+          sessionStorage.removeItem('conversation'); // Clear the stored conversation
+        }, 1000);
+    }
+  }, []);
+
+  console.log('isActive', isActive)
 
   return (
     <ul className={css['conversations']}>

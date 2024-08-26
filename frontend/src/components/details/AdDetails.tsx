@@ -1,7 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { Context } from '@/store/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
@@ -46,7 +44,6 @@ export default function AdDetails({
   const myAd = user?._id === userId._id;
   const navigate = useNavigate();
   const { sendRequest } = useHTTP();
-  const { setConversation } = useContext(Context);
 
   async function clickHandler() {
     if (!user) {
@@ -54,16 +51,15 @@ export default function AdDetails({
     } else if (myAd) {
       toggleForm();
     } else {
-      const conversationExists = await sendRequest({
+      const conversation = await sendRequest({
         path: `conversation/${userId._id}/${_id}`,
         method: 'GET',
       });
-      console.log('conversationExists', conversationExists); // logData
-      if (conversationExists) {
-        setConversation(conversationExists);
+      if (conversation) {
+        sessionStorage.setItem('conversation', JSON.stringify(conversation));
         navigate('/inbox');
       } else {
-        const response = await sendRequest({
+        const newConversation = await sendRequest({
           path: 'conversation',
           method: 'POST',
           data: {
@@ -74,7 +70,8 @@ export default function AdDetails({
             },
           },
         });
-        if (response) {
+        if (newConversation) {
+          sessionStorage.setItem('conversation', JSON.stringify(newConversation));
           navigate('/inbox');
         }
       }
