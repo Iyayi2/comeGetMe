@@ -18,7 +18,8 @@ export default function Messages({ conversation }: { conversation: Conversation 
 
   console.log('messages', messages);
 
-  async function sendMessage() {
+  async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (value.trim()) {
       const message = await sendRequest({
         path: 'message',
@@ -49,9 +50,9 @@ export default function Messages({ conversation }: { conversation: Conversation 
           ))}
         </ul>
       )}
-      <form>
-        <input value={value} onChange={(e) => setValue(e.target.value)} />
-        <button onClick={sendMessage}>send</button>
+      <form onSubmit={sendMessage}>
+        <textarea value={value} onChange={(e) => setValue(e.target.value)} />
+        <button>send</button>
       </form>
     </motion.div>
   );

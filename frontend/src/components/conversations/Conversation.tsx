@@ -35,6 +35,7 @@ export default function ConversationItem({
   const height = isActive ? 180 : 120;
   const  width = height;
   const transparent = 'linear-gradient(to right, #d4dbe000, #E9E4F000)';
+  const textShadow  = '-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000';
 
   return (
     <motion.li
@@ -81,7 +82,7 @@ export default function ConversationItem({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
                  exit={{ opacity: 0 }}
-              whileHover={{ backgroundColor: '#e4d8f4', color: '#4b4a47', textShadow: 'none' }}
+              whileHover={{ backgroundColor: '#e4d8f4', color: '#f1f1f1', textShadow }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               onClick={collapse}
             >

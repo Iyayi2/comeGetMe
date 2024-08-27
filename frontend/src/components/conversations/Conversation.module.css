@@ -51,14 +51,8 @@
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.5rem;
       cursor: pointer;
-      color: #ffffff;
+      color: #4b4a47;
       background: #e9e4f0;
-      /* prettier-ignore */
-      text-shadow:
-      -0.5px -0.5px 0 #000,
-       0.5px -0.5px 0 #000,
-      -0.5px  0.5px 0 #000,
-       0.5px  0.5px 0 #000;
     }
   }
 }

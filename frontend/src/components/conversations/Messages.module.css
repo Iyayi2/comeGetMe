@@ -2,11 +2,10 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
 
   > ul {
     flex: 1;
+    overflow: auto;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -19,7 +18,50 @@
   }
 
   > form {
+    position: sticky;
+    bottom: -2rem;
     display: flex;
-    align-self: center;
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid #000;
+    background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: 1px solid #000;
+
+      &:focus {
+        outline: none;
+      }
+      &:hover {
+        border-color: #000;
+      }
+    }
+
+    button {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      border: 1px solid #000;
+      border-left: none;
+      color: #4b4a47;
+      background: #e9e4f0;
+      transition: 0.5s ease-in-out;
+
+      &:hover {
+        text-shadow: var(--text-shadow);
+        background-color: #d5c2ee;
+        color: #f1f1f1;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .messages {
+    > form {
+      bottom: -1rem;
+    }
   }
 }
