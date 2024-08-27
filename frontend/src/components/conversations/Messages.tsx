@@ -9,13 +9,10 @@ import MessageItem from './Message';
 import css from './Messages.module.css';
 
 export default function Messages({ conversation }: { conversation: Conversation }) {
-  const { _id, sessionId, members } = conversation;
-  const { username }             = members[0];
-  const { username: sellerName } = members[1];
+  const { _id, sessionId } = conversation;
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading, getData } = useFetch('message/' + _id);
   const [value, setValue] = useState('');
-  const isRecipient = (userId: string) => (sessionId === userId ? sellerName : username);
 
   console.log('messages RENDERED', messages); // logData
 
@@ -47,7 +44,6 @@ export default function Messages({ conversation }: { conversation: Conversation 
                 message={message}
                 index={index}
                 activeId={sessionId}
-                isRecipient={isRecipient}
               />
             ))}
           </ul>

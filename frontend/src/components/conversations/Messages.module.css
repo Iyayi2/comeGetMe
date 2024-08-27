@@ -56,7 +56,7 @@
   }
 }
 
-@media screen and (max-width: 522px) and (orientation: landscape) {
+@media screen and (max-width: 512px) and (orientation: landscape) {
   .messages {
     > form {
       position: relative;
