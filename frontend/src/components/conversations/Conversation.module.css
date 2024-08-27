@@ -7,6 +7,9 @@
   .recipient {
     display: flex;
     overflow: auto;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
     img {
       object-fit: cover;
@@ -72,6 +75,14 @@
       button {
         font-size: 1rem;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .conversation {
+    .recipient {
+      position: relative;
     }
   }
 }

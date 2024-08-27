@@ -22,11 +22,12 @@
 
   > form {
     position: sticky;
-    bottom: -2rem;
+    bottom: 0;
+    z-index: 2;
     display: flex;
     justify-content: center;
     padding: 1rem;
-    border: 1px solid #000;
+    border-top: 1px solid #000;
     background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
 
     textarea {
@@ -61,13 +62,6 @@
   }
 }
 
-@media screen and (max-width: 440px) {
-  .messages {
-    > form {
-      bottom: -1rem;
-    }
-  }
-}
 
 @media (min-width: 320px) and (max-width: 440px) and (orientation: portrait),
   (min-width: 640px) and (max-width: 960px) and (min-height: 320px) and (max-height: 440px) and (orientation: landscape) {
@@ -79,5 +73,13 @@
           }
         }
       }
+  }
+}
+
+@media screen and (max-width: 522px) and (orientation: landscape) {
+  .messages {
+    > form {
+      position: relative;
+    }
   }
 }
