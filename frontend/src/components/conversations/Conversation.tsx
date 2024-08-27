@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { mediaQuery } from '@/util/mediaQuery';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
@@ -20,6 +21,7 @@ export default function ConversationItem({
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
   const navigate = useNavigate();
+  const isMobile = mediaQuery();
 
   function expand() {
     if (!isActive) {
@@ -32,7 +34,7 @@ export default function ConversationItem({
     setActive(null);
   }
 
-  const height = isActive ? 180 : 120;
+  const height = (isActive ? 180 : 120) * (isMobile ? 0.5 : 1);
   const  width = height;
   const transparent = 'linear-gradient(to right, #d4dbe000, #E9E4F000)';
   const textShadow  = '-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000';
