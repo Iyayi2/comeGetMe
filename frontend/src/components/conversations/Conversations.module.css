@@ -1,10 +1,10 @@
 .conversations {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   padding: 0 2rem 2rem;
   margin: 0;
-  height: 100vh;
   overflow: auto;
   list-style: none;
   background: linear-gradient(to right, #232526, #414345);
