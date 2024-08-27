@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
@@ -13,6 +13,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
   const [value, setValue] = useState('');
+  const latestMsg = useRef<HTMLLIElement>(null);
 
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,6 +30,10 @@ export default function Messages({ conversation }: { conversation: Conversation 
     }
   }
 
+  useEffect(() => {
+    latestMsg.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <motion.div className={css['messages']}>
       {isLoading ? (
@@ -36,8 +41,13 @@ export default function Messages({ conversation }: { conversation: Conversation 
       ) : (
         <LayoutGroup>
           <ul>
-            {(messages || []).map((message: Message) => (
-              <MessageItem key={message._id} message={message} activeId={sessionId} />
+            {(messages || []).map((message: Message, index) => (
+              <MessageItem
+                key={message._id}
+                ref={index === (messages || []).length - 1 ? latestMsg : null}
+                message={message}
+                activeId={sessionId}
+              />
             ))}
           </ul>
         </LayoutGroup>

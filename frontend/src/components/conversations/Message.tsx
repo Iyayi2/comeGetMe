@@ -1,9 +1,13 @@
+import { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 import Message from '@/models/Message';
 import formatDate from '@/util/formatDate';
 import css from './Message.module.css';
 
-export default function MessageItem({ message, activeId }: { message: Message; activeId: string }) {
+function MessageItem(
+  { message, activeId }: { message: Message; activeId: string },
+  ref: React.Ref<HTMLLIElement>
+) {
   const { createdAt, userId, text } = message;
   const isCurrentUser = userId === activeId;
   const date = formatDate({ date: createdAt, time: true });
@@ -11,6 +15,7 @@ export default function MessageItem({ message, activeId }: { message: Message; a
   return (
     <motion.li
       className={css['message']}
+      ref={ref}
       layout
       initial={{ opacity: 0, x: 100 * (isCurrentUser ? -1 : 1) }}
       animate={{ opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.3 } }}
@@ -26,3 +31,6 @@ export default function MessageItem({ message, activeId }: { message: Message; a
     </motion.li>
   );
 }
+
+const ForwardedMessageItem = forwardRef(MessageItem);
+export default ForwardedMessageItem;
