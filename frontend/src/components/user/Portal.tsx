@@ -35,7 +35,7 @@ export default function Portal({
     if (newItem) {
       setExpanded(false);
       setTimeout(() => {
-        setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
+        setData((items) => (items ? [...items, newItem] : [newItem]));
       }, 500);
     }
   };

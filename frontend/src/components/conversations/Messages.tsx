@@ -11,7 +11,7 @@ import css from './Messages.module.css';
 export default function Messages({ conversation }: { conversation: Conversation }) {
   const { _id, sessionId } = conversation;
   const { sendRequest } = useHTTP();
-  const { data: messages, isLoading, getData } = useFetch('message/' + _id);
+  const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
   const [value, setValue] = useState('');
 
   console.log('messages RENDERED', messages); // logData
@@ -26,7 +26,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
       });
       if (message) {
         setValue('');
-        await getData();
+        setData((prevData) => prevData ? [...prevData, message] : [message]);
       }
     }
   }
@@ -38,13 +38,8 @@ export default function Messages({ conversation }: { conversation: Conversation 
       ) : (
         <LayoutGroup>
           <ul>
-            {(messages || []).map((message: Message, index) => (
-              <MessageItem
-                key={message._id}
-                message={message}
-                index={index}
-                activeId={sessionId}
-              />
+            {(messages || []).map((message: Message) => (
+              <MessageItem key={message._id} message={message} activeId={sessionId} />
             ))}
           </ul>
         </LayoutGroup>
