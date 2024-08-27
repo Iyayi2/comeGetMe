@@ -90,7 +90,7 @@ export default function ConversationItem({
           )}
         </AnimatePresence>
       </motion.section>
-      {isActive && <Messages />}
+      {isActive && <Messages conversation={conversation} />}
     </motion.li>
   );
 }
