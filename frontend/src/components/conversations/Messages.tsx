@@ -12,7 +12,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { username }             = members[0];
   const { username: sellerName } = members[1];
   const { sendRequest } = useHTTP();
-  const { data: messages, isLoading } = useFetch('message/' + _id);
+  const { data: messages, isLoading, getData } = useFetch('message/' + _id);
   const [value, setValue] = useState('');
   const recipient = (userId: string) => (sessionId === userId ? sellerName : username);
 
@@ -26,7 +26,10 @@ export default function Messages({ conversation }: { conversation: Conversation 
         method: 'POST',
         data: { conversationId: _id, text: value },
       });
-      message && setValue('');
+      if (message) {
+        setValue('');
+        await getData();
+      }
     }
   }
 
