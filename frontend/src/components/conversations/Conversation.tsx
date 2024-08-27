@@ -5,10 +5,12 @@ import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
 
 export default function ConversationItem({
+  index,
   conversation,
   isActive,
   setActive,
 }: {
+         index: number;
   conversation: Conversation;
       isActive: Conversation[] | null;
      setActive: (conversation: Conversation[] | null) => void;
@@ -41,8 +43,8 @@ export default function ConversationItem({
       style={{ flex: isActive ? 1 : 0, cursor: isActive ? '' : 'pointer' }}
       transition={{ layout: { duration: 0.5 } }}
       whileHover={{ filter: `brightness(${isActive ? 1 : 0.7})` }}
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0, transition: { delay: 0.5 } }}
+      initial={{ opacity: 0, x: 50 * (index % 2 === 0 ? 1 : -1) }}
+      animate={{ opacity: 1, x: 0, transition: { delay: 0.5, ease: 'easeIn' } }}
          exit={{ opacity: 0, x: 100 }}
       onClick={expand}
     >

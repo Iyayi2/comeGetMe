@@ -31,9 +31,10 @@ export default function Conversations({ conversations }: { conversations: Conver
     <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={css['conversations']}>
       <LayoutGroup>
         <AnimatePresence>
-          {(isActive ? isActive : conversations).map((conversation) => (
+          {(isActive ? isActive : conversations).map((conversation, index) => (
             <ConversationItem
               key={conversation._id}
+              index={index}
               conversation={conversation}
               isActive={isActive}
               setActive={setIsActive}
