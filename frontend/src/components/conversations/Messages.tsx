@@ -11,12 +11,12 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { _id, sessionId, members } = conversation;
   const { username }             = members[0];
   const { username: sellerName } = members[1];
-  const recipient = (userId: string) => (sessionId === userId ? sellerName : username);
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading } = useFetch('message/' + _id);
   const [value, setValue] = useState('');
+  const recipient = (userId: string) => (sessionId === userId ? sellerName : username);
 
-  console.log('messages', messages);
+  console.log('messages RENDERED', messages); // logData
 
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,29 +31,37 @@ export default function Messages({ conversation }: { conversation: Conversation 
   }
 
   return (
-    <motion.div
-      className={css['messages']}
-      layout
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1, transition: { delay: 1 } }}
-    >
+    <motion.div className={css['messages']} layout>
       {isLoading ? (
         <LoadingIndicator />
       ) : (
         <ul>
-          {messages && (messages as Message[]).map(({ _id, userId, createdAt, text }) => (
-            <li key={_id}>
-              <p>{createdAt}</p>
-              <p>{recipient(userId)}</p>
-              <p>{text}</p>
-            </li>
-          ))}
+          {messages &&
+            (messages as Message[]).map(({ _id, userId, createdAt, text }, index) => {
+              const isCurrentUser = userId === sessionId;
+              return (
+                <motion.li
+                  key={_id}
+                  initial={{ opacity: 0, x: 100 * (isCurrentUser ? -1 : 1) }}
+                  animate={{ opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.1 * index } }}
+                  style={{ alignSelf: isCurrentUser ? 'start' : 'end' }}
+                >
+                  <p>{createdAt}</p>
+                  <p>{recipient(userId)}</p>
+                  <p>{text}</p>
+                </motion.li>
+              );
+            })}
         </ul>
       )}
-      <form onSubmit={sendMessage}>
+      <motion.form
+        onSubmit={sendMessage}
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0, transition: { ease: 'easeIn', duration: 0.5, delay: 1 } }}
+      >
         <textarea value={value} onChange={(e) => setValue(e.target.value)} />
         <button>send</button>
-      </form>
+      </motion.form>
     </motion.div>
   );
 }

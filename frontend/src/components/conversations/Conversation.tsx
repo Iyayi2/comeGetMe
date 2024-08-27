@@ -36,13 +36,14 @@ export default function ConversationItem({
   const  width = height;
   const transparent = 'linear-gradient(to right, #d4dbe000, #E9E4F000)';
   const textShadow  = '-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000';
+  const layoutTransition = { layout: { duration: 0.5, type: 'tween', ease: 'linear' } };
 
   return (
     <motion.li
       className={css['conversation']}
       layout
       style={{ flex: isActive ? 1 : 0, cursor: isActive ? '' : 'pointer' }}
-      transition={{ layout: { duration: 0.5 } }}
+      transition={layoutTransition}
       whileHover={{ filter: `brightness(${isActive ? 1 : 0.7})` }}
       initial={{ opacity: 0, x: 50 * (index % 2 === 0 ? 1 : -1) }}
       animate={{ opacity: 1, x: 0, transition: { delay: 0.5, ease: 'easeIn' } }}
@@ -52,11 +53,12 @@ export default function ConversationItem({
       <motion.section
         className={css['recipient']}
         layout
+        transition={layoutTransition}
         style={{ borderBottom: isActive ? '1px solid black' : '' }}
         initial={{ background: transparent }}
         animate={{
           background: isActive ? 'linear-gradient(to right, #d4dbe0, #E9E4F0)' : transparent,
-          transition: { delay: 0.1, duration: 0.5 },
+          transition: { duration: 0.5 },
         }}
       >
         <motion.img
@@ -83,7 +85,7 @@ export default function ConversationItem({
               animate={{ opacity: 1 }}
                  exit={{ opacity: 0 }}
               whileHover={{ backgroundColor: '#e4d8f4', color: '#f1f1f1', textShadow }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              transition={layoutTransition}
               onClick={collapse}
             >
               BACK
