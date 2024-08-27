@@ -28,8 +28,8 @@ export default function Conversations({ conversations }: { conversations: Conver
   }
 
   return (
-    <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={css['conversations']}>
-      <LayoutGroup>
+    <LayoutGroup>
+      <motion.ul initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={css['conversations']}>
         <AnimatePresence>
           {(isActive ? isActive : conversations).map((conversation, index) => (
             <ConversationItem
@@ -41,7 +41,7 @@ export default function Conversations({ conversations }: { conversations: Conver
             />
           ))}
         </AnimatePresence>
-      </LayoutGroup>
-    </motion.ul>
+      </motion.ul>
+    </LayoutGroup>
   );
 }

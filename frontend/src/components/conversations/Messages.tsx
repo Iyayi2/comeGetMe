@@ -14,8 +14,6 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
   const [value, setValue] = useState('');
 
-  console.log('messages RENDERED', messages); // logData
-
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (value.trim()) {
@@ -26,13 +24,13 @@ export default function Messages({ conversation }: { conversation: Conversation 
       });
       if (message) {
         setValue('');
-        setData((prevData) => prevData ? [...prevData, message] : [message]);
+        setData((prevData) => (prevData ? [...prevData, message] : [message]));
       }
     }
   }
 
   return (
-    <motion.div className={css['messages']} layout>
+    <motion.div className={css['messages']}>
       {isLoading ? (
         <LoadingIndicator />
       ) : (
@@ -45,6 +43,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
         </LayoutGroup>
       )}
       <motion.form
+        layout
         onSubmit={sendMessage}
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0, transition: { ease: 'easeIn', duration: 0.5, delay: 1 } }}
