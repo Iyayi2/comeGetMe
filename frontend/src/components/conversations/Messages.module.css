@@ -1,6 +1,25 @@
 .messages {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+
+  > ul {
+    flex: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  > form {
+    display: flex;
+    align-self: center;
+  }
 }

@@ -1,26 +1,32 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import css from './Messages.module.css';
+import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import Conversation from '@/models/Conversation';
-import { useRef } from 'react';
+import css from './Messages.module.css';
+import LoadingIndicator from '../loading/LoadingIndicator';
 
 export default function Messages({ conversation }: { conversation: Conversation }) {
   const { _id, sessionId, members } = conversation;
-  const { username, _id: userId } = members[0];
-  const { username: sellerName, product } = members[1];
+  // prettier-ignore
+  const { username, _id: userId }   = members[0];
+  // prettier-ignore
+  const { username: sellerName }    = members[1];
+  const recipient = (userId: string) => (sessionId === userId ? sellerName : username);
   const { sendRequest } = useHTTP();
-  const InputRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const { data: messages, isLoading } = useFetch('message/' + _id);
+  const [value, setValue] = useState('');
 
-  async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
-    event?.preventDefault();
-    if (InputRef.current) {
+  console.log('messages', messages);
+
+  async function sendMessage() {
+    if (value.trim()) {
       const message = await sendRequest({
         path: 'message',
         method: 'POST',
-        data: { conversationId: _id, text: InputRef.current.value },
+        data: { conversationId: _id, text: value },
       });
-      message && formRef.current && formRef.current.reset();
+      message && setValue('');
     }
   }
 
@@ -31,10 +37,22 @@ export default function Messages({ conversation }: { conversation: Conversation 
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1, transition: { delay: 1 } }}
     >
-      <span>MESSAGES</span>
-      <form ref={formRef} onSubmit={sendMessage}>
-        <input ref={InputRef} />
-        <button>send</button>
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <ul>
+          {messages &&messages.map(({ _id, userId, createdAt, text }) => (
+            <li key={_id}>
+              <p>{createdAt}</p>
+              <p>{recipient(userId)}</p>
+              <p>{text}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+      <form>
+        <input value={value} onChange={(e) => setValue(e.target.value)} />
+        <button onClick={sendMessage}>send</button>
       </form>
     </motion.div>
   );
