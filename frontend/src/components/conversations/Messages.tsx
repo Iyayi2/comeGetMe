@@ -5,13 +5,12 @@ import { useHTTP } from '@/hooks/useHTTP';
 import Conversation from '@/models/Conversation';
 import css from './Messages.module.css';
 import LoadingIndicator from '../loading/LoadingIndicator';
+import Message from '@/models/Message';
 
 export default function Messages({ conversation }: { conversation: Conversation }) {
   const { _id, sessionId, members } = conversation;
-  // prettier-ignore
-  const { username, _id: userId }   = members[0];
-  // prettier-ignore
-  const { username: sellerName }    = members[1];
+  const { username }             = members[0];
+  const { username: sellerName } = members[1];
   const recipient = (userId: string) => (sessionId === userId ? sellerName : username);
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading } = useFetch('message/' + _id);
@@ -41,7 +40,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
         <LoadingIndicator />
       ) : (
         <ul>
-          {messages &&messages.map(({ _id, userId, createdAt, text }) => (
+          {messages && (messages as Message[]).map(({ _id, userId, createdAt, text }) => (
             <li key={_id}>
               <p>{createdAt}</p>
               <p>{recipient(userId)}</p>
