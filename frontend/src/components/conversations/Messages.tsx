@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { LayoutGroup, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import Conversation from '@/models/Conversation';
-import css from './Messages.module.css';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Message from '@/models/Message';
+import MessageItem from './Message';
+import css from './Messages.module.css';
 
 export default function Messages({ conversation }: { conversation: Conversation }) {
   const { _id, sessionId, members } = conversation;
@@ -14,7 +15,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading, getData } = useFetch('message/' + _id);
   const [value, setValue] = useState('');
-  const recipient = (userId: string) => (sessionId === userId ? sellerName : username);
+  const isRecipient = (userId: string) => (sessionId === userId ? sellerName : username);
 
   console.log('messages RENDERED', messages); // logData
 
@@ -22,9 +23,9 @@ export default function Messages({ conversation }: { conversation: Conversation 
     event.preventDefault();
     if (value.trim()) {
       const message = await sendRequest({
-        path: 'message',
+          path: 'message',
         method: 'POST',
-        data: { conversationId: _id, text: value },
+          data: { conversationId: _id, text: value },
       });
       if (message) {
         setValue('');
@@ -38,24 +39,19 @@ export default function Messages({ conversation }: { conversation: Conversation 
       {isLoading ? (
         <LoadingIndicator />
       ) : (
-        <ul>
-          {messages &&
-            (messages as Message[]).map(({ _id, userId, createdAt, text }, index) => {
-              const isCurrentUser = userId === sessionId;
-              return (
-                <motion.li
-                  key={_id}
-                  initial={{ opacity: 0, x: 100 * (isCurrentUser ? -1 : 1) }}
-                  animate={{ opacity: 1, x: 0, transition: { duration: 0.5, delay: 0.1 * index } }}
-                  style={{ alignSelf: isCurrentUser ? 'start' : 'end' }}
-                >
-                  <p>{createdAt}</p>
-                  <p>{recipient(userId)}</p>
-                  <p>{text}</p>
-                </motion.li>
-              );
-            })}
-        </ul>
+        <LayoutGroup>
+          <ul>
+            {(messages || []).map((message: Message, index) => (
+              <MessageItem
+                key={message._id}
+                message={message}
+                index={index}
+                activeId={sessionId}
+                isRecipient={isRecipient}
+              />
+            ))}
+          </ul>
+        </LayoutGroup>
       )}
       <motion.form
         onSubmit={sendMessage}

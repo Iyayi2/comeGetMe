@@ -12,12 +12,6 @@
     margin: 0;
     padding: 1rem;
     list-style: none;
-
-    li {
-      p {
-        margin: 0;
-      }
-    }
   }
 
   > form {
@@ -59,20 +53,6 @@
         color: #f1f1f1;
       }
     }
-  }
-}
-
-
-@media (min-width: 320px) and (max-width: 440px) and (orientation: portrait),
-  (min-width: 640px) and (max-width: 960px) and (min-height: 320px) and (max-height: 440px) and (orientation: landscape) {
-    .messages {
-      > ul {
-        li {
-          p {
-            font-size: 0.6rem;
-          }
-        }
-      }
   }
 }
 
