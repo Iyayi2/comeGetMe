@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
@@ -30,9 +30,8 @@ export default function Messages({ conversation }: { conversation: Conversation 
     }
   }
 
-  useEffect(() => {
-    latestMsg.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  const scrollTo = () =>
+    messages && messages.length > 0 && latestMsg.current?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <motion.div className={css['messages']}>
@@ -47,6 +46,8 @@ export default function Messages({ conversation }: { conversation: Conversation 
                 ref={index === (messages || []).length - 1 ? latestMsg : null}
                 message={message}
                 activeId={sessionId}
+                index={index}
+                scrollTo={scrollTo}
               />
             ))}
           </ul>
