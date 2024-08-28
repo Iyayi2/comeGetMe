@@ -12,7 +12,8 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { _id, sessionId } = conversation;
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
-  const [value, setValue] = useState('');
+  const [value,   setValue] = useState('');
+  const [newMsg, setNewMsg] = useState(false);
   const msgRef = useRef<HTMLLIElement>(null);
 
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
@@ -27,6 +28,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
       if (message) {
         setValue('');
         setData((prevData) => (prevData ? [...prevData, message] : [message]));
+        setNewMsg(true)
       }
     }
   }
@@ -43,8 +45,8 @@ export default function Messages({ conversation }: { conversation: Conversation 
           <ul>
             {(messages || []).map((message: Message, index) => {
               const isLast   = index === (messages || []).length - 1;
-              const duration = Math.max(2 - (index * 0.01), 0.2)
-              const delay    = Math.min(0.02 * index, 2)
+              const duration = newMsg ? 0.5 : Math.max(1.5 - (0.01 * index), 0.2)
+              const delay    = newMsg ?   0 : Math.min(0.02        * index,  1.5)
 
               return (
                 <MessageItem
