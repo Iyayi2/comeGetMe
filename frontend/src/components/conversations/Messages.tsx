@@ -13,10 +13,11 @@ export default function Messages({ conversation }: { conversation: Conversation 
   const { sendRequest } = useHTTP();
   const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
   const [value, setValue] = useState('');
-  const latestMsg = useRef<HTMLLIElement>(null);
+  const msgRef = useRef<HTMLLIElement>(null);
 
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // prettier-ignore
     if (value.trim()) {
       const message = await sendRequest({
           path: 'message',
@@ -31,7 +32,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
   }
 
   const scrollTo = () =>
-    messages && messages.length > 0 && latestMsg.current?.scrollIntoView({ behavior: 'smooth' });
+    messages && messages.length > 0 && msgRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <motion.div className={css['messages']}>
@@ -40,16 +41,23 @@ export default function Messages({ conversation }: { conversation: Conversation 
       ) : (
         <LayoutGroup>
           <ul>
-            {(messages || []).map((message: Message, index) => (
-              <MessageItem
-                key={message._id}
-                ref={index === (messages || []).length - 1 ? latestMsg : null}
-                message={message}
-                activeId={sessionId}
-                index={index}
-                scrollTo={scrollTo}
-              />
-            ))}
+            {(messages || []).map((message: Message, index) => {
+              const isLast   = index === (messages || []).length - 1;
+              const duration = Math.max(2 - (index * 0.01), 0.2)
+              const delay    = Math.min(0.02 * index, 2)
+
+              return (
+                <MessageItem
+                  key={message._id}
+                  ref={isLast ? msgRef : null}
+                  message={message}
+                  activeId={sessionId}
+                  scrollTo={scrollTo}
+                  duration={duration}
+                  delay={delay}
+                />
+              );
+            })}
           </ul>
         </LayoutGroup>
       )}

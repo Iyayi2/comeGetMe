@@ -5,7 +5,13 @@ import formatDate from '@/util/formatDate';
 import css from './Message.module.css';
 
 function MessageItem(
-  { message, activeId, index, scrollTo }: { message: Message; activeId: string; index: number, scrollTo: () => void },
+  {
+    message,
+    activeId,
+    duration,
+    delay,
+    scrollTo,
+  }: { message: Message; activeId: string; duration: number; delay: number; scrollTo: () => void },
   ref: React.Ref<HTMLLIElement>
 ) {
   const { createdAt, userId, text } = message;
@@ -18,7 +24,7 @@ function MessageItem(
       ref={ref}
       layout
       initial={{ opacity: 0, x: 100 * (isCurrentUser ? -1 : 1) }}
-      animate={{ opacity: [0, 0, 1], x: 0, transition: { duration: Math.max(2 - (index * 0.01), 0.2), delay: 0.02 * index } }}
+      animate={{ opacity: [0, 0, 1], x: 0, transition: { duration, delay } }}
       onAnimationComplete={scrollTo}
       style={{
         alignSelf: isCurrentUser ? 'end' : 'start',
