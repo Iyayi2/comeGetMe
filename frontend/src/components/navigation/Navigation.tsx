@@ -11,8 +11,8 @@ export default function Navigation() {
           transition: { duration: 0.8, ease: 'easeInOut' },
         }}
       >
-        <NavButton path='/' label='Home' />
-        <NavButton path='/market' label='Market' />
+        <NavButton path='/'        label='Home' />
+        <NavButton path='/market'  label='Market' />
         <NavButton path='/account' label='Account' />
       </motion.ul>
     </nav>

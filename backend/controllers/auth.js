@@ -1,15 +1,10 @@
 const mongoose = require('mongoose');
 
 const User = require('../models/user');
+const { userDetails } = require('../util/userDetails');
 const { trimWhiteSpace } = require('../util/trimWhiteSpace');
 
-const userDetails = (user) => {
-   const { _id, username, email } = user;
-  return { _id, username, email };
-};
-
 exports.getLogin = (req, res, next) => {
-  // console.log('[GET Login session]', req.session); // LogData
   if (req.session.user) {
     res.status(200).json(userDetails(req.session.user));
   } else {
@@ -30,7 +25,6 @@ exports.postLogin = (req, res, next) => {
       }
 
       req.session.user = user;
-      // console.log('[POST Login session]', req.session); // LogData
       req.session.save((err) => {
         if (err) {
           return res.status(500).json({ message: 'Session save failed' });
@@ -41,13 +35,6 @@ exports.postLogin = (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ message: 'Server error', error: err });
     });
-};
-
-exports.getSignup = (req, res, next) => {
-  // res.render('auth/signup', {
-  //   pageTitle: 'Signup',
-  //   path: '/signup',
-  // });
 };
 
 exports.postSignup = (req, res, next) => {
@@ -65,13 +52,11 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
-  // console.log('[POST Logout session 1]', req.session); // LogData
   req.session.destroy((err) => {
     if (err) {
       console.log('[POST Logout session 2]', req.session); // LogData
       return res.status(500).json({ message: 'Logout failed' });
     }
-    // console.log('[POST Logout session 3]', req.session); // LogData
     res.status(200).json(null); // clear state in frontend
   });
 };

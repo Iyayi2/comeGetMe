@@ -1,0 +1,44 @@
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 60%;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #000;
+  border-radius: 3px;
+
+  p {
+    margin: 0;
+    overflow-wrap: break-word;
+    line-height: 0.8;
+
+    &:first-of-type {
+      text-align: end;
+      color: #2a2626;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    &:last-of-type {
+      text-align: start;
+      color: #f1f1f1;
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 440px) and (orientation: portrait),
+  (min-width: 640px) and (max-width: 960px) and (min-height: 320px) and (max-height: 440px) and (orientation: landscape) {
+  .message {
+    p {
+      font-size: 0.8rem;
+      &:first-of-type {
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) and (orientation: landscape) {
+  .message {
+    width: 90%;
+  }
+}

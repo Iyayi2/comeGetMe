@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const MessageSchema = new mongoose.Schema(
   {
     conversationId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId, required: true
     },
-    sender: {
-      type: String,
+    userId: {
+      type: mongoose.Schema.Types.ObjectId, required: true
     },
     text: {
-      type: String,
+      type: String, required: true,
     },
+    createdAt: { type: Date, default: Date.now }
   },
   { timestamps: true }
 );

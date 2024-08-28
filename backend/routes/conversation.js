@@ -5,8 +5,8 @@ const conversationController = require('../controllers/conversation');
 const router = express.Router();
 
 router.post('/conversation', conversationController.postConversation);
-router.get('/conversation/:userId', conversationController.getConversation);
-router.get('/conversation/find/:firstUserId/:secondUserId', conversationController.getConversations)
+router.get('/conversations/', conversationController.getConversations);
+router.get('/conversation/:sellerId/:productId', conversationController.findConversation)
 
 
 module.exports = router;

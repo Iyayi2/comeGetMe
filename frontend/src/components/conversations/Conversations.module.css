@@ -1,0 +1,19 @@
+.conversations {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0 2rem;
+  border-bottom: 2rem solid transparent;
+  margin: 0;
+  overflow: auto;
+  list-style: none;
+  background: linear-gradient(to right, #232526, #414345);
+}
+
+@media screen and (max-width: 440px) {
+  .conversations {
+    padding: 0 0.5rem;
+    border-bottom: 0.5rem solid transparent;
+  }
+}

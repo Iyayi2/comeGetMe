@@ -12,10 +12,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Navigation />
       <AnimatePresence mode='popLayout'>
         <motion.main
-          key={pathname}
+          id='main'
+          key={pathname.startsWith('/inbox') ? 'inbox' : pathname}
           initial={{ opacity: 0, y: '-100px' }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: '100%' }}
+             exit={{ opacity: 0, y: '100%' }}
           transition={{
             type: 'tween',
             ease: 'linear',

@@ -35,13 +35,13 @@ export default function Portal({
     if (newItem) {
       setExpanded(false);
       setTimeout(() => {
-        setData((items: Product[] | null) => (items ? [...items, newItem] : [newItem]));
+        setData((items) => (items ? [...items, newItem] : [newItem]));
       }, 500);
     }
   };
 
   return (
-    <motion.div className={css.portal} layout initial={{ y: -100 }} animate={{ y: 0 }}>
+    <motion.div className={css.portal} initial={{ y: -100 }} animate={{ y: 0 }}>
       <section>
         <div className={css.info}>
           <motion.h2

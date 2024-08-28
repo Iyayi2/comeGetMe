@@ -5,7 +5,7 @@ import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import { APIError } from '@/hooks/useHTTP';
+import { APIError, useHTTP } from '@/hooks/useHTTP';
 import css from './AdDetails.module.css';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
@@ -43,14 +43,36 @@ export default function AdDetails({
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
   const navigate = useNavigate();
+  const { sendRequest } = useHTTP();
 
-  function clickHandler() {
+  async function clickHandler() {
     if (!user) {
       navigate('/account');
     } else if (myAd) {
       toggleForm();
     } else {
-      navigate('/inbox');
+      const conversation = await sendRequest({
+        path: `conversation/${userId._id}/${_id}`,
+        method: 'GET',
+      });
+      if (conversation) {
+        navigate('/inbox/' + conversation._id);
+      } else {
+        const newConversation = await sendRequest({
+          path: 'conversation',
+          method: 'POST',
+          data: {
+            seller: {
+              _id: userId._id,
+              username: userId.username,
+              product: { _id, title, price, imageUrl },
+            },
+          },
+        });
+        if (newConversation) {
+          navigate('/inbox/' + newConversation._id);
+        }
+      }
     }
   }
 
