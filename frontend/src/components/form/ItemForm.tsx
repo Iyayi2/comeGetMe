@@ -32,18 +32,18 @@ export default function ItemForm({
       {expanded && (
         <motion.form
           onSubmit={submitHandler}
-          className={css.form}
+          className={css['form']}
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
              exit={{ opacity: 0, height: 0 }}
           transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
         >
-          <div className={css.inputs}>
+          <div className={css['inputs']}>
             <Input id='title'       error={error} defaultValue={title} />
             <Input id='price'       error={error} defaultValue={price} />
             <Input id='description' error={error} defaultValue={description} text />
           </div>
-          <div className={css.controls}>
+          <div className={css['controls']}>
             <ImagePicker error={error} />
             <Button text={product ? 'Update' : 'Add +'} style={{ background: '#538392' }} isLoading={isLoading} />
           </div>

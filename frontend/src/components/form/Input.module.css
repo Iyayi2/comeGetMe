@@ -1,10 +1,16 @@
 .input {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  align-items: center;
+  width: 100%;
   margin: 0;
-}
 
-.input textarea {
-  resize: none;
+  label {
+    width: 100%;
+    text-align: start;
+  }
+
+  textarea {
+    resize: none;
+  }
 }
