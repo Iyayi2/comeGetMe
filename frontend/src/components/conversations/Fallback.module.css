@@ -1,0 +1,63 @@
+.fallback {
+  position: relative;
+  width: 90%;
+  max-width: 40rem;
+  height: 25rem;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem;
+  padding: 1rem;
+  border: 1px solid #4b4b4b;
+  border-radius: 112px 12px;
+  background: linear-gradient(to bottom, #f1f1f1, #eae6e1);
+  box-shadow: 5px 5px 10px #000;
+
+  h2 {
+    z-index: 1;
+    margin: 0.5rem 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    font-size: 2.5rem;
+    color: #4b4b4b;
+    border-top: 1px solid #4b4b4b;
+    border-bottom: 1px solid #4b4b4b;
+    text-align: center;
+  }
+
+  img {
+    z-index: 1;
+    width: 250px;
+  }
+
+  .background {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 112px 12px;
+    background: url('/autumn.jpg') center/cover no-repeat;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .fallback {
+    h2 {
+      font-size: 1.5rem;
+      border-top-color: transparent;
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 440px) and (orientation: portrait),
+  (min-width: 640px) and (max-width: 960px) and (min-height: 320px) and (max-height: 440px) and (orientation: landscape) {
+  .fallback {
+    img {
+      width: 200px;
+    }
+  }
+}
