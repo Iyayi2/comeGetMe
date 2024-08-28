@@ -1,4 +1,5 @@
 .fallback {
+  position: relative;
   width: 90%;
   max-width: 40rem;
   height: 25rem;
@@ -15,6 +16,7 @@
   box-shadow: 5px 5px 10px #000;
 
   h2 {
+    z-index: 1;
     margin: 0.5rem 1rem;
     font-family: 'Bebas Neue', sans-serif;
     font-weight: 400;
@@ -26,7 +28,19 @@
   }
 
   img {
+    z-index: 1;
     width: 250px;
+  }
+
+  .background {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 112px 12px;
+    background: url('/autumn.jpg') center/cover no-repeat;
   }
 }
 
