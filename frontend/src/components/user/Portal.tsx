@@ -31,7 +31,7 @@ export default function Portal({
   const hasItems = userItems && userItems.length > 0;
 
   const submitHandler = async (data: object) => {
-    const newItem = await sendRequest({ path: 'add-product', method: 'POST', data });
+    const newItem = await sendRequest({ params: 'add-product', method: 'POST', data });
     if (newItem) {
       setExpanded(false);
       setTimeout(() => {

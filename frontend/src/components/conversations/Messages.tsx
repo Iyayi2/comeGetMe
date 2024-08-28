@@ -22,7 +22,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
     // prettier-ignore
     if (value.trim()) {
       const message = await sendRequest({
-          path: 'message',
+        params: 'message',
         method: 'POST',
           data: { conversationId: _id, text: value },
       });
@@ -36,7 +36,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
 
   useEffect(() => {
     const checkForMsgs = async () => {
-      const response = await sendRequest({ path: 'message/' + _id, method: 'GET' });
+      const response = await sendRequest({ params: 'message/' + _id, method: 'GET' });
       if (response) {
         const newMsgs = returnNewMessages(messages || [], response);
         if (newMsgs.length > 0) {

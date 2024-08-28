@@ -8,12 +8,12 @@ export function useHTTP<T = null>(initialData = null) {
   const [isLoading, setIsLoading] = useState(false);
   const [    error,     setError] = useState<APIError>(null);
 
-  const sendRequest = useCallback(async ({ path, method, data }: Fetch) => {
+  const sendRequest = useCallback(async ({ params, method, data }: Fetch) => {
     console.clear(); // logData
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetchData({ path, method, data });
+      const response = await fetchData({ params, method, data });
       setData(response);
       setIsLoading(false);
       return response;

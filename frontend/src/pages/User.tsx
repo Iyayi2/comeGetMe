@@ -9,12 +9,12 @@ export default function UserPage() {
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
   const { isLoading: isFetching } = useFetch('login', setData);
 
-  const handleLogin = async (path: string, data: object) => {
-    await sendRequest({ path, method: 'POST', data });
+  const handleLogin = async (params: string, data: object) => {
+    await sendRequest({ params, method: 'POST', data });
   };
 
   const handleLogout = async () => {
-    await sendRequest({ path: 'logout', method: 'POST' });
+    await sendRequest({ params: 'logout', method: 'POST' });
   };
 
   return (

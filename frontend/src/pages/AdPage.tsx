@@ -14,12 +14,12 @@ export default function AdPage() {
   const [expanded, setExpanded]   = useState(false);
 
   const updateItem = async (data: object) => {
-    const didUpdate = await sendRequest({ path: 'edit-product/' + productId, method: 'PUT', data });
+    const didUpdate = await sendRequest({ params: 'edit-product/' + productId, method: 'PUT', data });
     didUpdate && setExpanded(false);
   };
 
   const deleteItem = async () => {
-    await sendRequest({ path: 'delete-product/' + productId, method: 'DELETE' });
+    await sendRequest({ params: 'delete-product/' + productId, method: 'DELETE' });
   };
 
   return isFetching ? (

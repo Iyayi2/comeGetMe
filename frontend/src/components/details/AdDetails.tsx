@@ -52,14 +52,14 @@ export default function AdDetails({
       toggleForm();
     } else {
       const conversation = await sendRequest({
-        path: `conversation/${userId._id}/${_id}`,
+        params: `conversation/${userId._id}/${_id}`,
         method: 'GET',
       });
       if (conversation) {
         navigate('/inbox/' + conversation._id);
       } else {
         const newConversation = await sendRequest({
-          path: 'conversation',
+          params: 'conversation',
           method: 'POST',
           data: {
             seller: {
