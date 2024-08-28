@@ -39,7 +39,7 @@ export default function SignInForm({
 
   return (
     <motion.form
-      className={css.form}
+      className={css['form']}
       onSubmit={submitHandler}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -56,7 +56,7 @@ export default function SignInForm({
       <AnimatePresence mode='wait' initial={false}>
         <motion.div
           key={formState}
-          className={css.inputs}
+          className={css['inputs']}
           initial={{ ...animateProps }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ ...animateProps }}

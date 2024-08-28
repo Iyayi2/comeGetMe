@@ -9,17 +9,17 @@
   border: 1px solid #000;
   border-radius: 3px;
   overflow: auto;
-}
 
-.radio-buttons {
-  display: flex;
-  gap: 1rem;
-  font-family: 'Bebas Neue', sans-serif;
-}
+  .radio-buttons {
+    display: flex;
+    gap: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+  }
 
-.inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin: 0.5rem;
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0.5rem;
+  }
 }
