@@ -14,13 +14,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <motion.main
           id='main'
           key={pathname.startsWith('/inbox') ? 'inbox' : pathname}
-          initial={{ opacity: 0, y: '-100px' }}
-          animate={{ opacity: 1, y: 0 }}
-             exit={{ opacity: 0, y: '100%' }}
+          initial={{ opacity: 0, y: pathname.startsWith('/inbox') ? 0 :'-100px' }}
+          animate={{ opacity: 1, y: 0, transition: { duration: pathname.startsWith('/inbox') ? 1 : 0.3 } }}
+             exit={{ opacity: 0, y: pathname.startsWith('/inbox') ? 0 : '100%' }}
           transition={{
             type: 'tween',
             ease: 'linear',
-            duration: 0.3,
           }}
         >
           {children}

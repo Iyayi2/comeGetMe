@@ -4,9 +4,9 @@ import { Fetch, fetchData } from '../util/fetchData';
 export type APIError = { errors: object; keyPattern: object; path: string; } | null;
 
 export function useHTTP<T = null>(initialData = null) {
-  const [data, setData] = useState<T | null>(initialData);
+  const [     data,      setData] = useState<T | null>(initialData);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<APIError>(null);
+  const [    error,     setError] = useState<APIError>(null);
 
   const sendRequest = useCallback(async ({ path, method, data }: Fetch) => {
     console.clear(); // logData

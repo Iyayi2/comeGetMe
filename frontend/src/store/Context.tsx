@@ -1,22 +1,22 @@
-import Conversation from '@/models/Conversation';
+import User from '@/models/User';
 import { createContext, ReactNode, useState, Dispatch, SetStateAction } from 'react';
 
 type ContextType = {
-     conversation: Conversation | null;
-  setConversation: Dispatch<SetStateAction<Conversation | null>>;
+     user: User | null;
+  setUser: Dispatch<SetStateAction<User | null>>;
 };
 
 export const Context = createContext<ContextType>({
-     conversation: null,
-  setConversation: () => {},
+     user: null,
+  setUser: () => {},
 });
 
 export default function ContextProvider({ children }: { children: ReactNode }) {
-  const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const ctxValue = {
-       conversation,
-    setConversation,
+    user,
+    setUser,
   };
 
   return <Context.Provider value={ctxValue}>{children}</Context.Provider>;

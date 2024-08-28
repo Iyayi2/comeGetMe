@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect } from "react";
 import { useHTTP } from "./useHTTP";
 
-export const useFetch =  <T = null>(path: string, setExternalData?: Dispatch<SetStateAction<null>>) => {
+export const useFetch =  <T = null>(path: string, setExternalData?: Dispatch<SetStateAction<T>>) => {
   const { data, setData, isLoading, error, sendRequest } = useHTTP<T>();
 
   const getData = useCallback(async () => {
