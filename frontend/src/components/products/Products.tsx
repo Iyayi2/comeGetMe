@@ -32,7 +32,6 @@ export default function Products({
       <LayoutGroup>
         <motion.ul
            className={css['products']}
-              layout
              initial='hidden'
              animate='visible'
           transition={{ staggerChildren: 0.15, delayChildren: 0.5 }}
@@ -44,10 +43,11 @@ export default function Products({
               ))
             ) : (
               <motion.p
-                       key='fallback'
+                       key=     'fallback'
+                 className={css['fallback']}
                     layout
-                   initial={{ opacity: 0, scale: 0, x: -350 }}
-                   animate={{ opacity: 1, scale: 1, x: 0 }}
+                   initial={{ opacity: 0, scale: 0 }}
+                   animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0 }}
                 transition={{ duration: 0.5 }}
               >

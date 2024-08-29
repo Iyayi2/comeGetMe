@@ -16,15 +16,15 @@ export default function ProductItem({
 
   return (
     <motion.li
-      className={css['product']}
-      layout
-      variants={{
-         hidden: { opacity: 0, height: 0,      y: -50 },
-        visible: { opacity: 1, height: 'auto', y: 0 },
-      }}
-           exit={{ opacity: 0, height: 0, scale: 0 }}
+          layout
+       className={css['product']}
+        variants={{
+          hidden: { opacity: 0, height: 0,      y: -50 },
+         visible: { opacity: 1, height: 'auto', y: 0 },
+        }}
+            exit={{ opacity: 0, height: 0, scale: 0 }}
       whileHover={{ borderColor: '#000', y: -5 }}
-      transition={{ type: 'tween', ease: 'easeInOut', duration: 0.2 }}
+      transition={{ ease: 'easeInOut', duration: 0.45, layout: { duration: 0.65 } }}
          onClick={() => navTo('/market/' + _id)}
     >
       <img src={`http://localhost:3000/${imageUrl}`} alt={title} />

@@ -18,7 +18,7 @@ export default function UserPage() {
   };
 
   return (
-    <AnimatePresence mode='wait' initial={false}>
+    <AnimatePresence mode='wait'>
       <motion.section
         key={isLoggedIn}
         exit={{

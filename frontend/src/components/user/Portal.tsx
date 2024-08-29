@@ -44,7 +44,7 @@ export default function Portal({
     <motion.div
       className={css.portal}
       initial={{ y: -100 }}
-      animate={{ y: 0, transition: { duration: 0.5 } }}
+      animate={{ y: 0, transition: { ease: 'easeIn', duration: 0.5 } }}
     >
       <section>
         <div className={css.info}>

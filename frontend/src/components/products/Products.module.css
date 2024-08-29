@@ -6,10 +6,23 @@
 }
 
 .products {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.5rem;
   padding: 1rem;
   margin: 0;
+
+  .fallback {
+    position: absolute;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .products {
+    .fallback {
+      position: relative;
+    }
+  }
 }
