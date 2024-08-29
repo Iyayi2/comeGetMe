@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '@/store/Context';
 import Product from '@/models/Product';
 import css from './Product.module.css';
 
@@ -11,7 +12,7 @@ export default function ProductItem({
   expanded?: boolean | null;
 }) {
   const { _id, title, price, description, imageUrl, userId } = product;
-  const navigate = useNavigate();
+  const { navTo } = useContext(Context);
 
   return (
     <motion.li
@@ -24,7 +25,7 @@ export default function ProductItem({
            exit={{ opacity: 0, height: 0, scale: 0 }}
       whileHover={{ borderColor: '#000', y: -5 }}
       transition={{ type: 'tween', ease: 'easeInOut', duration: 0.2 }}
-      onClick={() => navigate('/market/' + _id)}
+         onClick={() => navTo('/market/' + _id)}
     >
       <img src={`http://localhost:3000/${imageUrl}`} alt={title} />
       {expanded && <p className={css['username']}>Posted by {userId.username}</p>}

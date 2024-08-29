@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+  const inboxPath = pathname.startsWith('/inbox');
 
   console.clear(); // logData
 
@@ -13,13 +14,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <AnimatePresence mode='popLayout'>
         <motion.main
           id='main'
-          key={pathname.startsWith('/inbox') ? 'inbox' : pathname}
-          initial={{ opacity: 0, y: pathname.startsWith('/inbox') ? 0 :'-100px' }}
-          animate={{ opacity: 1, y: 0, transition: { duration: pathname.startsWith('/inbox') ? 1 : 0.3 } }}
-             exit={{ opacity: 0, y: pathname.startsWith('/inbox') ? 0 : '100%' }}
-          transition={{
-            type: 'tween',
-            ease: 'linear',
+          key={inboxPath ? 'inbox' : pathname}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: {
+              type: 'tween',
+              ease: 'linear',
+              duration: inboxPath ? 1 : 0.5,
+              delay: 0.5,
+            },
+          }}
+          exit={{
+            opacity: 0,
+            y: inboxPath ? 0 : 200,
+            transition: { type: 'spring', damping: 60, stiffness: 200, mass: 2 },
           }}
         >
           {children}

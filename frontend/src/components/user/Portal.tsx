@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate } from 'react-router-dom';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
+import { Context } from '@/store/Context';
 import User from '@/models/User';
 import Product from '@/models/Product';
 import Products from '../products/Products';
@@ -26,7 +26,7 @@ export default function Portal({
   const { sendRequest, isLoading: sendingData, error } = useHTTP();
   const { data: userItems, setData, isLoading: isFetching } = useFetch<Product[]>('my-products');
   const [expanded, setExpanded] = useState(false);
-  const navigate = useNavigate();
+  const { navTo } = useContext(Context);
 
   const hasItems = userItems && userItems.length > 0;
 
@@ -41,7 +41,11 @@ export default function Portal({
   };
 
   return (
-    <motion.div className={css.portal} initial={{ y: -100 }} animate={{ y: 0 }}>
+    <motion.div
+      className={css.portal}
+      initial={{ y: -100 }}
+      animate={{ y: 0, transition: { duration: 0.5 } }}
+    >
       <section>
         <div className={css.info}>
           <motion.h2
@@ -68,7 +72,7 @@ export default function Portal({
           <Button
             text={'inbox'}
             style={{ background: '#94ca7c' }}
-            onClick={() => navigate('/inbox')}
+            onClick={() => navTo('/inbox')}
           />
           <Button
             text={expanded ? 'cancel' : 'new ad'}

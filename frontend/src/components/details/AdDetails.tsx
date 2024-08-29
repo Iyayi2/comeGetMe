@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { APIError, useHTTP } from '@/hooks/useHTTP';
+import { useContext } from 'react';
+import { Context } from '@/store/Context';
 import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import { APIError, useHTTP } from '@/hooks/useHTTP';
 import css from './AdDetails.module.css';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
@@ -42,12 +43,12 @@ export default function AdDetails({
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
-  const navigate = useNavigate();
+  const { navTo } = useContext(Context)
   const { sendRequest } = useHTTP();
 
   async function clickHandler() {
     if (!user) {
-      navigate('/account');
+      navTo('/account');
     } else if (myAd) {
       toggleForm();
     } else {
@@ -56,7 +57,7 @@ export default function AdDetails({
         method: 'GET',
       });
       if (conversation) {
-        navigate('/inbox/' + conversation._id);
+        navTo('/inbox/' + conversation._id);
       } else {
         const newConversation = await sendRequest({
           params: 'conversation',
@@ -70,7 +71,7 @@ export default function AdDetails({
           },
         });
         if (newConversation) {
-          navigate('/inbox/' + newConversation._id);
+          navTo('/inbox/' + newConversation._id);
         }
       }
     }

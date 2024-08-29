@@ -18,7 +18,7 @@ export default function UserPage() {
   };
 
   return (
-    <AnimatePresence mode='popLayout'>
+    <AnimatePresence mode='wait' initial={false}>
       <motion.section
         key={isLoggedIn}
         exit={{

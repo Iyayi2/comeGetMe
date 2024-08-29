@@ -1,5 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useContext } from 'react';
+import { Context } from '@/store/Context';
 import { mediaQuery } from '@/util/mediaQuery';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
@@ -20,17 +21,17 @@ export default function ConversationItem({
   const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
-  const navigate = useNavigate();
+  const { navTo } = useContext(Context);
   const isMobile = mediaQuery();
 
   function expand() {
     if (!isActive) {
-      navigate(`/inbox/${_id}`);
+      navTo(`/inbox/${_id}`);
     }
   }
 
   function collapse() {
-    navigate('/inbox');
+    navTo('/inbox');
     setActive(null);
   }
 
@@ -68,7 +69,7 @@ export default function ConversationItem({
           alt={product.title}
           initial={{ width, height }}
           animate={{ width, height, transition: { delay: 0.1, duration: 0.5 } }}
-          onClick={() => isActive && navigate('/market/' + product._id)}
+          onClick={() => isActive && navTo('/market/' + product._id)}
           style={{ cursor: isActive ? 'pointer' : '' }}
           whileHover={{ scale: isActive ? 1.05 : 1 }}
         />
