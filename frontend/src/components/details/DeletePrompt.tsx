@@ -1,12 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext, useState } from 'react';
-import { Context } from '@/store/Context';
+import { useState } from 'react';
 import Button from '../button/Button';
 import css from './DeletePrompt.module.css';
 
 export default function DeletePrompt({ onDelete }: { onDelete: () => void }) {
   const [confirmation, setConfirmation] = useState(false);
-  const { navTo } = useContext(Context);
 
   function confirmHandler() {
     setConfirmation((toggle) => !toggle);
@@ -14,7 +12,6 @@ export default function DeletePrompt({ onDelete }: { onDelete: () => void }) {
 
   function deleteHandler() {
     onDelete();
-       navTo('/account');
   }
 
   return (
