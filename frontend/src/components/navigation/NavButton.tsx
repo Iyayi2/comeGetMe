@@ -17,9 +17,7 @@ export default function NavButton({ path, label }: { path: string; label: string
     <li>
       <button
         style={isAnimating ? { pointerEvents: 'none', opacity: 0.6 } : {}}
-        onClick={() => {
-          navTo(path);
-        }}
+        onClick={() => navTo(path)}
       >
         {label}
       </button>

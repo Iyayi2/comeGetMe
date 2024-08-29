@@ -35,7 +35,7 @@ export default function Products({
               layout
              initial='hidden'
              animate='visible'
-          transition={{ staggerChildren: 0.15 }}
+          transition={{ staggerChildren: 0.15, delayChildren: 0.5 }}
         >
           <AnimatePresence>
             {filteredProducts.length > 0 ? (
