@@ -7,7 +7,7 @@ import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
-import css from './AdDetails.module.css';
+import css from './ProductIdDetails.module.css';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
   <div className={css.box}>{children}</div>

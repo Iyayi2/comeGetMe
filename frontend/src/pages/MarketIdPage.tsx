@@ -3,11 +3,11 @@ import { useContext, useState } from 'react';
 import { Context } from '@/store/Context';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
-import AdDetails from '@/components/details/AdDetails';
+import ProductIdDetails from '@/components/details/ProductIdDetails';
 import ErrorPage from '@/components/error/Error';
 import LoadingIndicator from '@/components/loading/LoadingIndicator';
 
-export default function AdPage() {
+export default function MarketIdPage() {
   const { productId } = useParams();
   const { data: product, setData, sendRequest, isLoading, error } = useHTTP();
   const { isLoading: isFetching } = useFetch('product/' + productId, setData);
@@ -34,7 +34,7 @@ export default function AdPage() {
   return isFetching ? (
     <LoadingIndicator />
   ) : product ? (
-    <AdDetails
+    <ProductIdDetails
             user={user}
          product={product}
           onEdit={updateItem}
