@@ -36,6 +36,7 @@ body {
   flex-direction: column;
   overflow: auto;
   max-height: 100vh;
+  position: relative;
 }
 
 /* hidethescrollbar */

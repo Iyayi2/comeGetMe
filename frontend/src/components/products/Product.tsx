@@ -6,10 +6,10 @@ import css from './Product.module.css';
 
 export default function ProductItem({
   product,
-  expanded,
+  isLoggedIn,
 }: {
-    product: Product;
-  expanded?: boolean | null;
+      product: Product;
+  isLoggedIn?: boolean | null;
 }) {
   const { _id, title, price, description, imageUrl, userId } = product;
   const { navTo } = useContext(Context);
@@ -28,7 +28,7 @@ export default function ProductItem({
          onClick={() => navTo('/market/' + _id)}
     >
       <img src={`http://localhost:3000/${imageUrl}`} alt={title} />
-      {expanded && <p className={css['username']}>Posted by {userId.username}</p>}
+      {isLoggedIn && <p className={css['username']}>Posted by {userId.username}</p>}
       <div className={css['details']}>
         <p>
           ${price.toFixed(2)} ○ {title}

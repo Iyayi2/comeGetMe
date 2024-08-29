@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
@@ -7,10 +7,8 @@ import { Context } from '@/store/Context';
 import User from '@/models/User';
 import Product from '@/models/Product';
 import Products from '../products/Products';
-import LoadingIndicator from '../loading/LoadingIndicator';
 import Button from '../button/Button';
 import ItemForm from '../form/ItemForm';
-import Logo from './Logo';
 import css from './Portal.module.css';
 
 export default function Portal({
@@ -83,22 +81,7 @@ export default function Portal({
       </section>
 
       <ItemForm expanded={expanded} dataFn={submitHandler} isLoading={sendingData} error={error} />
-      <motion.h3
-        key={hasItems as null}
-        initial={{ opacity: 0, scaleY: 0 }}
-        animate={{ opacity: 1, scaleY: 1 }}
-      >
-        {isFetching ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
-      </motion.h3>
-      <AnimatePresence mode='wait'>
-        {isFetching ? (
-          <LoadingIndicator key='1' scale={0.5} />
-        ) : hasItems ? (
-          <Products key='2' products={userItems} />
-        ) : (
-          <Logo key='3' />
-        )}
-      </AnimatePresence>
+      <Products onUserPage products={userItems || []} hasItems={hasItems} isLoading={isFetching} />
     </motion.div>
   );
 }

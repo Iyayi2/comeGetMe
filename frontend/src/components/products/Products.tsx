@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import Product from '@/models/Product';
-import css from './Products.module.css';
 import ProductItem from './Product';
+import LoadingIndicator from '../loading/LoadingIndicator';
+import Fallback from './Fallback';
+import css from './Products.module.css';
 
 export default function Products({
   products,
-  expanded,
+  isLoggedIn,
+  hasItems,
+  onUserPage,
+  isLoading,
 }: {
-   products: Product[];
-  expanded?: boolean | null;
+     products: Product[];
+  isLoggedIn?: boolean | null;
+    hasItems?: boolean | null;
+  onUserPage?: boolean | null;
+    isLoading: boolean;
 }) {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -22,14 +30,28 @@ export default function Products({
   };
 
   return (
-    <>
-      <input
-          className={css['search']}
-              value={searchTerm}
-           onChange={changeHandler}
-        placeholder='Search...'
-      />
-      <LayoutGroup>
+    <LayoutGroup>
+      <div className={css['container']}>
+        {onUserPage && (
+          <motion.h3
+                 layout
+                   key={hasItems + ''}
+               initial={{ opacity: 0, scaleY: 0 }}
+               animate={{ opacity: 1, scaleY: 1 }}
+            transition={{ layout: { ease: 'easeInOut', duration: 0.65 }}}
+          >
+            {isLoading ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
+          </motion.h3>
+        )}
+        <motion.input
+               layout
+            className={css['search']}
+                value={searchTerm}
+             onChange={changeHandler}
+          placeholder='Search...'
+          transition={{ layout: { ease: 'easeInOut', duration: 0.65 }}}
+
+        />
         <motion.ul
            className={css['products']}
              initial='hidden'
@@ -37,26 +59,18 @@ export default function Products({
           transition={{ staggerChildren: 0.15, delayChildren: 0.5 }}
         >
           <AnimatePresence>
-            {filteredProducts.length > 0 ? (
+            {isLoading ? (
+              <LoadingIndicator key='loading' />
+            ) : filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
-                <ProductItem key={product._id} product={product} expanded={expanded} />
+                <ProductItem key={product._id} product={product} isLoggedIn={isLoggedIn} />
               ))
             ) : (
-              <motion.p
-                       key=     'fallback'
-                 className={css['fallback']}
-                    layout
-                   initial={{ opacity: 0, scale: 0 }}
-                   animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                Nothing Found
-              </motion.p>
+              <Fallback key='noSearches' />
             )}
           </AnimatePresence>
         </motion.ul>
-      </LayoutGroup>
-    </>
+      </div>
+    </LayoutGroup>
   );
 }

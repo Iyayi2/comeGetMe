@@ -26,7 +26,7 @@ export default function UserPage() {
           opacity: 0,
           transition: { duration: 0.5 },
         }}
-        style={{ display: 'flex', flexDirection: 'column' }}
+        style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}
       >
         {isFetching ? (
           <LoadingIndicator />
