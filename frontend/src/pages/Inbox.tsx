@@ -4,7 +4,7 @@ import ErrorPage from '@/components/error/Error';
 import LoadingIndicator from '@/components/loading/LoadingIndicator';
 
 export default function Inbox() {
-  const { data: conversations, isLoading, error } = useFetch({ params: 'conversations' });
+  const { data: conversations, isLoading, error } = useFetch('conversations');
 
   return isLoading ? (
     <LoadingIndicator />

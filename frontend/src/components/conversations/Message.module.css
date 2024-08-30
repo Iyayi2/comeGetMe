@@ -10,7 +10,6 @@
   p {
     margin: 0;
     overflow-wrap: break-word;
-    line-height: 0.8;
 
     &:first-of-type {
       text-align: end;

@@ -19,7 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const { title, description } = dynamic ? dynamic : metadata[pathname as keyof typeof metadata] || metadata['*'];
 
   console.clear(); // logData
-  console.log('METADATA', dynamic);
 
   return (
     <>
