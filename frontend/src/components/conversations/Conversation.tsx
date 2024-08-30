@@ -21,7 +21,7 @@ export default function ConversationItem({
   const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
-  const { navTo } = useContext(Context);
+  const { navTo, isAnimating } = useContext(Context);
   const isMobile = mediaQuery();
 
   function expand() {
@@ -32,7 +32,9 @@ export default function ConversationItem({
 
   function collapse() {
     navTo('/inbox');
-    setActive(null);
+    if (!isAnimating) {
+      setActive(null);
+    }
   }
 
   const height = (isActive ? 180 : 120) * (isMobile ? 0.5 : 1);

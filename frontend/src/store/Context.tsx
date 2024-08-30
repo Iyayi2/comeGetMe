@@ -31,7 +31,7 @@ export default function ContextProvider({ children }: { children: ReactNode }) {
       setTimeout(() => {
         setIsAnimating(false);
         document.body.style.overflow = '';
-      }, 1500);
+      }, 1400);
     }
   };
 

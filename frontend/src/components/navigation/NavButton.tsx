@@ -10,7 +10,7 @@ export default function NavButton({ path, label }: { path: string; label: string
   const isActive =
     pathname === path ||
     (pathname.startsWith(path) && path !== '/') ||
-    (pathname === '/inbox' && path === '/account');
+    (pathname.startsWith ('/inbox') && path === '/account');
 
 
   return (
