@@ -10,7 +10,12 @@
     text-align: start;
   }
 
+  textarea, input {
+    width: 170px;
+  }
+
   textarea {
     resize: none;
+    height: 3.5rem;
   }
 }

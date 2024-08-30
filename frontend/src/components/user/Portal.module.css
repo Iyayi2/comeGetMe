@@ -6,31 +6,6 @@
   border: 1px solid #000;
   border-radius: 3px;
   background: #ede7e7;
-
-  section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem;
-    margin: 0;
-
-    .info {
-      h2,
-      p {
-        font-family: 'Bebas Neue', sans-serif;
-        font-weight: 100;
-        margin: 0;
-        color: rgb(79, 79, 79);
-      }
-    }
-
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-  }
 }
 
 
