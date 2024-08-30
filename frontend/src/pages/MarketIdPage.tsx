@@ -45,6 +45,6 @@ export default function MarketIdPage() {
       toggleForm={() => setExpanded((toggle) => !toggle)}
     />
   ) : (
-    <ErrorPage type='ad' />
+    <ErrorPage type='product' />
   );
 }

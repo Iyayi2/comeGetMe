@@ -1,11 +1,10 @@
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
   padding: 1rem;
-  position: relative;
 
   h3 {
     font-family: 'Bebas Neue', sans-serif;
@@ -23,7 +22,6 @@
 
   .products {
     position: relative;
-    min-height: 325px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;

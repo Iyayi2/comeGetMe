@@ -4,6 +4,7 @@ import Product from '@/models/Product';
 import ProductItem from './Product';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Fallback from './Fallback';
+import ErrorPage from '../error/Error';
 import css from './Products.module.css';
 
 export default function Products({
@@ -31,7 +32,8 @@ export default function Products({
 
   return (
     <LayoutGroup>
-      <div className={css['container']}>
+      {/* keep container size consistent during absolute element transitions */}
+      <div className={css['container']} style={{ minHeight: onUserPage ? 435 : '' }}>
         {onUserPage && (
           <motion.h3
                  layout
@@ -53,14 +55,13 @@ export default function Products({
         />
         <AnimatePresence>
           {isLoading ? (
-            <motion.div
-              style={{ height: 325, width: 90, position: 'relative' }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-               exit={{ opacity: 0, scale: 1, position: 'absolute' }}
-          >
             <LoadingIndicator key='loading' />
-          </motion.div>
+          ) : products.length === 0 ? (
+            onUserPage ? (
+              <Fallback key='noAds' noAds />
+            ) : (
+              <ErrorPage key='error' type='market' />
+            )
           ) : (
             <motion.ul
                className={css['products']}
