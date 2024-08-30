@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import Product from '@/models/Product';
 import ProductItem from './Product';
@@ -21,13 +21,21 @@ export default function Products({
     isLoading: boolean;
 }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const timerRef = useRef<number | null>(null);
 
   const filteredProducts = products?.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+    }
+
+    timerRef.current = setTimeout(() => {
+      timerRef.current = null;
+      setSearchTerm(event.target.value.trim());
+    }, 1000);
   };
 
   return (
@@ -48,7 +56,7 @@ export default function Products({
         <motion.input
                layout
             className={css['search']}
-                value={searchTerm}
+             disabled={products.length === 0}
              onChange={changeHandler}
           placeholder='Search...'
           transition={{ layout: { ease: 'easeInOut', duration: 0.65 }}}
