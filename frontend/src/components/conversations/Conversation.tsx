@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Context } from '@/store/Context';
 import { mediaQuery } from '@/util/mediaQuery';
 import Messages from './Messages';
@@ -21,7 +21,8 @@ export default function ConversationItem({
   const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
-  const { navTo, isAnimating } = useContext(Context);
+  const { isAnimating,  navTo } = useContext(Context);
+  const [imageSrc, setImageSrc] = useState(`http://localhost:3000/${product.imageUrl}`);
   const isMobile = mediaQuery();
 
   function expand() {
@@ -67,11 +68,12 @@ export default function ConversationItem({
         }}
       >
         <motion.img
-          src={`http://localhost:3000/${product.imageUrl}`}
+          src={imageSrc}
           alt={product.title}
           initial={{ width, height }}
           animate={{ width, height, transition: { delay: 0.1, duration: 0.5 } }}
           onClick={() => isActive && navTo('/market/' + product._id)}
+          onError={() => setImageSrc('/notFound.png')}
           style={{ cursor: isActive ? 'pointer' : '' }}
           whileHover={{ scale: isActive ? 1.05 : 1 }}
         />
