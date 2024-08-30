@@ -1,3 +1,5 @@
+import { Context } from '@/store/Context';
+import { useContext } from 'react';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
 import Portal from '@/components/user/Portal';
@@ -6,23 +8,30 @@ import LoadingIndicator from '@/components/loading/LoadingIndicator';
 import PageWrapper from '@/components/pages/PageWrapper';
 
 export default function UserPage() {
-  const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
+  const { data: user, setData, isLoading, error, sendRequest } = useHTTP();
   const { isLoading: isFetching } = useFetch('login', setData);
+  const { setUser } = useContext(Context);
 
   const handleLogin = async (params: string, data: object) => {
-    await sendRequest({ params, method: 'POST', data });
+    const isLoggedIn = await sendRequest({ params, method: 'POST', data });
+    if (isLoggedIn) {
+      setUser(isLoggedIn);
+    }
   };
 
   const handleLogout = async () => {
-    await sendRequest({ params: 'logout', method: 'POST' });
+    const response = await sendRequest({ params: 'logout', method: 'POST' });
+    if (!response) {
+      setUser(response); // backend sends null on success / json objects on fail
+    }
   };
 
   return (
-    <PageWrapper recreate={isLoggedIn}>
+    <PageWrapper recreate={user}>
       {isFetching ? (
         <LoadingIndicator key='lds' />
-      ) : isLoggedIn ? (
-        <Portal key='portal' user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />
+      ) : user ? (
+        <Portal key='portal' user={user} isLoading={isLoading} onLogout={handleLogout} />
       ) : (
         <SignInForm key='form' isLoading={isLoading} error={error} onLogin={handleLogin} />
       )}
