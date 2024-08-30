@@ -50,26 +50,30 @@ export default function Products({
              onChange={changeHandler}
           placeholder='Search...'
           transition={{ layout: { ease: 'easeInOut', duration: 0.65 }}}
-
         />
-        <motion.ul
-           className={css['products']}
-             initial='hidden'
-             animate='visible'
-          transition={{ staggerChildren: 0.15, delayChildren: 0.5 }}
-        >
-          <AnimatePresence>
-            {isLoading ? (
-              <LoadingIndicator key='loading' />
-            ) : filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <ProductItem key={product._id} product={product} isLoggedIn={isLoggedIn} />
-              ))
-            ) : (
-              <Fallback key='noSearches' />
-            )}
-          </AnimatePresence>
-        </motion.ul>
+        <AnimatePresence>
+          {isLoading ? (
+            <LoadingIndicator key='loading' />
+          ) : (
+            <motion.ul
+               className={css['products']}
+                     key='products'
+                 initial='hidden'
+                 animate='visible'
+              transition={{ staggerChildren: 0.15, delayChildren: 0.5 }}
+            >
+              <AnimatePresence>
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product) => (
+                    <ProductItem key={product._id} product={product} isLoggedIn={isLoggedIn} />
+                  ))
+                ) : (
+                  <Fallback key='noSearches' />
+                )}
+              </AnimatePresence>
+            </motion.ul>
+          )}
+        </AnimatePresence>
       </div>
     </LayoutGroup>
   );

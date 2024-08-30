@@ -17,11 +17,6 @@
 
 .noSearches {
   position: absolute;
+  top: 5%;
   text-wrap: nowrap;
-}
-
-@media screen and (max-width: 420px) {
-  .fallback {
-    position: relative;
-  }
 }
