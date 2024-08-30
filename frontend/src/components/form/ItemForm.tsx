@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { APIError } from '@/hooks/useHTTP';
 import Input from './Input';
 import ImagePicker from './ImagePicker';
 import Button from '../button/Button';
-import { APIError } from '@/hooks/useHTTP';
 import Product from '@/models/Product';
 import css from './ItemForm.module.css';
 
@@ -31,12 +31,13 @@ export default function ItemForm({
     <AnimatePresence mode='wait'>
       {expanded && (
         <motion.form
-          onSubmit={submitHandler}
-          className={css['form']}
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-             exit={{ opacity: 0, height: 0 }}
-          transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
+              layout
+            onSubmit={submitHandler}
+           className={css['form']}
+             initial={{ opacity: 0, height: 0 }}
+             animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+          transition={{ ease: 'linear', duration: 0.65 }}
         >
           <div className={css['inputs']}>
             <Input id='title'       error={error} defaultValue={title} />

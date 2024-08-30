@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APIError, useHTTP } from '@/hooks/useHTTP';
 import { useContext } from 'react';
@@ -10,7 +10,9 @@ import User from '@/models/User';
 import css from './ProductIdDetails.module.css';
 
 const Box = ({ children }: { children: React.ReactNode }) => (
-  <div className={css.box}>{children}</div>
+  <motion.div layout className={css.box}>
+    {children}
+  </motion.div>
 );
 
 const GitLink = ({ link, name }: { link: string; name: string }) => (
@@ -32,18 +34,18 @@ export default function AdDetails({
   expanded,
   toggleForm,
 }: {
-       user: User | null;
-    product: Product;
-     onEdit: (data: object) => void;
-   onDelete: () => void;
-  isLoading: boolean;
-      error: APIError;
-   expanded: boolean;
- toggleForm: () => void;
+        user: User | null;
+     product: Product;
+      onEdit: (data: object) => void;
+    onDelete: () => void;
+   isLoading: boolean;
+       error: APIError;
+    expanded: boolean;
+  toggleForm: () => void;
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
-  const { navTo } = useContext(Context)
+  const { navTo } = useContext(Context);
   const { sendRequest } = useHTTP();
 
   async function clickHandler() {
@@ -64,9 +66,9 @@ export default function AdDetails({
           method: 'POST',
             data: {
               seller: {
-                   _id: userId._id,
-              username: userId.username,
-               product: { _id, title, price, imageUrl },
+                    _id: userId._id,
+               username: userId.username,
+                product: { _id, title, price, imageUrl },
             },
           },
         });
@@ -85,16 +87,18 @@ export default function AdDetails({
 
   return (
     <section className={css.ad}>
+
       <article className={css.article}>
         <AnimatePresence mode='wait' initial={false}>
           <motion.img
-            key={imageUrl}
-            initial={{ opacity: 0, height: 0,      width: 0      }}
-            animate={{ opacity: 1, height: 'auto', width: 'auto' }}
-               exit={{ opacity: 0, height: 0,      width: 0      }}
-            transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
-            src={`http://localhost:3000/${imageUrl}`}
-            alt='product'
+                 layout
+                   key={imageUrl}
+                   src={`http://localhost:3000/${imageUrl}`}
+                   alt='product'
+               initial={{ opacity: 0, height: 0,      width: 0 }}
+               animate={{ opacity: 1, height: 'auto', width: 'auto' }}
+                  exit={{ opacity: 0, height: 0     , width: 0 }}
+            transition={{ ease: 'linear', duration: 0.8, delay: 0.5 }}
           />
         </AnimatePresence>
         <Box>
@@ -118,28 +122,32 @@ export default function AdDetails({
           </AnimatePresence>
         </Box>
       </article>
-      <aside className={css.aside}>
-        <Box>
-          <p>
-            <span>Ad ID</span>
-            <span>{_id}</span>
-          </p>
-          {user &&                    <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
-          <button onClick={clickHandler}>{myAd ?   'Edit Listing' : 'Send Message'                }</button>
-          {myAd && <DeletePrompt onDelete={onDelete} />}
-        </Box>
-        <ItemForm
-          expanded={expanded}
-            dataFn={onEdit}
-         isLoading={isLoading}
-             error={error}
-           product={product}
-        />
-        <Box>
-          <GitLink link='Iyayi2'        name='Iyayi Roland' />
-          <GitLink link='thegroosalugg' name='Victor Loginov' />
-        </Box>
-      </aside>
+
+      <LayoutGroup>
+        <aside className={css.aside}>
+          <Box>
+            <p>
+              <span>Ad ID</span>
+              <span>{_id}</span>
+            </p>
+            {user &&                    <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
+            <button onClick={clickHandler}>{myAd ?   'Edit Listing' : 'Send Message'}</button>
+            {myAd && <DeletePrompt onDelete={onDelete} />}
+          </Box>
+          <ItemForm
+             expanded={expanded}
+               dataFn={onEdit}
+            isLoading={isLoading}
+                error={error}
+              product={product}
+          />
+          <Box>
+            <GitLink link='Iyayi2'        name='Iyayi Roland'   />
+            <GitLink link='thegroosalugg' name='Victor Loginov' />
+          </Box>
+        </aside>
+      </LayoutGroup>
+
     </section>
   );
 }

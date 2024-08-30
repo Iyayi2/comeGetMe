@@ -5,7 +5,6 @@
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   align-self: center;
   gap: 1rem;
-  margin: auto;
   padding: 1rem;
 
   .article,
