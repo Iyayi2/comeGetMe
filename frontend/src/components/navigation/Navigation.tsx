@@ -7,9 +7,7 @@ import css from './Navigation.module.css';
 
 export default function Navigation() {
   const { user, setUser } = useContext(Context);
-  const { data } = useFetch('login', setUser);
-
-  console.log('NAV context user', user, '\nfetched data', data);
+  useFetch('login', setUser);
 
   return (
     <nav className={css.nav}>
