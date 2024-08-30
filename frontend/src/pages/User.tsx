@@ -1,9 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
+import Portal from '@/components/user/Portal';
 import SignInForm from '../components/form/SignInForm';
 import LoadingIndicator from '@/components/loading/LoadingIndicator';
-import Portal from '@/components/user/Portal';
+import PageWrapper from '@/components/pages/PageWrapper';
 
 export default function UserPage() {
   const { data: isLoggedIn, setData, isLoading, error, sendRequest } = useHTTP();
@@ -18,24 +18,14 @@ export default function UserPage() {
   };
 
   return (
-    <AnimatePresence mode='wait'>
-      <motion.section
-        key={isLoggedIn}
-        exit={{
-          y: 100,
-          opacity: 0,
-          transition: { duration: 0.5 },
-        }}
-        style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}
-      >
-        {isFetching ? (
-          <LoadingIndicator />
-        ) : isLoggedIn ? (
-          <Portal user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />
-        ) : (
-          <SignInForm isLoading={isLoading} error={error} onLogin={handleLogin} />
-        )}
-      </motion.section>
-    </AnimatePresence>
+    <PageWrapper recreate={isLoggedIn}>
+      {isFetching ? (
+        <LoadingIndicator key='lds' />
+      ) : isLoggedIn ? (
+        <Portal key='portal' user={isLoggedIn} isLoading={isLoading} onLogout={handleLogout} />
+      ) : (
+        <SignInForm key='form' isLoading={isLoading} error={error} onLogin={handleLogin} />
+      )}
+    </PageWrapper>
   );
 }
