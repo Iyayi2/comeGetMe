@@ -12,7 +12,12 @@ export default function ProductItem({
   isLoggedIn?: boolean | null;
 }) {
   const { _id, title, price, description, imageUrl, userId } = product;
-  const { navTo } = useContext(Context);
+  const { navTo, isAnimating, setMetadata } = useContext(Context);
+
+  function clickHandler() {
+    navTo('/market/' + _id)
+    !isAnimating && setMetadata({ title, description });
+  }
 
   return (
     <motion.li
@@ -25,7 +30,7 @@ export default function ProductItem({
             exit={{ opacity: 0, height: 0, scale: 0 }}
       whileHover={{ borderColor: '#000', y: -5 }}
       transition={{ ease: 'easeInOut', duration: 0.45, layout: { duration: 0.65 } }}
-         onClick={() => navTo('/market/' + _id)}
+         onClick={clickHandler}
     >
       <img src={`http://localhost:3000/${imageUrl}`} alt={title} />
       {isLoggedIn && <p className={css['username']}>Posted by {userId.username}</p>}

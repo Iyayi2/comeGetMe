@@ -10,15 +10,13 @@ const metadata = {
   '/account': { title: 'My Account',   description: 'User Account'   },
    '/market': { title: 'Marketplace',  description: 'Market Place'   },
     '/inbox': { title: 'My Messages',  description: 'Mail Inbox'     },
-         "*": { title: 'Come Get Me',  description: 'Page Not Found' },
+         "*": { title: 'Error'      ,  description: 'Page Not Found' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { pathname, prevPath } = usePaths();
   const { metadata: dynamic  } = useContext(Context);
-  const { title, description } = dynamic
-    ? { title: dynamic.title, description: dynamic.description }
-    : metadata[pathname as keyof typeof metadata] || metadata['*'];
+  const { title, description } = dynamic ? dynamic : metadata[pathname as keyof typeof metadata] || metadata['*'];
 
   console.clear(); // logData
   console.log('METADATA', dynamic);

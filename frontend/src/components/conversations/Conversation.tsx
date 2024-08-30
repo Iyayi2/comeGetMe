@@ -21,13 +21,14 @@ export default function ConversationItem({
   const { username, _id: userId }         = members[0];
   const { username: sellerName, product } = members[1];
   const recipient = sessionId === userId ? sellerName : username;
-  const { isAnimating,  navTo } = useContext(Context);
-  const [imageSrc, setImageSrc] = useState(`http://localhost:3000/${product.imageUrl}`);
+  const { isAnimating, navTo, setMetadata } = useContext(Context);
+  const [    imageSrc,        setImageSrc ] = useState(`http://localhost:3000/${product.imageUrl}`);
   const isMobile = mediaQuery();
 
   function expand() {
     if (!isActive) {
       navTo(`/inbox/${_id}`);
+      !isAnimating && setMetadata({ title: recipient, description: 'Conversation' });
     }
   }
 

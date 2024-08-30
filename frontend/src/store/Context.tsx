@@ -1,13 +1,17 @@
 import User from '@/models/User';
-import Product from '@/models/Product';
 import { createContext, ReactNode, useState, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+type Metadata = {
+       title: string,
+ description: string
+}
 
 type ContextType = {
             user: User | null;
          setUser: Dispatch<SetStateAction<User | null>>;
-        metadata: Product | null;
-     setMetadata: Dispatch<SetStateAction<Product | null>>;
+        metadata: Metadata | null;
+     setMetadata: Dispatch<SetStateAction<Metadata | null>>;
      isAnimating: boolean,
   setIsAnimating: Dispatch<SetStateAction<boolean>>,
            navTo: (path: string) => void;
@@ -24,8 +28,8 @@ export const Context = createContext<ContextType>({
 });
 
 export default function ContextProvider({ children }: { children: ReactNode }) {
-  const [       user,        setUser] = useState<User    | null>(null);
-  const [   metadata,    setMetadata] = useState<Product | null>(null);
+  const [       user,        setUser] = useState<User     | null>(null);
+  const [   metadata,    setMetadata] = useState<Metadata | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const                     navigate  = useNavigate();
 
