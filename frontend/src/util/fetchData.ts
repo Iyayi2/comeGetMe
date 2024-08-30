@@ -17,8 +17,6 @@ export const fetchData = async ({ params, method, data }: Fetch) => {
 
   const resData = await response.json();
 
-  console.log('[Server Response]', resData); // logData
-
   if (!response.ok) {
     throw resData;
   }

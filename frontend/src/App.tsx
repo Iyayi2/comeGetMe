@@ -1,3 +1,5 @@
+import ContextProvider from './store/Context';
+import { HelmetProvider } from 'react-helmet-async';
 import { useRoutes } from 'react-router-dom';
 import HomePage from './pages/Home';
 import MarketPage from './pages/Market';
@@ -6,7 +8,6 @@ import UserPage from './pages/User';
 import Inbox from './pages/Inbox';
 import ErrorPage from './components/error/Error';
 import RootLayout from './pages/Root';
-import ContextProvider from './store/Context';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';  // import brand icons
@@ -30,7 +31,9 @@ export default function App() {
 
   return (
     <ContextProvider>
-      <RootLayout>{element}</RootLayout>
+      <HelmetProvider>
+        <RootLayout>{element}</RootLayout>
+      </HelmetProvider>
     </ContextProvider>
   );
 }

@@ -62,11 +62,11 @@ export default function AdDetails({
         const newConversation = await sendRequest({
           params: 'conversation',
           method: 'POST',
-          data: {
-            seller: {
-              _id: userId._id,
+            data: {
+              seller: {
+                   _id: userId._id,
               username: userId.username,
-              product: { _id, title, price, imageUrl },
+               product: { _id, title, price, imageUrl },
             },
           },
         });
@@ -124,8 +124,8 @@ export default function AdDetails({
             <span>Ad ID</span>
             <span>{_id}</span>
           </p>
-          {user && <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
-          <button onClick={clickHandler}>{myAd ? 'Edit Listing' : 'Send Message'}</button>
+          {user &&                    <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
+          <button onClick={clickHandler}>{myAd ?   'Edit Listing' : 'Send Message'                }</button>
           {myAd && <DeletePrompt onDelete={onDelete} />}
         </Box>
         <ItemForm
