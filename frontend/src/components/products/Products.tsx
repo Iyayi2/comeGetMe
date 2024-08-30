@@ -53,7 +53,14 @@ export default function Products({
         />
         <AnimatePresence>
           {isLoading ? (
+            <motion.div
+              style={{ height: 325, width: 90, position: 'relative' }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+               exit={{ opacity: 0, scale: 1, position: 'absolute' }}
+          >
             <LoadingIndicator key='loading' />
+          </motion.div>
           ) : (
             <motion.ul
                className={css['products']}
