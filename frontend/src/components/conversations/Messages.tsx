@@ -12,7 +12,7 @@ import css from './Messages.module.css';
 export default function Messages({ conversation }: { conversation: Conversation }) {
   const { _id, sessionId } = conversation;
   const {           sendRequest              } = useHTTP();
-  const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
+  const { data: messages, isLoading, setData } = useFetch<Message[]>({ params: 'message/' + _id });
   const [value,     setValue] = useState('');
   const [didSend, setDidSend] = useState(false);
   const  msgRef               = useRef<HTMLLIElement>(null);

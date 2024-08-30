@@ -10,8 +10,8 @@ import LoadingIndicator from '@/components/loading/LoadingIndicator';
 export default function MarketIdPage() {
   const { productId } = useParams();
   const { data: product, setData, sendRequest, isLoading, error } = useHTTP();
-  const { isLoading: isFetching } = useFetch('product/' + productId, setData);
-  const { data: user } = useFetch('login');
+  const { isLoading: isFetching } = useFetch({ params: 'product/' + productId, setExternalData: setData, metadata: true });
+  const { data: user } = useFetch({ params: 'login' });
   const [expanded, setExpanded] = useState(false);
   const { navTo } = useContext(Context);
 

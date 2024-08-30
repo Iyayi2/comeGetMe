@@ -7,7 +7,7 @@ import css from './Navigation.module.css';
 
 export default function Navigation() {
   const { user, setUser } = useContext(Context);
-  useFetch('login', setUser);
+  useFetch({ params: 'login', setExternalData: setUser});
 
   return (
     <nav className={css.nav}>

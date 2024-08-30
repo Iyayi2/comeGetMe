@@ -9,7 +9,6 @@ export function useHTTP<T = null>(initialData = null) {
   const [    error,     setError] = useState<APIError>(null);
 
   const sendRequest = useCallback(async ({ params, method, data }: Fetch) => {
-    console.clear(); // logData
     setIsLoading(true);
     setError(null);
     try {

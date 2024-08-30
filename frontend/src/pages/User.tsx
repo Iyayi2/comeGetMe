@@ -9,7 +9,7 @@ import PageWrapper from '@/components/pages/PageWrapper';
 
 export default function UserPage() {
   const { data: user, setData, isLoading, error, sendRequest } = useHTTP();
-  const { isLoading: isFetching } = useFetch('login', setData);
+  const { isLoading: isFetching } = useFetch({ params: 'login', setExternalData: setData });
   const { setUser } = useContext(Context);
 
   const handleLogin = async (params: string, data: object) => {
