@@ -1,5 +1,7 @@
 .lds-ring {
-  margin: 5% auto;
+  position: absolute; /* set position relative on parent contrainers */
+  align-self: center; /* all parents in this App are flex boxes */
+  top: 100px; /* lower loading indicator in relative to parent */
   width: 80px;
   height: 80px;
   display: flex;

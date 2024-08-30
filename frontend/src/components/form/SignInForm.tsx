@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import Button from '../button/Button';
-import css from './SignInForm.module.css';
 import { APIError } from '@/hooks/useHTTP';
+import css from './SignInForm.module.css';
 
 export default function SignInForm({
   onLogin,
   isLoading,
   error,
 }: {
-  onLogin: (path: string, data: object) => void;
+    onLogin: (params: string, data: object) => void;
   isLoading: boolean;
-  error: APIError;
+      error: APIError;
 }) {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';

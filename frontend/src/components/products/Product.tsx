@@ -1,33 +1,34 @@
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Context } from '@/store/Context';
 import Product from '@/models/Product';
 import css from './Product.module.css';
 
 export default function ProductItem({
   product,
-  expanded,
+  isLoggedIn,
 }: {
-    product: Product;
-  expanded?: boolean | null;
+      product: Product;
+  isLoggedIn?: boolean | null;
 }) {
   const { _id, title, price, description, imageUrl, userId } = product;
-  const navigate = useNavigate();
+  const { navTo } = useContext(Context);
 
   return (
     <motion.li
-      className={css['product']}
-      layout
-      variants={{
-         hidden: { opacity: 0, height: 0,      y: -50 },
-        visible: { opacity: 1, height: 'auto', y: 0 },
-      }}
-           exit={{ opacity: 0, height: 0, scale: 0 }}
+          layout
+       className={css['product']}
+        variants={{
+          hidden: { opacity: 0, height: 0,      y: -50 },
+         visible: { opacity: 1, height: 'auto', y: 0 },
+        }}
+            exit={{ opacity: 0, height: 0, scale: 0 }}
       whileHover={{ borderColor: '#000', y: -5 }}
-      transition={{ type: 'tween', ease: 'easeInOut', duration: 0.2 }}
-      onClick={() => navigate('/market/' + _id)}
+      transition={{ ease: 'easeInOut', duration: 0.45, layout: { duration: 0.65 } }}
+         onClick={() => navTo('/market/' + _id)}
     >
       <img src={`http://localhost:3000/${imageUrl}`} alt={title} />
-      {expanded && <p className={css['username']}>Posted by {userId.username}</p>}
+      {isLoggedIn && <p className={css['username']}>Posted by {userId.username}</p>}
       <div className={css['details']}>
         <p>
           ${price.toFixed(2)} ○ {title}

@@ -54,7 +54,6 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
-      console.log('[POST Logout session 2]', req.session); // LogData
       return res.status(500).json({ message: 'Logout failed' });
     }
     res.status(200).json(null); // clear state in frontend

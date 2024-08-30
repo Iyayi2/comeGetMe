@@ -19,19 +19,21 @@
     gap: 1rem;
     padding: 0.5rem;
 
-    li,
-    a {
-      transition: 0.4s ease-in-out;
-    }
-
     li {
-      :hover {
+      transition: 0.4s ease-in-out;
+ 
+      &:hover {
         transform: scale(1.05);
       }
 
-      a {
+      button {
         color: #ffffff;
-        text-decoration: none;
+        border: none;
+        background: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: 0.4s ease-in-out;
 
         &:hover {
           color: #beb8b8;
@@ -50,7 +52,7 @@
 @media screen and (max-width: 440px) and (orientation: landscape) {
   .nav {
     h2 {
-      margin: 0 0 0 1rem;
+      margin: 0 1rem;
       font-size: 1rem;
     }
     ul {
@@ -58,7 +60,9 @@
       padding: 0.25rem;
 
       li {
-        font-size: 0.8rem;
+        button {
+          font-size: 0.8rem;
+        }
       }
     }
   }
