@@ -31,6 +31,13 @@ export default function MarketIdPage() {
     }
   };
 
+  const toggleForm = (ref: React.RefObject<HTMLElement>) => {
+    setExpanded((toggle) => !toggle)
+    setTimeout(() => {
+      ref.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 1000);
+  }
+
   return isFetching ? (
     <LoadingIndicator />
   ) : product ? (
@@ -42,7 +49,7 @@ export default function MarketIdPage() {
        isLoading={isLoading}
            error={error}
         expanded={expanded}
-      toggleForm={() => setExpanded((toggle) => !toggle)}
+      toggleForm={toggleForm}
     />
   ) : (
     <ErrorPage type='product' />

@@ -43,23 +43,20 @@ export default function ProductIdDetails({
    isLoading: boolean;
        error: APIError;
     expanded: boolean;
-  toggleForm: () => void;
+  toggleForm: (ref: React.RefObject<HTMLElement>) => void;
 }) {
   const { _id, title, description, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
   const { navTo } = useContext(Context);
   const { sendRequest } = useHTTP();
-  const scrollDownRef = useRef<HTMLDivElement>(null);
-  const scrollUpRef   = useRef<HTMLButtonElement>(null);
+  const scrollDownRef = useRef(null);
+  const scrollUpRef   = useRef(null);
 
   async function clickHandler() {
     if (!user) {
       navTo('/account');
     } else if (myAd) {
-      toggleForm();
-      setTimeout(() => {
-        (expanded ? scrollUpRef : scrollDownRef).current?.scrollIntoView({ behavior: 'smooth' });
-      }, 1000);
+      toggleForm(expanded ? scrollUpRef : scrollDownRef)
     } else {
       const conversation = await sendRequest({
         params: `conversation/${userId._id}/${_id}`,
@@ -97,10 +94,10 @@ export default function ProductIdDetails({
       <section className={css.ad}>
 
 
-        <motion.article layout className={css.article}>
+        <motion.article layout className={css.article} ref={scrollUpRef}>
           <AnimatePresence mode='wait' initial={false}>
             <motion.img
-                    layout
+                   layout
                      key={imageUrl}
                      src={`http://localhost:3000/${imageUrl}`}
                      alt='product'
@@ -140,7 +137,7 @@ export default function ProductIdDetails({
               <span>{_id}</span>
             </p>
             {user && <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
-            <button ref={scrollUpRef} onClick={clickHandler}>
+            <button onClick={clickHandler}>
               {myAd ? 'Edit Listing' : 'Send Message'}
             </button>
             {myAd && <DeletePrompt onDelete={onDelete} />}
