@@ -7,15 +7,15 @@ import css from './Message.module.css';
 function MessageItem(
   {
     message,
-    activeId,
+    sessionId,
     duration,
     delay,
     scrollTo,
-  }: { message: Message; activeId: string; duration: number; delay: number; scrollTo: () => void },
+  }: { message: Message; sessionId: string; duration: number; delay: number; scrollTo: () => void },
   ref: React.Ref<HTMLLIElement>
 ) {
   const { createdAt, userId, text } = message;
-  const isCurrentUser = userId === activeId;
+  const isCurrentUser = userId === sessionId;
   const date = formatDate({ date: createdAt, time: true });
 
   return (

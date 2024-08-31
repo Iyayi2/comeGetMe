@@ -26,7 +26,7 @@ const GitLink = ({ link, name }: { link: string; name: string }) => (
   </p>
 );
 
-export default function AdDetails({
+export default function ProductIdDetails({
   user,
   product,
   onEdit,
@@ -58,7 +58,7 @@ export default function AdDetails({
     } else if (myAd) {
       toggleForm();
       setTimeout(() => {
-        (expanded ? scrollDownRef : scrollDownRef).current?.scrollIntoView({ behavior: 'smooth' });
+        (expanded ? scrollUpRef : scrollDownRef).current?.scrollIntoView({ behavior: 'smooth' });
       }, 1000);
     } else {
       const conversation = await sendRequest({

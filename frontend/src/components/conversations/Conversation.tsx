@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useContext, useState } from 'react';
 import { Context } from '@/store/Context';
 import { mediaQuery } from '@/util/mediaQuery';
+import { destructureConversation } from '@/util/destructureConversation';
 import Messages from './Messages';
 import Conversation from '@/models/Conversation';
 import css from './Conversation.module.css';
@@ -17,10 +18,7 @@ export default function ConversationItem({
       isActive: Conversation[] | null;
      setActive: (conversation: Conversation[] | null) => void;
 }) {
-  const { _id, sessionId, members }       = conversation;
-  const { username, _id: userId }         = members[0];
-  const { username: sellerName, product } = members[1];
-  const recipient = sessionId === userId ? sellerName : username;
+  const { _id, recipient, product } = destructureConversation(conversation);
   const { isAnimating, navTo, setMetadata } = useContext(Context);
   const [    imageSrc,        setImageSrc ] = useState(`http://localhost:3000/${product.imageUrl}`);
   const isMobile = mediaQuery();

@@ -8,25 +8,21 @@ export const useFetch = <T = null>(
   setExternalData?: Dispatch<SetStateAction<T>>
 ) => {
   const { data, setData, isLoading, error, sendRequest } = useHTTP<T>();
-  const { metadata, setMetadata } = useContext(Context);
-  const { productId } = useParams();
-  console.log('useFetch: params:', productId); // LogData
+  const { setMetadata } = useContext(Context);
+  const {  productId  } = useParams();
 
   const getData = useCallback(async () => {
     const response = await sendRequest({ params, method: 'GET' });
     setExternalData && setExternalData(response); // allows to update another state with this data
-    if (productId) {
-      if (response.title && response.description) {
-        setMetadata({ title: response.title, description: response.description })
-      }
+    if (productId && response?.title && response?.description) {
+        const { title, description } = response;
+        setMetadata({ title, description }); // update dynamic product path metadata
     }
   }, [params, productId, sendRequest, setExternalData, setMetadata]); // LogData
 
   useEffect(() => {
     getData();
   }, [getData]);
-
-  console.log('useFetch metadata', metadata) // LogData
 
   return { data, setData, getData, isLoading, error };
 };

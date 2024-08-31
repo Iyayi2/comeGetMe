@@ -2,6 +2,7 @@ import { Context } from '@/store/Context';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { destructureConversation } from '@/util/destructureConversation';
 import Conversation from '@/models/Conversation';
 import ConversationItem from './Conversation';
 import Fallback from './Fallback';
@@ -12,14 +13,14 @@ export default function Conversations({ conversations }: { conversations: Conver
   const [isActive, setIsActive] = useState<Conversation[] | null>(null);
   const [   error,    setError] = useState(false);
   const {   conversationId    } = useParams();
-  const { metadata, setMetadata } = useContext(Context);
+  const {     setMetadata     } = useContext(Context);
 
   useEffect(() => {
     if (conversationId) {
       const conversation = conversations.find((conv) => conv._id === conversationId);
       if (conversation) {
         setIsActive([conversation]);
-        const recipient = conversation.members[(conversation.sessionId === conversation.members[0]._id ? 1 : 0)].username
+        const { recipient } = destructureConversation(conversation);
         setMetadata({ title: recipient, description: 'Conversation' })
         setError(false);
       } else {
@@ -31,8 +32,6 @@ export default function Conversations({ conversations }: { conversations: Conver
   if (error) {
     return <ErrorPage />;
   }
-
-  console.log('CONVERSATIONS RENDERED: metadata', metadata); // logData
 
   return (
     <LayoutGroup>
