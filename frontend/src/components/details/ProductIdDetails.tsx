@@ -1,7 +1,7 @@
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APIError, useHTTP } from '@/hooks/useHTTP';
-import { useContext } from 'react';
+import { forwardRef, useContext, useRef } from 'react';
 import { Context } from '@/store/Context';
 import ItemForm from '../form/ItemForm';
 import DeletePrompt from './DeletePrompt';
@@ -9,10 +9,12 @@ import Product from '@/models/Product';
 import User from '@/models/User';
 import css from './ProductIdDetails.module.css';
 
-const Box = ({ children }: { children: React.ReactNode }) => (
-  <motion.div layout className={css.box}>
-    {children}
-  </motion.div>
+const Box = forwardRef(
+  ({ children }: { children: React.ReactNode }, ref: React.Ref<HTMLDivElement>) => (
+    <motion.div ref={ref} layout className={css.box}>
+      {children}
+    </motion.div>
+  )
 );
 
 const GitLink = ({ link, name }: { link: string; name: string }) => (
@@ -47,12 +49,17 @@ export default function AdDetails({
   const myAd = user?._id === userId._id;
   const { navTo } = useContext(Context);
   const { sendRequest } = useHTTP();
+  const scrollDownRef = useRef<HTMLDivElement>(null);
+  const scrollUpRef   = useRef<HTMLButtonElement>(null);
 
   async function clickHandler() {
     if (!user) {
       navTo('/account');
     } else if (myAd) {
       toggleForm();
+      setTimeout(() => {
+        (expanded ? scrollDownRef : scrollDownRef).current?.scrollIntoView({ behavior: 'smooth' });
+      }, 1000);
     } else {
       const conversation = await sendRequest({
         params: `conversation/${userId._id}/${_id}`,
@@ -65,7 +72,7 @@ export default function AdDetails({
           params: 'conversation',
           method: 'POST',
             data: {
-              seller: {
+             seller: {
                     _id: userId._id,
                username: userId.username,
                 product: { _id, title, price, imageUrl },
@@ -86,52 +93,56 @@ export default function AdDetails({
   };
 
   return (
-    <section className={css.ad}>
+    <LayoutGroup>
+      <section className={css.ad}>
 
-      <article className={css.article}>
-        <AnimatePresence mode='wait' initial={false}>
-          <motion.img
-                 layout
-                   key={imageUrl}
-                   src={`http://localhost:3000/${imageUrl}`}
-                   alt='product'
-               initial={{ opacity: 0, height: 0,      width: 0 }}
-               animate={{ opacity: 1, height: 'auto', width: 'auto' }}
-                  exit={{ opacity: 0, height: 0     , width: 0 }}
-            transition={{ ease: 'linear', duration: 0.8, delay: 0.5 }}
-          />
-        </AnimatePresence>
-        <Box>
-          <AnimatePresence mode='wait' initial={false}>
-            <motion.h2 key={title} {...animationProps}>
-              {title}
-            </motion.h2>
-          </AnimatePresence>
-          <AnimatePresence mode='wait' initial={false}>
-            <motion.p key={price} {...animationProps}>
-              ${price.toFixed(2)}
-            </motion.p>
-          </AnimatePresence>
-        </Box>
-        <Box>
-          <h2>Description</h2>
-          <AnimatePresence mode='wait' initial={false}>
-            <motion.p key={description} {...animationProps}>
-              {description}
-            </motion.p>
-          </AnimatePresence>
-        </Box>
-      </article>
 
-      <LayoutGroup>
+        <motion.article layout className={css.article}>
+          <AnimatePresence mode='wait' initial={false}>
+            <motion.img
+                    layout
+                     key={imageUrl}
+                     src={`http://localhost:3000/${imageUrl}`}
+                     alt='product'
+                 initial={{ opacity: 0, height:      0, width:     0 }}
+                 animate={{ opacity: 1, height: 'auto', width: 'auto' }}
+                    exit={{ opacity: 0, height:      0,  width:     0 }}
+              transition={{ ease: 'linear', duration: 0.8, delay: 0.5 }}
+            />
+          </AnimatePresence>
+          <Box>
+            <AnimatePresence mode='wait' initial={false}>
+              <motion.h2 key={title} {...animationProps}>
+                {title}
+              </motion.h2>
+            </AnimatePresence>
+            <AnimatePresence mode='wait' initial={false}>
+              <motion.p key={price} {...animationProps}>
+                ${price.toFixed(2)}
+              </motion.p>
+            </AnimatePresence>
+          </Box>
+          <Box>
+            <h2>Description</h2>
+            <AnimatePresence mode='wait' initial={false}>
+              <motion.p key={description} {...animationProps}>
+                {description}
+              </motion.p>
+            </AnimatePresence>
+          </Box>
+        </motion.article>
+
+
         <aside className={css.aside}>
           <Box>
             <p>
               <span>Ad ID</span>
               <span>{_id}</span>
             </p>
-            {user &&                    <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
-            <button onClick={clickHandler}>{myAd ?   'Edit Listing' : 'Send Message'}</button>
+            {user && <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
+            <button ref={scrollUpRef} onClick={clickHandler}>
+              {myAd ? 'Edit Listing' : 'Send Message'}
+            </button>
             {myAd && <DeletePrompt onDelete={onDelete} />}
           </Box>
           <ItemForm
@@ -141,13 +152,14 @@ export default function AdDetails({
                 error={error}
               product={product}
           />
-          <Box>
-            <GitLink link='Iyayi2'        name='Iyayi Roland'   />
+          <Box ref={scrollDownRef}>
+            <GitLink link='Iyayi2'        name='Iyayi Roland' />
             <GitLink link='thegroosalugg' name='Victor Loginov' />
           </Box>
         </aside>
-      </LayoutGroup>
 
-    </section>
+
+      </section>
+    </LayoutGroup>
   );
 }
