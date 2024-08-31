@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {   motion } from 'framer-motion';
+import { LayoutGroup,
+           motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import {  useHTTP } from '@/hooks/useHTTP';
 import       User   from '@/models/User';
@@ -40,14 +41,17 @@ export default function Portal({
   const productsProps = { hasItems,    products, isLoading:  isFetching                                };
 
   return (
-    <motion.div
-      className={css['portal']}
-        initial={{ y: -100 }}
-        animate={{ y: 0, transition: { ease: 'easeIn', duration: 0.5 } }}
-    >
-      <UserInfo  {...userInfoProps} />
-      <ItemForm  {...itemFormProps} />
-      <Products  {...productsProps} onUserPage />
-    </motion.div>
+    <LayoutGroup>
+      <motion.div
+            layout
+        className={css['portal']}
+          initial={{ y: -100 }}
+          animate={{ y: 0, transition: { ease: 'easeIn', duration: 0.5 } }}
+      >
+        <UserInfo  {...userInfoProps} />
+        <ItemForm  {...itemFormProps} />
+        <Products  {...productsProps} onUserPage />
+      </motion.div>
+    </LayoutGroup>
   );
 }

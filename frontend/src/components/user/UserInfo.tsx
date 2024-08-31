@@ -25,7 +25,7 @@ export default function UserInfo({
   const { navTo } = useContext(Context);
 
   return (
-    <section className={css['container']}>
+    <motion.section layout className={css['container']}>
       <div className={css['info']}>
         <motion.h2
              initial={{ opacity: 0, x: -100, scaleY: 0 }}
@@ -55,6 +55,6 @@ export default function UserInfo({
           onClick={() => setExpanded((toggle) => !toggle)}
         />
       </div>
-    </section>
+    </motion.section>
   );
 }
