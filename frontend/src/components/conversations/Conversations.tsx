@@ -1,5 +1,6 @@
+import { Context } from '@/store/Context';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import Conversation from '@/models/Conversation';
 import ConversationItem from './Conversation';
@@ -11,22 +12,27 @@ export default function Conversations({ conversations }: { conversations: Conver
   const [isActive, setIsActive] = useState<Conversation[] | null>(null);
   const [   error,    setError] = useState(false);
   const {   conversationId    } = useParams();
+  const { metadata, setMetadata } = useContext(Context);
 
   useEffect(() => {
     if (conversationId) {
       const conversation = conversations.find((conv) => conv._id === conversationId);
       if (conversation) {
         setIsActive([conversation]);
+        const recipient = conversation.members[(conversation.sessionId === conversation.members[0]._id ? 1 : 0)].username
+        setMetadata({ title: recipient, description: 'Conversation' })
         setError(false);
       } else {
         setError(true);
       }
     }
-  }, [conversations, conversationId]);
+  }, [conversations, conversationId, setMetadata]);
 
   if (error) {
     return <ErrorPage />;
   }
+
+  console.log('CONVERSATIONS RENDERED: metadata', metadata); // logData
 
   return (
     <LayoutGroup>
