@@ -1,4 +1,4 @@
-.ad {
+.container {
   max-width: 100%;
   overflow: auto;
   display: grid;
@@ -7,133 +7,77 @@
   gap: 1rem;
   padding: 1rem;
 
-  .article,
   .aside {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 
-    .box,
     form {
       padding: 0.8rem;
       background: #ffffff;
       border-radius: 3px;
     }
-  }
-}
 
-.article {
-  max-width: inherit;
-
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 3px;
-  }
-
-  h2,
-  p {
-    margin: 0;
-  }
-
-  h2 {
-    line-height: 1;
-    font-weight: 500;
-    font-size: large;
-  }
-
-  p {
-    font-size: smaller;
-  }
-
-  .box:first-of-type h2 {
-    overflow-y: hidden;
-    overflow-x: scroll;
-    text-wrap: nowrap;
-    margin-bottom: 0.5rem;
-  }
-
-  .box:last-of-type {
-    h2 {
-      font-size: medium;
-      border-bottom: 1px solid #000;
-      line-height: 2;
-    }
-
-    p {
-      max-height: 5rem;
-      overflow: auto;
-      margin: 0.5rem 0;
-    }
-  }
-}
-
-.aside {
-  .box:first-of-type {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    p {
+    section:first-of-type {
       display: flex;
-      justify-content: space-between;
-      margin: 0;
-      font-size: small;
+      flex-direction: column;
+      gap: 1rem;
 
-      span:first-of-type {
+      p {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        font-size: small;
+
+        span:first-of-type {
+          font-weight: bold;
+        }
+      }
+
+      p:last-of-type {
+        line-height: 2;
+        border-bottom: 1px solid #000;
+      }
+
+      > button {
+        width: 150px;
+        padding: 0.5rem;
+        align-self: center;
+        border-radius: 20px;
         font-weight: bold;
+        transition: 0.5s ease;
+      }
+
+      > button:last-of-type {
+        background: #d04121cd;
+      }
+
+      > button:first-of-type {
+        background: #88df45b7;
+      }
+
+      > button:hover {
+        filter: brightness(120%);
       }
     }
 
-    p:last-of-type {
-      line-height: 2;
-      border-bottom: 1px solid #000;
-    }
-
-    > button {
-      width: 150px;
-      padding: 0.5rem;
-      align-self: center;
-      border-radius: 20px;
-      font-weight: bold;
-      transition: 0.5s ease;
-    }
-
-    > button:last-of-type {
-      background: #d04121cd;
-    }
-
-    > button:first-of-type {
-      background: #88df45b7;
-    }
-
-    > button:hover {
-      filter: brightness(120%);
-    }
-  }
-
-  .box:last-of-type {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-
-    p {
+    section:last-of-type {
       display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      margin: 0;
+      justify-content: center;
+      gap: 2rem;
 
-      a {
-        text-decoration: none;
-        font-family: 'Bebas Neue', sans-serif;
-        color: #000;
+      p {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        margin: 0;
+
+        a {
+          text-decoration: none;
+          font-family: 'Bebas Neue', sans-serif;
+          color: #000;
+        }
       }
     }
-  }
-}
-
-@media (min-width: 800px) {
-  .article {
-    width: 400px;
   }
 }

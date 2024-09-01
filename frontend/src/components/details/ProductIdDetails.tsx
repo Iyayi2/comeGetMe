@@ -1,19 +1,24 @@
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import { LayoutGroup, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APIError, useHTTP } from '@/hooks/useHTTP';
 import { forwardRef, useContext, useRef } from 'react';
 import { Context } from '@/store/Context';
 import ItemForm from '../form/ItemForm';
+import Article from './Article';
 import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
 import css from './ProductIdDetails.module.css';
 
-const Box = forwardRef(
+export const Box = forwardRef(
   ({ children }: { children: React.ReactNode }, ref: React.Ref<HTMLDivElement>) => (
-    <motion.div ref={ref} layout className={css.box}>
+    <motion.section
+      layout
+         ref={ref}
+       style={{ padding: '0.8rem', borderRadius: 3, background: '#ffffff' }}
+    >
       {children}
-    </motion.div>
+    </motion.section>
   )
 );
 
@@ -45,7 +50,7 @@ export default function ProductIdDetails({
     expanded: boolean;
   toggleForm: (ref: React.RefObject<HTMLElement>) => void;
 }) {
-  const { _id, title, description, price, imageUrl, userId } = product;
+  const { _id, title, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
   const {    navTo    } = useContext(Context);
   const { sendRequest } = useHTTP();
@@ -83,53 +88,14 @@ export default function ProductIdDetails({
     }
   }
 
-  const animationProps = {
-    initial: { opacity: 0, y: -10 },
-    animate: { opacity: 1, y:   0 },
-       exit: { opacity: 0, y:  10 },
-  };
-
   return (
     <LayoutGroup>
-      <section className={css.ad}>
+      <section className={css['container']}>
         <LayoutGroup>
-          <motion.article layout className={css.article} ref={scrollUpRef}>
-            <AnimatePresence mode='wait' initial={false}>
-              <motion.img
-                    layout
-                       key={imageUrl}
-                       src={`http://localhost:3000/${imageUrl}`}
-                       alt='product'
-                   initial={{ opacity: 0, height: 0,      maxWidth: 0      }}
-                   animate={{ opacity: 1, height: 'auto', maxWidth: '100%' }}
-                      exit={{ opacity: 0, height: 0,      maxWidth: 0      }}
-                transition={{   ease: 'linear', duration: 0.7, delay: 0.9  }}
-              />
-            </AnimatePresence>
-            <Box>
-              <AnimatePresence mode='wait' initial={false}>
-                <motion.h2 key={title} {...animationProps}>
-                  {title}
-                </motion.h2>
-              </AnimatePresence>
-              <AnimatePresence mode='wait' initial={false}>
-                <motion.p key={price} {...animationProps}>
-                  ${price.toFixed(2)}
-                </motion.p>
-              </AnimatePresence>
-            </Box>
-            <Box>
-              <h2>Description</h2>
-              <AnimatePresence mode='wait' initial={false}>
-                <motion.p key={description} {...animationProps}>
-                  {description}
-                </motion.p>
-              </AnimatePresence>
-            </Box>
-          </motion.article>
+          <Article product={product} ref={scrollUpRef} />
         </LayoutGroup>
         <LayoutGroup>
-          <aside className={css.aside}>
+          <aside className={css['aside']}>
             <Box>
               <p>
                 <span>Ad ID</span>
