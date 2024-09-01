@@ -22,7 +22,17 @@ export default function UserInfo({
   setExpanded: Dispatch<SetStateAction<boolean>>;
 }) {
   const { username, email } = user;
-  const { navTo } = useContext(Context);
+  const { navTo, isAnimating, setIsAnimating } = useContext(Context);
+
+  function clickHandler() {
+    if (!isAnimating) {
+      setIsAnimating(true)
+      setExpanded((toggle) => !toggle)
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 1000);
+    }
+  }
 
   return (
     <motion.section layout className={css['container']}>
@@ -52,7 +62,7 @@ export default function UserInfo({
         <Button
              text={              expanded ?  'cancel' : 'new ad'   }
             style={{ background: expanded ? '#747272' : '#538392' }}
-          onClick={() => setExpanded((toggle) => !toggle)}
+          onClick={clickHandler}
         />
       </div>
     </motion.section>

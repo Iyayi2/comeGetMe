@@ -13,15 +13,15 @@ export default function MarketIdPage() {
   const { isLoading: isFetching } = useFetch('product/' + productId, setData);
   const { data: user } = useFetch('login');
   const [expanded, setExpanded] = useState(false);
-  const { navTo } = useContext(Context);
+  const { navTo, isAnimating, setIsAnimating } = useContext(Context);
 
   const updateItem = async (data: object) => {
-    setExpanded(false);
-    await sendRequest({
+    const didUpdate = await sendRequest({
       params: 'edit-product/' + productId,
       method: 'PUT',
       data,
     });
+    didUpdate && setExpanded(false);
   };
 
   const deleteItem = async () => {
@@ -32,10 +32,16 @@ export default function MarketIdPage() {
   };
 
   const toggleForm = (ref: React.RefObject<HTMLElement>) => {
-    setExpanded((toggle) => !toggle)
-    setTimeout(() => {
-      ref.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 500);
+    if (!isAnimating) {
+      setIsAnimating(true)
+      setExpanded((toggle) => !toggle)
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 1000);
+    }
   }
 
   return isFetching ? (
