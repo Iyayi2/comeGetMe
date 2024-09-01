@@ -1,14 +1,21 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Button from '../button/Button';
 import css from './DeletePrompt.module.css';
 
 export default function DeletePrompt({ onDelete }: { onDelete: () => void }) {
   const [confirmation, setConfirmation] = useState(false);
+  const isAnimating = useRef(false);
 
-  function confirmHandler() {
-    setConfirmation((toggle) => !toggle);
-  }
+  const confirmHandler = useCallback(() => {
+    if (!isAnimating.current) {
+      isAnimating.current = true;
+      setConfirmation((toggle) => !toggle);
+      setTimeout(() => {
+        isAnimating.current = false;
+      }, 1500);
+    }
+  }, []);
 
   function deleteHandler() {
     onDelete();
