@@ -10,18 +10,18 @@ import LoadingIndicator from '@/components/loading/LoadingIndicator';
 export default function MarketIdPage() {
   const { productId } = useParams();
   const { data: product, setData, sendRequest, isLoading, error } = useHTTP();
-  const { isLoading: isFetching } = useFetch('product/' + productId, setData );
+  const { isLoading: isFetching } = useFetch('product/' + productId, setData);
   const { data: user } = useFetch('login');
   const [expanded, setExpanded] = useState(false);
   const { navTo } = useContext(Context);
 
   const updateItem = async (data: object) => {
-    const didUpdate = await sendRequest({
+    setExpanded(false);
+    await sendRequest({
       params: 'edit-product/' + productId,
       method: 'PUT',
       data,
     });
-    didUpdate && setExpanded(false);
   };
 
   const deleteItem = async () => {
@@ -35,7 +35,7 @@ export default function MarketIdPage() {
     setExpanded((toggle) => !toggle)
     setTimeout(() => {
       ref.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 1000);
+    }, 500);
   }
 
   return isFetching ? (

@@ -35,9 +35,9 @@ export default function ItemForm({
             onSubmit={submitHandler}
            className={css['form']}
              initial={{ opacity: 0, height: 0 }}
-             animate={{ opacity: 1, height: 'auto' }}
+             animate={{ opacity: 1, height: '' }}
                 exit={{ opacity: 0, height: 0 }}
-          transition={{ ease: 'linear', duration: 0.65 }}
+          transition={{ ease: 'linear', duration: 0.5 }}
         >
           <div className={css['inputs']}>
             <Input id='title'       error={error} defaultValue={title} />
