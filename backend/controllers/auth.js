@@ -13,9 +13,9 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
-  User.findOne({ email })
+  User.findOne({ email: email.trim() })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ errors: { email: 'denied' } });
