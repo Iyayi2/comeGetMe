@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 const { userDetails } = require('../util/userDetails');
-const { trimWhiteSpace } = require('../util/trimWhiteSpace');
 
 exports.getLogin = (req, res, next) => {
   if (req.session.user) {
@@ -13,9 +12,9 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
-  User.findOne({ email })
+  User.findOne({ email: email.trim() })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ errors: { email: 'denied' } });
@@ -38,7 +37,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
-  const { username, email, password } = trimWhiteSpace(req.body);
+  const { username, email, password } = req.body;
   const user = new User({ username, email, password });
   user
     .save()

@@ -28,7 +28,7 @@ export default function Input({
       <label htmlFor={id} style={{ color: hasError ? 'red' : '' }}>
         {id} {hasError}
       </label>
-      <Element id={id} name={id} {...props} />
+      <Element id={id} name={id} type={id === 'password' ? 'password' : 'text'} {...props} />
     </p>
   );
 }
