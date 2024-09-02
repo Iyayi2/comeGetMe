@@ -41,14 +41,14 @@ export default function Products({
   return (
     <LayoutGroup>
       {/* keep container size consistent during absolute element transitions */}
-      <div className={css['container']} style={{ minHeight: onUserPage ? 435 : '' }}>
+      <motion.div layout className={css['container']} style={{ minHeight: onUserPage ? 435 : '' }}>
         {onUserPage && (
           <motion.h3
                  layout
                    key={hasItems + ''}
                initial={{ opacity: 0, scaleY: 0 }}
                animate={{ opacity: 1, scaleY: 1 }}
-            transition={{ layout: { ease: 'easeInOut', duration: 0.65 }}}
+            transition={{ layout: { ease: 'easeInOut', duration: 0.5 }}}
           >
             {isLoading ? '...loading' : hasItems ? 'Your Listings' : 'You have no listings'}
           </motion.h3>
@@ -59,7 +59,7 @@ export default function Products({
              disabled={products.length === 0}
              onChange={changeHandler}
           placeholder='Search...'
-          transition={{ layout: { ease: 'easeInOut', duration: 0.65 }}}
+          transition={{ layout: { ease: 'easeInOut', duration: 0.5 }}}
         />
         <AnimatePresence>
           {isLoading ? (
@@ -90,7 +90,7 @@ export default function Products({
             </motion.ul>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </LayoutGroup>
   );
 }

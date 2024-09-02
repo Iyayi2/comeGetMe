@@ -1,6 +1,8 @@
+import { Context } from '@/store/Context';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { destructureConversation } from '@/util/destructureConversation';
 import Conversation from '@/models/Conversation';
 import ConversationItem from './Conversation';
 import Fallback from './Fallback';
@@ -11,18 +13,21 @@ export default function Conversations({ conversations }: { conversations: Conver
   const [isActive, setIsActive] = useState<Conversation[] | null>(null);
   const [   error,    setError] = useState(false);
   const {   conversationId    } = useParams();
+  const {     setMetadata     } = useContext(Context);
 
   useEffect(() => {
     if (conversationId) {
       const conversation = conversations.find((conv) => conv._id === conversationId);
       if (conversation) {
         setIsActive([conversation]);
+        const { recipient } = destructureConversation(conversation);
+        setMetadata({ title: recipient, description: 'Conversation' })
         setError(false);
       } else {
         setError(true);
       }
     }
-  }, [conversations, conversationId]);
+  }, [conversations, conversationId, setMetadata]);
 
   if (error) {
     return <ErrorPage />;

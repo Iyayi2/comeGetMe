@@ -71,13 +71,13 @@ export default function Messages({ conversation }: { conversation: Conversation 
 
               return (
                 <MessageItem
-                       key={message._id}
-                       ref={isLast ? msgRef : null}
-                   message={message}
-                  activeId={sessionId}
-                  scrollTo={scrollTo}
-                  duration={duration}
-                     delay={delay}
+                        key={message._id}
+                        ref={isLast ? msgRef : null}
+                    message={message}
+                  sessionId={sessionId}
+                   scrollTo={scrollTo}
+                   duration={duration}
+                      delay={delay}
                 />
               );
             })}

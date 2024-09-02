@@ -10,7 +10,7 @@ const metadata = {
   '/account': { title: 'My Account',   description: 'User Account'   },
    '/market': { title: 'Marketplace',  description: 'Market Place'   },
     '/inbox': { title: 'My Messages',  description: 'Mail Inbox'     },
-         "*": { title: 'Error'      ,  description: 'Page Not Found' },
+         "*": { title: 'Come Get Me',  description: 'Page Not Found' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

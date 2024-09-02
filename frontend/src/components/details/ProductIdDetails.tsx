@@ -1,16 +1,25 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { LayoutGroup, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { APIError, useHTTP } from '@/hooks/useHTTP';
-import { useContext } from 'react';
+import { forwardRef, useContext, useRef } from 'react';
 import { Context } from '@/store/Context';
 import ItemForm from '../form/ItemForm';
+import Article from './Article';
 import DeletePrompt from './DeletePrompt';
 import Product from '@/models/Product';
 import User from '@/models/User';
 import css from './ProductIdDetails.module.css';
 
-const Box = ({ children }: { children: React.ReactNode }) => (
-  <div className={css.box}>{children}</div>
+export const Box = forwardRef(
+  ({ children }: { children: React.ReactNode }, ref: React.Ref<HTMLDivElement>) => (
+    <motion.section
+      layout
+         ref={ref}
+       style={{ padding: '0.8rem', borderRadius: 3, background: '#ffffff' }}
+    >
+      {children}
+    </motion.section>
+  )
 );
 
 const GitLink = ({ link, name }: { link: string; name: string }) => (
@@ -22,7 +31,7 @@ const GitLink = ({ link, name }: { link: string; name: string }) => (
   </p>
 );
 
-export default function AdDetails({
+export default function ProductIdDetails({
   user,
   product,
   onEdit,
@@ -32,25 +41,27 @@ export default function AdDetails({
   expanded,
   toggleForm,
 }: {
-       user: User | null;
-    product: Product;
-     onEdit: (data: object) => void;
-   onDelete: () => void;
-  isLoading: boolean;
-      error: APIError;
-   expanded: boolean;
- toggleForm: () => void;
+        user: User | null;
+     product: Product;
+      onEdit: (data: object) => void;
+    onDelete: () => void;
+   isLoading: boolean;
+       error: APIError;
+    expanded: boolean;
+  toggleForm: (ref: React.RefObject<HTMLElement>) => void;
 }) {
-  const { _id, title, description, price, imageUrl, userId } = product;
+  const { _id, title, price, imageUrl, userId } = product;
   const myAd = user?._id === userId._id;
-  const { navTo } = useContext(Context)
+  const {    navTo    } = useContext(Context);
   const { sendRequest } = useHTTP();
+  const  scrollDownRef  = useRef(null);
+  const    scrollUpRef  = useRef(null);
 
   async function clickHandler() {
     if (!user) {
       navTo('/account');
     } else if (myAd) {
-      toggleForm();
+      toggleForm(expanded ? scrollUpRef : scrollDownRef);
     } else {
       const conversation = await sendRequest({
         params: `conversation/${userId._id}/${_id}`,
@@ -63,10 +74,10 @@ export default function AdDetails({
           params: 'conversation',
           method: 'POST',
             data: {
-              seller: {
-                   _id: userId._id,
-              username: userId.username,
-               product: { _id, title, price, imageUrl },
+             seller: {
+                    _id: userId._id,
+               username: userId.username,
+                product: { _id, title, price, imageUrl },
             },
           },
         });
@@ -77,69 +88,37 @@ export default function AdDetails({
     }
   }
 
-  const animationProps = {
-    initial: { opacity: 0, y: -10 },
-    animate: { opacity: 1, y:   0 },
-       exit: { opacity: 0, y:  10 },
-  };
-
   return (
-    <section className={css.ad}>
-      <article className={css.article}>
-        <AnimatePresence mode='wait' initial={false}>
-          <motion.img
-            key={imageUrl}
-            initial={{ opacity: 0, height: 0,      width: 0      }}
-            animate={{ opacity: 1, height: 'auto', width: 'auto' }}
-               exit={{ opacity: 0, height: 0,      width: 0      }}
-            transition={{ type: 'tween', ease: 'easeInOut', duration: 0.5 }}
-            src={`http://localhost:3000/${imageUrl}`}
-            alt='product'
-          />
-        </AnimatePresence>
-        <Box>
-          <AnimatePresence mode='wait' initial={false}>
-            <motion.h2 key={title} {...animationProps}>
-              {title}
-            </motion.h2>
-          </AnimatePresence>
-          <AnimatePresence mode='wait' initial={false}>
-            <motion.p key={price} {...animationProps}>
-              ${price.toFixed(2)}
-            </motion.p>
-          </AnimatePresence>
-        </Box>
-        <Box>
-          <h2>Description</h2>
-          <AnimatePresence mode='wait' initial={false}>
-            <motion.p key={description} {...animationProps}>
-              {description}
-            </motion.p>
-          </AnimatePresence>
-        </Box>
-      </article>
-      <aside className={css.aside}>
-        <Box>
-          <p>
-            <span>Ad ID</span>
-            <span>{_id}</span>
-          </p>
-          {user &&                    <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
-          <button onClick={clickHandler}>{myAd ?   'Edit Listing' : 'Send Message'                }</button>
-          {myAd && <DeletePrompt onDelete={onDelete} />}
-        </Box>
-        <ItemForm
-          expanded={expanded}
-            dataFn={onEdit}
-         isLoading={isLoading}
-             error={error}
-           product={product}
-        />
-        <Box>
-          <GitLink link='Iyayi2'        name='Iyayi Roland' />
-          <GitLink link='thegroosalugg' name='Victor Loginov' />
-        </Box>
-      </aside>
-    </section>
+    <LayoutGroup>
+      <section className={css['container']}>
+        <LayoutGroup>
+          <Article product={product} ref={scrollUpRef} />
+        </LayoutGroup>
+        <LayoutGroup>
+          <aside className={css['aside']}>
+            <Box>
+              <p>
+                <span>Ad ID</span>
+                <span>{_id}</span>
+              </p>
+              {user &&                    <p>{myAd ? 'Manage your Ad' : 'Posted by ' + userId.username}</p>}
+              <button onClick={clickHandler}>{myAd ?   'Edit Listing' : 'Send Message'}</button>
+              {myAd && <DeletePrompt onDelete={onDelete} />}
+            </Box>
+            <ItemForm
+               expanded={expanded}
+                 dataFn={onEdit}
+              isLoading={isLoading}
+                  error={error}
+                product={product}
+            />
+            <Box ref={scrollDownRef}>
+              <GitLink name='Iyayi Roland'   link='Iyayi2'        />
+              <GitLink name='Victor Loginov' link='thegroosalugg' />
+            </Box>
+          </aside>
+        </LayoutGroup>
+      </section>
+    </LayoutGroup>
   );
 }

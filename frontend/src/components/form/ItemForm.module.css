@@ -14,7 +14,6 @@
   .controls {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     button {
       margin-top: 1rem;

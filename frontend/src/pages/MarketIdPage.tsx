@@ -10,18 +10,18 @@ import LoadingIndicator from '@/components/loading/LoadingIndicator';
 export default function MarketIdPage() {
   const { productId } = useParams();
   const { data: product, setData, sendRequest, isLoading, error } = useHTTP();
-  const { isLoading: isFetching } = useFetch('product/' + productId, setData );
+  const { isLoading: isFetching } = useFetch('product/' + productId, setData);
   const { data: user } = useFetch('login');
   const [expanded, setExpanded] = useState(false);
-  const { navTo } = useContext(Context);
+  const { navTo, isAnimating, setIsAnimating } = useContext(Context);
 
   const updateItem = async (data: object) => {
-    const didUpdate = await sendRequest({
-      params: 'edit-product/' + productId,
-      method: 'PUT',
-      data,
-    });
+    setIsAnimating(true)
+    const didUpdate = await sendRequest({ params: 'edit-product/' + productId, method: 'PUT', data });
     didUpdate && setExpanded(false);
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 1000);
   };
 
   const deleteItem = async () => {
@@ -30,6 +30,19 @@ export default function MarketIdPage() {
       navTo('/account');
     }
   };
+
+  const toggleForm = (ref: React.RefObject<HTMLElement>) => {
+    if (!isAnimating) {
+      setIsAnimating(true)
+      setExpanded((toggle) => !toggle)
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 1000);
+    }
+  }
 
   return isFetching ? (
     <LoadingIndicator />
@@ -42,7 +55,7 @@ export default function MarketIdPage() {
        isLoading={isLoading}
            error={error}
         expanded={expanded}
-      toggleForm={() => setExpanded((toggle) => !toggle)}
+      toggleForm={toggleForm}
     />
   ) : (
     <ErrorPage type='product' />
