@@ -16,12 +16,12 @@ export default function MarketIdPage() {
   const { navTo, isAnimating, setIsAnimating } = useContext(Context);
 
   const updateItem = async (data: object) => {
-    const didUpdate = await sendRequest({
-      params: 'edit-product/' + productId,
-      method: 'PUT',
-      data,
-    });
+    setIsAnimating(true)
+    const didUpdate = await sendRequest({ params: 'edit-product/' + productId, method: 'PUT', data });
     didUpdate && setExpanded(false);
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 1000);
   };
 
   const deleteItem = async () => {

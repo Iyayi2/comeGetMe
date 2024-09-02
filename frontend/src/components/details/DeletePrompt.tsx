@@ -29,9 +29,9 @@ export default function DeletePrompt({ onDelete }: { onDelete: () => void }) {
                 type='button'
                  key={'a' + confirmation}
              onClick={confirmHandler}
-             initial={{ opacity: 0, scaleX: 0.5 }}
-             animate={{ opacity: 1, scaleX: 1 }}
-                exit={{ opacity: 0, scaleX: 0.5 }}
+             initial={{    opacity: 0, scaleX: 0.5    }}
+             animate={{    opacity: 1, scaleX:   1    }}
+                exit={{    opacity: 0, scaleX: 0.5    }}
           transition={{ duration: 0.5, ease: 'linear' }}
         >
           Delete Listing
@@ -41,10 +41,10 @@ export default function DeletePrompt({ onDelete }: { onDelete: () => void }) {
               layout
            className={css['confirm-dialog']}
                  key={'b' + confirmation}
-             initial={{ opacity: 0, x: -100, height: 35 }}
+             initial={{ opacity: 0, x: -100, height:    35  }}
              animate={{ opacity: 1, x:    0, height: 'auto' }}
-                exit={{ opacity: 0, x:  100, height: 35 }}
-          transition={{ duration: 0.5, ease: 'linear' }}
+                exit={{ opacity: 0, x:  100, height:    35  }}
+          transition={{    duration: 0.5, ease: 'linear'    }}
         >
           <h5>Are you sure you want to delete the listing?</h5>
           <div>
