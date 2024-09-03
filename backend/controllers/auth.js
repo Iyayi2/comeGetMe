@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const User = require('../models/user');
 const { userDetails } = require('../util/userDetails');
@@ -19,16 +21,22 @@ exports.postLogin = (req, res, next) => {
       if (!user) {
         return res.status(404).json({ errors: { email: 'denied' } });
       }
-      if (user.password !== password) {
-        return res.status(401).json({ errors: { password: 'denied' } });
-      }
 
-      req.session.user = user;
-      req.session.save((err) => {
+      bcrypt.compare(password, user.password, (err, result) => {
         if (err) {
-          return res.status(500).json({ message: 'Session save failed' });
+          return res.status(500).json({ message: 'Server error', error: err });
         }
-        res.status(200).json(userDetails(user));
+        if (!result) {
+          return res.status(401).json({ errors: { password: 'denied' } });
+        }
+
+        req.session.user = user;
+        req.session.save((err) => {
+          if (err) {
+            return res.status(500).json({ message: 'Session save failed' });
+          }
+          res.status(200).json(userDetails(user));
+        });
       });
     })
     .catch((err) => {
@@ -38,11 +46,14 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
   const { username, email, password } = req.body;
-  const user = new User({ username, email, password });
-  user
-    .save()
+
+  bcrypt.hash(password, saltRounds)
+    .then((hashedPassword) => {
+      const user = new User({ username, email, password: hashedPassword });
+      return user.save();
+    })
     .then((user) => {
-      req.session.user = user; // set new user as session user on creation
+      req.session.user = user; // Set new user as session user on creation
       res.status(200).json(userDetails(user));
     })
     .catch((err) => {
