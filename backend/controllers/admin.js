@@ -23,7 +23,11 @@ exports.postAddProduct = (req, res, next) => {
       if (req.file) {
         fs.unlinkSync(req.file.path); // Remove the uploaded file if form validation fails
       }
-      res.status(500).json(err);
+      let errors = {};
+      for (key in err.errors) { // converts mongoose errors into more easily consumable frontend object
+        errors[key] = err.errors[key].kind === 'Number' ? 'non-numeric' : err.errors[key].kind;
+      }
+      res.status(400).json(errors);
     });
 };
 
@@ -42,7 +46,7 @@ exports.getProductById = (req, res, next) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ ...err, message: 'getProductById Error' });
     });
 };
 
@@ -53,7 +57,7 @@ exports.getProducts = (req, res, next) => {
       res.status(200).json(product);
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json({ ...err, message: 'my-products fetch error' });
     });
 };
 
@@ -79,7 +83,14 @@ exports.putEditProduct = (req, res, next) => {
       if (imageUrl) {
         fs.unlinkSync(imageUrl);
       }
-      res.status(500).json(err);
+      let errors = {};
+      for (key in err.errors) { // converts mongoose errors into more easily consumable frontend object
+        errors[key] = err.errors[key].kind;
+      }
+      if (err.kind === 'Number') { // alternate err object structure to POST if price is not a number
+        errors.price = 'non-numeric';
+      }
+      res.status(400).json(errors);
     }
   });
 };
@@ -97,6 +108,6 @@ exports.deleteProduct = (req, res, next) => {
       res.status(200).json(null); // must be empty for frontend response
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json({ ...err, message: 'delete product error' });
     });
 };

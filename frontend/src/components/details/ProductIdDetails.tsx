@@ -1,6 +1,6 @@
 import { LayoutGroup, motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { APIError, useHTTP } from '@/hooks/useHTTP';
+import { useHTTP } from '@/hooks/useHTTP';
 import { forwardRef, useContext, useRef } from 'react';
 import { Context } from '@/store/Context';
 import ItemForm from '../form/ItemForm';
@@ -46,7 +46,7 @@ export default function ProductIdDetails({
       onEdit: (data: object) => void;
     onDelete: () => void;
    isLoading: boolean;
-       error: APIError;
+       error: object | null;
     expanded: boolean;
   toggleForm: (ref: React.RefObject<HTMLElement>) => void;
 }) {

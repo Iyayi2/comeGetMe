@@ -13,6 +13,7 @@ export default function UserInfo({
   adsOnline,
   expanded,
   setExpanded,
+  setError,
 }: {
          user: User;
      onLogout: () => void;
@@ -20,6 +21,7 @@ export default function UserInfo({
     adsOnline: number;
      expanded: boolean;
   setExpanded: Dispatch<SetStateAction<boolean>>;
+     setError: Dispatch<SetStateAction<null>>;
 }) {
   const { username, email } = user;
   const { navTo, isAnimating, setIsAnimating } = useContext(Context);
@@ -28,6 +30,7 @@ export default function UserInfo({
     if (!isAnimating) {
       setIsAnimating(true)
       setExpanded((toggle) => !toggle)
+      setError(null);
       setTimeout(() => {
         setIsAnimating(false);
       }, 1000);
