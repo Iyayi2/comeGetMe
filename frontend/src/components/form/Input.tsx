@@ -13,20 +13,11 @@ export default function Input({
   defaultValue?: string | number;
 }) {
   const Element = text ? 'textarea' : 'input';
-  let hasError;
-
-  if (error?.errors?.[id as keyof APIError]) {
-    hasError = 'required';
-  } else if (error?.keyPattern?.[id as keyof APIError]) {
-    hasError = 'exists';
-  } else if (error?.path === id) {
-    hasError = 'non numeric';
-  }
 
   return (
     <p className={css.input}>
-      <label htmlFor={id} style={{ color: hasError ? 'red' : '' }}>
-        {id} {hasError}
+      <label htmlFor={id} style={{ color: error?.[id as keyof APIError] ? 'red' : '' }}>
+        {id} {error?.[id as keyof APIError]}
       </label>
       <Element id={id} name={id} type={id === 'password' ? 'password' : 'text'} {...props} />
     </p>

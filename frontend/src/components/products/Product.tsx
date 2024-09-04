@@ -24,10 +24,10 @@ export default function ProductItem({
           layout
        className={css['product']}
         variants={{
-          hidden: { opacity: 0, height: 0,      y: -50 },
-         visible: { opacity: 1, height: 'auto', y: 0 },
+          hidden: { opacity: 0, y: -50 },
+         visible: { opacity: 1, y:   0 },
         }}
-            exit={{ opacity: 0, height: 0, scale: 0 }}
+            exit={{ opacity: 0, scale: 0 }}
       whileHover={{ borderColor: '#000', y: -5 }}
       transition={{ ease: 'easeInOut', duration: 0.45, layout: { duration: 0.65 } }}
          onClick={clickHandler}

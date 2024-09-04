@@ -6,11 +6,11 @@
   margin: 0;
 
   label {
-    width: 100%;
-    text-align: start;
+    align-self: start;
+    text-wrap: nowrap;
   }
 
-  textarea, input {
+  textarea, input, label {
     width: 170px;
   }
 
