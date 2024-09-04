@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { APIError } from '@/hooks/useHTTP';
 import Input from './Input';
 import ImagePicker from './ImagePicker';
 import Button from '../button/Button';
@@ -16,7 +15,7 @@ export default function ItemForm({
    expanded: boolean;
      dataFn: (data: object) => void;
   isLoading: boolean;
-      error: APIError;
+      error: object | null;
    product?: Product;
 }) {
   const { title = '', price = '', description = '' } = product || {};

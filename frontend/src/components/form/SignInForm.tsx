@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import Button from '../button/Button';
-import { APIError } from '@/hooks/useHTTP';
 import css from './SignInForm.module.css';
 
 export default function SignInForm({
@@ -12,7 +11,7 @@ export default function SignInForm({
 }: {
     onLogin: (params: string, data: object) => void;
   isLoading: boolean;
-      error: APIError;
+      error: object | null;
 }) {
   const [formState, setFormState] = useState('signup');
   const signup = formState === 'signup';
@@ -47,23 +46,24 @@ export default function SignInForm({
     >
       <div className={css['radio-buttons']}>
         <label>
-          <input value='signup' {...radioProps} defaultChecked={signup} /> Sign Up
+          <input value='signup' {...radioProps} defaultChecked={signup}  /> Sign Up
         </label>
         <label>
-          <input value='login' {...radioProps} defaultChecked={!signup} /> Login
+          <input value='login'  {...radioProps} defaultChecked={!signup} /> Login
         </label>
       </div>
       <AnimatePresence mode='wait' initial={false}>
         <motion.div
-          key={formState}
-          className={css['inputs']}
-          initial={{ ...animateProps }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ ...animateProps }}
+                 key={formState}
+           className={css['inputs']}
+             initial={{ ...animateProps }}
+             animate={{ opacity: 1, x: 0 }}
+                exit={{ ...animateProps }}
           transition={{ ease: 'easeIn', duration: 0.3 }}
         >
-          {signup && <Input id='username' error={error} />}
-          <Input id='email' error={error} />
+          {signup &&
+          <Input id='username' error={error} />}
+          <Input id='email'    error={error} />
           <Input id='password' error={error} />
           <Button isLoading={isLoading} text={formState} style={buttonProps} />
         </motion.div>

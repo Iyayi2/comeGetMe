@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from 'react';
-import { APIError } from '@/hooks/useHTTP';
 import css from './ImagePicker.module.css';
 
-export default function ImagePicker({ error }: { error: APIError }) {
+export default function ImagePicker({ error }: { error: object | null }) {
   const [image, setImage] = useState<string | null>(null);
+  const hasError = error?.['imageUrl' as keyof typeof error];
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -16,7 +16,7 @@ export default function ImagePicker({ error }: { error: APIError }) {
 
   return (
     <div className={css['image-picker']}>
-      <p style={{ color: error?.['imageUrl' as keyof APIError] ? 'red' : '' }}>picture {error?.['imageUrl' as keyof APIError]}</p>
+      <p style={{ color: hasError ? 'red' : '' }}>picture {hasError}</p>
       <label htmlFor='image'>
         <input id='image' name='image' type='file' accept='image/*' onChange={changeHandler} />
         {image ? <img src={image} alt='Selected' /> : 'Click to Upload'}
