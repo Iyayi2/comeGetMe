@@ -14,14 +14,9 @@ export default function ImagePicker({ error }: { error: APIError }) {
     }
   };
 
-  let hasError;
-  if (error?.errors?.['imageUrl' as keyof APIError]) {
-    hasError = 'required';
-  }
-
   return (
     <div className={css['image-picker']}>
-      <p style={{ color: hasError ? 'red' : '' }}>picture {hasError}</p>
+      <p style={{ color: error?.['imageUrl' as keyof APIError] ? 'red' : '' }}>picture {error?.['imageUrl' as keyof APIError]}</p>
       <label htmlFor='image'>
         <input id='image' name='image' type='file' accept='image/*' onChange={changeHandler} />
         {image ? <img src={image} alt='Selected' /> : 'Click to Upload'}
