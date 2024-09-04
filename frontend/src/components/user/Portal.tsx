@@ -19,7 +19,7 @@ export default function Portal({
    onLogout: () => void;
   isLoading: boolean;
 }) {
-  const { sendRequest, isLoading: sendingData, error } = useHTTP();
+  const { sendRequest, isLoading: sendingData, error, setError } = useHTTP();
   const { data, setData, isLoading: isFetching } = useFetch<Product[]>('my-products');
   const [expanded, setExpanded] = useState(false);
 
@@ -36,9 +36,9 @@ export default function Portal({
     }
   };
 
-  const userInfoProps = { expanded, setExpanded, isLoading, user, onLogout, adsOnline: products.length };
-  const itemFormProps = { expanded,       error, isLoading: sendingData, dataFn: submitHandler         };
-  const productsProps = { hasItems,    products, isLoading:  isFetching                                };
+  const userInfoProps = { expanded, setExpanded, isLoading, user, onLogout, setError, adsOnline: products.length };
+  const itemFormProps = { expanded,       error, isLoading: sendingData,                 dataFn:   submitHandler };
+  const productsProps = { hasItems,    products, isLoading:  isFetching                                          };
 
   return (
     <LayoutGroup>

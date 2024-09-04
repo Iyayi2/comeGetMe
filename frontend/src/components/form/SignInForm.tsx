@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import Button from '../button/Button';
@@ -8,18 +8,19 @@ export default function SignInForm({
   onLogin,
   isLoading,
   error,
+  setError,
 }: {
     onLogin: (params: string, data: object) => void;
   isLoading: boolean;
       error: object | null;
+   setError: Dispatch<SetStateAction<null>>;
 }) {
   const [formType,   setFormType] = useState('signup');
-  const [errorType, seterrorType] = useState(error);
   const signup = formType === 'signup';
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormType(event.target.value);
-    seterrorType({});
+    setError(null);
   };
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -28,10 +29,6 @@ export default function SignInForm({
     const data = Object.fromEntries(formData.entries());
     onLogin(formType, data);
   };
-
-  useEffect(() => {
-    seterrorType(error);
-  }, [error]);
 
   const animateProps = { opacity: 0, x: signup ? 100 : -100 };
   const   radioProps = { type: 'radio', name: 'toggleForm', onChange: changeHandler };
@@ -68,9 +65,9 @@ export default function SignInForm({
           transition={{ ease: 'easeIn', duration: 0.3 }}
         >
           {signup &&
-          <Input id='username' error={errorType} />}
-          <Input id='email'    error={errorType} />
-          <Input id='password' error={errorType} />
+          <Input id='username' error={error} />}
+          <Input id='email'    error={error} />
+          <Input id='password' error={error} />
           <Button isLoading={isLoading} text={formType} style={buttonProps} />
         </motion.div>
       </AnimatePresence>

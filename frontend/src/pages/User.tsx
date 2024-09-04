@@ -8,7 +8,7 @@ import LoadingIndicator from '@/components/loading/LoadingIndicator';
 import PageWrapper from '@/components/pages/PageWrapper';
 
 export default function UserPage() {
-  const { data: user, setData, isLoading, error, sendRequest } = useHTTP();
+  const { data: user, setData, isLoading, error, setError, sendRequest } = useHTTP();
   const { isLoading: isFetching } = useFetch('login', setData);
   const { setUser } = useContext(Context);
 
@@ -33,7 +33,7 @@ export default function UserPage() {
       ) : user ? (
         <Portal key='portal' user={user} isLoading={isLoading} onLogout={handleLogout} />
       ) : (
-        <SignInForm key='form' isLoading={isLoading} error={error} onLogin={handleLogin} />
+        <SignInForm key='form' isLoading={isLoading} error={error} setError={setError} onLogin={handleLogin} />
       )}
     </PageWrapper>
   );

@@ -9,7 +9,7 @@ import LoadingIndicator from '@/components/loading/LoadingIndicator';
 
 export default function MarketIdPage() {
   const { productId } = useParams();
-  const { data: product, setData, sendRequest, isLoading, error } = useHTTP();
+  const { data: product, setData, sendRequest, isLoading, error, setError } = useHTTP();
   const { isLoading: isFetching } = useFetch('product/' + productId, setData);
   const { data: user } = useFetch('login');
   const [expanded, setExpanded] = useState(false);
@@ -35,6 +35,7 @@ export default function MarketIdPage() {
     if (!isAnimating) {
       setIsAnimating(true)
       setExpanded((toggle) => !toggle)
+      setError(null);
       setTimeout(() => {
         ref.current?.scrollIntoView({ behavior: 'smooth' });
       }, 500);

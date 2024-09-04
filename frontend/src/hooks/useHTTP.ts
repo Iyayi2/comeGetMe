@@ -20,5 +20,5 @@ export function useHTTP<T = null>(initialData = null) {
     }
   }, []);
 
-  return { data, setData, isLoading, error, sendRequest };
+  return { data, setData, isLoading, error, setError, sendRequest };
 }
