@@ -11,7 +11,7 @@ export default function Photos() {
         <img src={stock1} alt='stock' />
         <img src={stock2} alt='stock' />
       </div>
-      <h1 style={{ textAlign: 'center', fontFamily: 'Bebas Neue' }}>▢▢▢ Come Get Me ▫◻</h1>
+      <h1>▢▢▢ Come Get Me ▫◻</h1>
       <div className={css.row}>
         <img src={stock3} alt='stock' />
         <img src={stock4} alt='stock' />
