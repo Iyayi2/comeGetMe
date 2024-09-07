@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import woman from '@/assets/pngs/autumn-woman.png';
 import css from './Banner.module.css';
 
 // prettier-ignore
@@ -10,12 +11,25 @@ const variants = {
    right: (direction: number) => ({ opacity: 0, x: direction < 0 ? 100 : -100 }),
 };
 
+const slides = [
+  <p>Component</p>,
+  <img src={woman} alt='woman in autumn' style={{ width: 125 }} />,
+  <p>Component</p>,
+];
+
 export default function Banner() {
   const [[index, direction], setIndex] = useState([1, 0]);
+  const isAnimating = useRef(false);
 
   const clickHandler = (direction: number) => {
-    if (index + direction >= 0 && index + direction <= 2) {
-      setIndex([index + direction, direction]);
+    if (!isAnimating.current) {
+      isAnimating.current = true;
+      if (index + direction >= 0 && index + direction <= 2) {
+        setIndex([index + direction, direction]);
+      }
+      setTimeout(() => {
+        isAnimating.current = false;
+      }, 1000);
     }
   };
 
@@ -27,8 +41,13 @@ export default function Banner() {
       >
         <FontAwesomeIcon icon='chevron-left' />
       </button>
-      <div>
+      <div
+        style={{
+          borderRadius: direction === 1 ? '3px 0 0 3px' : direction === -1 ? '0 3px 3px 0' : 3,
+        }}
+      >
         <AnimatePresence mode='popLayout' custom={direction}>
+          {/* prettier-ignore */}
           <motion.div
                    key={index}
               variants={variants}
@@ -38,7 +57,7 @@ export default function Banner() {
                   exit='right'
             transition={{ duration: 1 }}
           >
-            {index}
+            {slides[index]}
           </motion.div>
         </AnimatePresence>
       </div>

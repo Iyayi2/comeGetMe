@@ -2,10 +2,20 @@
   display: flex;
   justify-content: space-between;
 
-  button {
+  > button {
     border-color: transparent;
     background-color: transparent;
     font-size: 4rem;
+
+    &:first-of-type {
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-of-type {
+      border-left: none;
+      border-radius: 0 3px 3px 0;
+    }
 
     svg {
       color: #414345;
@@ -18,7 +28,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 3px;
     color: #ffffff;
     background: linear-gradient(to right, #232526, #414345);
   }
