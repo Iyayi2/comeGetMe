@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
-import woman from '@/assets/pngs/autumn-woman.png';
+import ImageFocus from './ImageFocus';
 import css from './Banner.module.css';
 
 // prettier-ignore
@@ -13,7 +13,7 @@ const variants = {
 
 const slides = [
   <p>Component</p>,
-  <img src={woman} alt='woman in autumn' style={{ width: 125 }} />,
+  <ImageFocus />,
   <p>Component</p>,
 ];
 
