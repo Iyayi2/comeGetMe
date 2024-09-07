@@ -113,6 +113,9 @@ app.use(
                resave: false,
     saveUninitialized: false,
                 store: store,
+               cookie: {
+                 maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days. Prevents browser logouts when closed
+               },
   })
 );
 
