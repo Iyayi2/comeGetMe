@@ -6,6 +6,7 @@
     border-color: transparent;
     background-color: transparent;
     font-size: 4rem;
+    cursor: pointer;
 
     &:first-of-type {
       border-right: none;
