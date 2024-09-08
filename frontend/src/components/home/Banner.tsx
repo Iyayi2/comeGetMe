@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
+import SlideOutMenu  from './SlideOutMenu';
 import ImageFocus from './ImageFocus';
 import css from './Banner.module.css';
 
@@ -12,9 +13,9 @@ const variants = {
 };
 
 const slides = [
-  <p>Component</p>,
+  <SlideOutMenu />,
   <ImageFocus />,
-  <p>Component</p>,
+  <p style={{ color: 'white' }}>Component</p>,
 ];
 
 export default function Banner() {
@@ -29,7 +30,7 @@ export default function Banner() {
       }
       setTimeout(() => {
         isAnimating.current = false;
-      }, 1000);
+      }, 500);
     }
   };
 
@@ -55,7 +56,7 @@ export default function Banner() {
                initial='left'
                animate='center'
                   exit='right'
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.5 }}
           >
             {slides[index]}
           </motion.div>

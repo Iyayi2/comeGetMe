@@ -1,0 +1,33 @@
+.menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  button {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border-color: transparent;
+    background: #ffffff;
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+    }
+  }
+
+  ul {
+    width: 150px;
+    margin: 0;
+    padding: 0;
+    transform-origin: center top;
+    list-style: none;
+    border-radius: 5px;
+    background: #ffffff;
+  }
+}
