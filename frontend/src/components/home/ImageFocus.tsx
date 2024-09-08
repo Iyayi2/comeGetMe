@@ -3,6 +3,12 @@ import leaves from '@/assets/pngs/leaves.png';
 import balloons from '@/assets/pngs/balloons.png';
 import css from './ImageFocus.module.css';
 
+const images = [balloons, woman, leaves];
+images.forEach((src) => {
+  const img = new Image();
+  img.src = src;
+});
+
 export default function ImageFocus() {
   return (
     <div className={css['image-focus']}>
