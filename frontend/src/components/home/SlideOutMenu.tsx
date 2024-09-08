@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import graphic from '@/assets/pngs/graphic.png';
 import css from './SlideOutMenu.module.css';
 
 export default function SlideOutMenu() {
@@ -16,11 +17,7 @@ export default function SlideOutMenu() {
   };
 
   return (
-    <motion.div
-      className={css['menu']}
-      initial={false}
-      animate={isOpen ? 'open' : 'closed'}
-    >
+    <motion.div className={css['menu']} initial={false} animate={isOpen ? 'open' : 'closed'}>
       <motion.button whileTap={{ scale: 0.95 }} onClick={() => setIsOpen(!isOpen)}>
         <span>Click</span>
         <motion.span animate={{ rotate: isOpen ? 0 : -180 }}>
@@ -54,6 +51,13 @@ export default function SlideOutMenu() {
         <motion.li variants={variants}>3</motion.li>
         <motion.li variants={variants}>4</motion.li>
       </motion.ul>
+      <motion.img
+        src={graphic}
+        alt='abstract graphic'
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1.5 }}
+      />
     </motion.div>
   );
 }
