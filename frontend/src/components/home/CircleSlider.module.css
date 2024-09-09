@@ -1,0 +1,21 @@
+.slider {
+  flex: 1;
+  display: flex;
+
+  >  div {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #4286f4, #4e5360);
+    border-radius: 3px 0 0 3px;
+    cursor: pointer;
+
+    > span {
+      position: absolute;
+      top: 40px;
+      left: 25px;
+    }
+  }
+}

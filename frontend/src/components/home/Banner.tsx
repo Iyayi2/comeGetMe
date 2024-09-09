@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import SlideOutMenu  from './SlideOutMenu';
 import ImageFocus from './ImageFocus';
+import CircleSlider from './CircleSlider';
 import css from './Banner.module.css';
 
 // prettier-ignore
@@ -15,7 +16,7 @@ const variants = {
 const slides = [
   <SlideOutMenu />,
   <ImageFocus />,
-  <p style={{ color: 'white' }}>Component</p>,
+  <CircleSlider />,
 ];
 
 export default function Banner() {
