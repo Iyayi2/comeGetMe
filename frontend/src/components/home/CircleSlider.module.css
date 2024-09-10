@@ -1,21 +1,23 @@
 .slider {
+  position: relative;
   flex: 1;
-  display: flex;
+  overflow: hidden;
 
-  >  div {
-    position: relative;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to right, #4286f4, #4e5360);
-    border-radius: 3px 0 0 3px;
-    cursor: pointer;
-
-    > span {
-      position: absolute;
-      top: 40px;
-      left: 25px;
-    }
+  span {
+    color: white;
+    position: absolute;
   }
 }
+
+.shape1, .shape2, .shape3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.shape1 { background: linear-gradient(to right, #4286f4, #4e5360) }
+.shape2 { background: linear-gradient(to right, #BE5869, #4e5360) }
+.shape3 { background: linear-gradient(to right, #99f2c8, #1f4037) }
