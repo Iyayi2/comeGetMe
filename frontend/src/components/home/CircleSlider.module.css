@@ -1,7 +1,6 @@
 .slider {
   position: relative;
   flex: 1;
-  overflow: hidden;
 
   span {
     color: white;
@@ -21,3 +20,11 @@
 .shape1 { background: linear-gradient(to right, #4286f4, #4e5360) }
 .shape2 { background: linear-gradient(to right, #BE5869, #4e5360) }
 .shape3 { background: linear-gradient(to right, #99f2c8, #1f4037) }
+
+@media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  .slider {
+    span {
+      font-size: 0.5rem;
+    }
+  }
+}

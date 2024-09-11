@@ -4,17 +4,17 @@ import css from './CircleSlider.module.css';
 
 const clipPath = (index: number, open?: boolean) => {
   return [
-    `circle(${open ? 500 : 30}px at  75px  75px)`,
-    `circle(${open ? 500 : 40}px at 225px 125px)`,
-    `circle(${open ? 500 : 35}px at 400px  75px)`,
+    `circle(${open ? 150 :  9}% at 15% 35%)`,
+    `circle(${open ? 150 : 12}% at 50% 65%)`,
+    `circle(${open ? 150 : 10}% at 85% 35%)`,
   ][index];
 }
 
 const offSet = (index: number) => {
   return [
-    { top:  65, left:  50 },
-    { top: 115, left: 200 },
-    { top:  65, left: 375 },
+    { top: '30%', left:  '9.5%' },
+    { top: '60%', left: '44.5%' },
+    { top: '30%', left: '79.5%' },
   ][index];
 }
 
