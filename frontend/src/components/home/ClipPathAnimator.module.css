@@ -1,0 +1,39 @@
+.slider {
+  position: relative;
+  flex: 1;
+
+  .clippath {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+
+    span {
+      color: rgb(223, 139, 54);
+      position: absolute;
+    }
+  }
+
+  > img {
+    width: 150px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  .slider {
+    .clippath {
+      span {
+        font-size: 0.5rem;
+      }
+    }
+
+    > img {
+      width: 75px;
+    }
+  }
+}

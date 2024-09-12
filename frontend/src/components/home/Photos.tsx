@@ -1,7 +1,7 @@
-import stock1 from '@/assets/stock/stock01.jpg';
-import stock2 from '@/assets/stock/stock02.jpg';
-import stock3 from '@/assets/stock/stock03.jpg';
-import stock4 from '@/assets/stock/stock04.jpg';
+import stock1 from '@/assets/logo/photo1.jpg';
+import stock2 from '@/assets/logo/photo2.jpg';
+import stock3 from '@/assets/logo/photo3.jpg';
+import stock4 from '@/assets/logo/photo4.jpg';
 import css from './Photos.module.css'
 
 export default function Photos() {
