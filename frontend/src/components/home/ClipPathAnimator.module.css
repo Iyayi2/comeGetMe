@@ -9,10 +9,18 @@
     right: 0;
     bottom: 0;
     cursor: pointer;
+    border-radius: 2px 0 0 2px;
 
     span {
       color: rgb(223, 139, 54);
       position: absolute;
+    }
+
+    img {
+      width: 200px;
+      position: absolute;
+      bottom: 0;
+      right: 20%;
     }
   }
 
@@ -29,6 +37,10 @@
     .clippath {
       span {
         font-size: 0.5rem;
+      }
+
+      img {
+        width: 100px;
       }
     }
 

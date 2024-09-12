@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import man1 from '@/assets/stock/man-with-laptop-1.png'
-// import man2 from '@/assets/stock/man-with-laptop-2.png'
+import man1 from '@/assets/stock/man-with-laptop-1.png';
+import man2 from '@/assets/stock/man-with-laptop-2.png';
 import css from './ClipPathAnimator.module.css';
 
 const clipPath = (index: number, open?: boolean) => {
@@ -9,8 +9,8 @@ const clipPath = (index: number, open?: boolean) => {
     `circle(${open ? 150 : 9}% at 15% 35%)`,
     `circle(${open ? 150 : 12}% at 50% 65%)`,
     open
-    ? 'polygon(-60% -15%, 150% -15%, 150% 150%, 73% 150%, 74% 150%, 70% 150%, -60% 150%)'
-    : 'polygon( 60%  15%,  79%  15%,  79%  38%, 73%  38%, 74%  48%, 70%  38%,  60%  38%)'
+      ? 'polygon(-60% -15%, 150% -15%, 150% 150%, 73% 150%, 74% 150%, 70% 150%, -60% 150%)'
+      : 'polygon( 60%  15%,  79%  15%,  79%  38%, 73%  38%, 74%  48%, 70%  38%,  60%  38%)',
   ][index];
 };
 
@@ -37,14 +37,14 @@ export default function ClipPathAnimator() {
 
   return (
     <div className={css['slider']}>
-      {Array.from({ length: 3 }, ( _, index) => (
+      {Array.from({ length: 3 }, (_, index) => (
         <motion.div
           key={index}
           className={css['clippath']}
           onClick={() => toggleOpen(index === isOpen ? null : index)}
           initial={false}
           animate={isOpen === index ? 'open' : 'closed'}
-          style={{ background: background(index)}}
+          style={{ background: background(index) }}
           variants={{
             open: {
               clipPath: clipPath(index, true),
@@ -62,13 +62,17 @@ export default function ClipPathAnimator() {
                 type: 'spring',
                 stiffness: 400,
                 damping: 40,
-                zIndex: { delay: 0.5 }
+                zIndex: { delay: 0.5 },
               },
             },
           }}
         >
           <span style={offSet(index)}>CLICK</span>
-          {/* <img src={man2} alt='man with laptop' /> */}
+          <motion.img
+            src={man2}
+            alt='man with laptop'
+            animate={{ opacity: index === 2 ? 1 : 0 }}
+          />
         </motion.div>
       ))}
       <img src={man1} alt='man with laptop' />
