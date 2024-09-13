@@ -5,6 +5,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
+  overflow: auto;
 
   h3 {
     font-family: 'Bebas Neue', sans-serif;
