@@ -1,4 +1,4 @@
-.slider {
+.container {
   position: relative;
   flex: 1;
 
@@ -14,6 +14,37 @@
 
     span {
       position: absolute;
+      text-align: center;
+
+      &:first-of-type {
+        color: #ffffff;
+        width: 54px;
+        font-size: 0.8rem;
+        top: 23%;
+        left: 9.2%;
+      }
+
+      &:last-of-type {
+        width: 80px;
+        top: 16%;
+        left: 61.2%;
+      }
+    }
+
+    h2 {
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+
+      &:first-of-type {
+        color: #ffffff;
+        top: 30%;
+        right: 20%;
+      }
+
+      &:last-of-type {
+        left: 50%;
+      }
     }
 
     img {
@@ -49,10 +80,22 @@
 }
 
 @media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
-  .slider {
+  .container {
     .clippath {
       span {
-        font-size: 0.5rem;
+        &:first-of-type {
+          width: 29px;
+          font-size: 0.4rem;
+        }
+
+        &:last-of-type {
+          width: 42px;
+          font-size: 0.5rem;
+        }
+      }
+
+      h2 {
+        font-size: small;
       }
 
       img {
@@ -72,7 +115,7 @@
       }
 
       &:last-of-type {
-        width: 100px;
+        width: 80px;
       }
     }
   }

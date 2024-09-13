@@ -8,17 +8,10 @@ import css from './ClipPathAnimator.module.css';
 
 const clipPath = (index: number, open?: boolean) => {
   return [
-    `circle(${open ? 150 : 9}% at 15% 35%)`,
+    `circle(${open ? 150 : 10}% at 15% 35%)`,
     open
       ? 'polygon(-60% -15%, 150% -15%, 150% 150%, 73% 150%, 74% 150%, 70% 150%, -60% 150%)'
       : 'polygon( 60%  15%,  79%  15%,  79%  38%, 73%  38%, 74%  48%, 70%  38%,  60%  38%)',
-  ][index];
-};
-
-const offSet = (index: number) => {
-  return [
-    { top: '30%', left: '9.5%' },
-    { top: '20%', left:  '64%' },
   ][index];
 };
 
@@ -33,7 +26,7 @@ export default function ClipPathAnimator() {
   const [isOpen, toggleOpen] = useState<number | null>(null);
 
   return (
-    <div className={css['slider']}>
+    <div className={css['container']}>
       {Array.from({ length: 2 }, (_, index) => (
         <motion.div
           key={index}
@@ -65,11 +58,16 @@ export default function ClipPathAnimator() {
             },
           }}
         >
-          <span style={{ ...offSet(index), color: index === 0 ? '#ffffff' : '#000' }}>
-            {index === 0 ? 'Click 1' : "Click 2"}
-          </span>
-          <motion.img src={woman2} alt='woman celebrating' animate={{ opacity: index === 0 ? 1 : 0 }} />
-          <motion.img src=  {man2} alt=  'man celebrating' animate={{ opacity: index === 1 ? 1 : 0 }} />
+          <motion.span animate={{ opacity: index === isOpen ? 0 : 1 }}>
+            Take it or Leave it?
+          </motion.span>
+          <motion.span animate={{ opacity: index === isOpen ? 0 : 1 }}>
+            Come Get Me?
+          </motion.span>
+          <motion.h2 animate={{ opacity: isOpen === 0 ? 1 : 0 }}>Temptation!</motion.h2>
+          <motion.h2 animate={{ opacity: isOpen === 1 ? 1 : 0 }}> Go Get It!</motion.h2>
+          <motion.img src={woman2} alt='woman celebrating' animate={{ opacity: isOpen === 0 ? 1 : 0 }} />
+          <motion.img src=  {man2} alt=  'man celebrating' animate={{ opacity: isOpen === 1 ? 1 : 0 }} />
         </motion.div>
       ))}
       <img src={woman1} alt='woman thinking' />
