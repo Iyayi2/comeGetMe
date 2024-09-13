@@ -4,6 +4,7 @@ import { Context } from '@/store/Context';
 import { useContext } from 'react';
 import usePaths from '@/hooks/usePaths';
 import Navigation from '../components/navigation/Navigation';
+import Footer from '@/components/home/Footer';
 
 const metadata = {
          '/': { title: 'Come Get Me',  description: 'Home Page'      },
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </motion.main>
       </AnimatePresence>
+      {pathname === '/' && <Footer />}
     </>
   );
 }
