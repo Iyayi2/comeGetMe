@@ -1,0 +1,51 @@
+.banner {
+  display: flex;
+  justify-content: space-between;
+
+  > button {
+    border-color: transparent;
+    background-color: transparent;
+    font-size: 4rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+
+    &:first-of-type {
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+    }
+
+    &:last-of-type {
+      border-left: none;
+      border-radius: 0 3px 3px 0;
+    }
+
+    svg {
+      color: #414345;
+    }
+  }
+
+  > div {
+    height: 200px;
+    width: 466px;
+    display: flex;
+    background: linear-gradient(to right, #232526, #414345);
+
+    > div {
+      flex: 1;
+      display: flex;
+    }
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  .banner {
+    button {
+      font-size: 1.5rem;
+    }
+
+    > div {
+      width: 266px;
+      height: 100px;
+    }
+  }
+}

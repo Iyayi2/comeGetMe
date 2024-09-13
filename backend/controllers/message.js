@@ -5,13 +5,13 @@ exports.postMessage = (req, res, next) => {
   const { text, conversationId } = req.body;
   const userId = req.session.user?._id;
 
-  const missingFields = {};
-  if (!text.trim()) missingFields.text = 'Message empty';
-  if (!conversationId) missingFields.conversationId = 'Conversation ID missing';
-  if (!userId) missingFields.userId = 'Denied. No user logged in';
+  const errors = {};
+  if (!text.trim())    errors.text           = 'Message empty';
+  if (!conversationId) errors.conversationId = 'Cannot find conversation';
+  if (!userId)         errors.userId         = 'No user logged in';
 
-  if (Object.keys(missingFields).length > 0) {
-    return res.status(400).json({ errors: missingFields });
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ ...errors });
   }
 
   const newMessage = new Message({ text, userId, conversationId });
@@ -21,7 +21,7 @@ exports.postMessage = (req, res, next) => {
       res.status(201).json(message);
     })
     .catch(err => {
-      res.status(500).json({ error: err.message });
+      res.status(500).json({ ...err, message: 'message sending failed' });
     });
 };
 
@@ -31,6 +31,6 @@ exports.getMessages = (req, res, next) => {
     res.status(200).json(messages);
   })
   .catch(err => {
-    res.status(500).json(err);
+    res.status(500).json({ ...err, message: 'failed to fetch messages' });
   })
 };

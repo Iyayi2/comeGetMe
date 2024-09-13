@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { Context } from '@/store/Context';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
@@ -11,6 +12,7 @@ import css from './Messages.module.css';
 
 export default function Messages({ conversation }: { conversation: Conversation }) {
   const { _id, sessionId } = conversation;
+  const {              navTo                 } = useContext(Context);
   const {           sendRequest              } = useHTTP();
   const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
   const [value,     setValue] = useState('');
@@ -29,7 +31,9 @@ export default function Messages({ conversation }: { conversation: Conversation 
       if (message) {
           setValue('');
            setData((prevData) => (prevData ? [...prevData, message] : [message]));
-        setDidSend(true)
+        setDidSend(true);
+      } else {
+        navTo('/account'); // if session ends on server
       }
     }
   }

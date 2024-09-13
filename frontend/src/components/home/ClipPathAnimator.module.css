@@ -1,0 +1,122 @@
+.container {
+  position: relative;
+  flex: 1;
+
+  .clippath {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+
+    span {
+      position: absolute;
+      text-align: center;
+
+      &:first-of-type {
+        color: #ffffff;
+        width: 54px;
+        font-size: 0.8rem;
+        top: 23%;
+        left: 9.2%;
+      }
+
+      &:last-of-type {
+        width: 80px;
+        top: 16%;
+        left: 61.2%;
+      }
+    }
+
+    h2 {
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+
+      &:first-of-type {
+        color: #ffffff;
+        top: 30%;
+        right: 20%;
+      }
+
+      &:last-of-type {
+        left: 50%;
+      }
+    }
+
+    img {
+      position: absolute;
+      bottom: 0;
+
+      &:first-of-type {
+        width: 125px;
+        left: 25%;
+      }
+
+      &:last-of-type {
+        width: 200px;
+        right: 20%;
+      }
+    }
+  }
+
+  > img {
+    position: absolute;
+    bottom: 0;
+
+    &:first-of-type {
+      width: 125px;
+      left: 25%;
+    }
+
+    &:last-of-type {
+      width: 150px;
+      right: 0;
+    }
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  .container {
+    .clippath {
+      span {
+        &:first-of-type {
+          width: 29px;
+          font-size: 0.4rem;
+        }
+
+        &:last-of-type {
+          width: 42px;
+          font-size: 0.5rem;
+        }
+      }
+
+      h2 {
+        font-size: small;
+      }
+
+      img {
+        &:first-of-type {
+          width: 75px;
+        }
+
+        &:last-of-type {
+          width: 100px;
+        }
+      }
+    }
+
+    > img {
+      &:first-of-type {
+        width: 75px;
+      }
+
+      &:last-of-type {
+        width: 80px;
+      }
+    }
+  }
+}
