@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import man1 from '@/assets/stock/man-with-laptop-1.png';
-import man2 from '@/assets/stock/man-with-laptop-2.png';
+import   man1 from '@/assets/stock/man-thinking.png';
+import woman1 from '@/assets/stock/woman-thinking.png';
+import   man2 from '@/assets/stock/man-celebrating.png';
+import woman2 from '@/assets/stock/woman-celebrating.png';
 import css from './ClipPathAnimator.module.css';
 
 const clipPath = (index: number, open?: boolean) => {
   return [
     `circle(${open ? 150 : 9}% at 15% 35%)`,
-    `circle(${open ? 150 : 12}% at 50% 65%)`,
     open
       ? 'polygon(-60% -15%, 150% -15%, 150% 150%, 73% 150%, 74% 150%, 70% 150%, -60% 150%)'
       : 'polygon( 60%  15%,  79%  15%,  79%  38%, 73%  38%, 74%  48%, 70%  38%,  60%  38%)',
@@ -16,28 +17,24 @@ const clipPath = (index: number, open?: boolean) => {
 
 const offSet = (index: number) => {
   return [
-    { top: '30%', left:  '9.5%' },
-    { top: '60%', left: '44.5%' },
-    { top: '20%', left:   '64%' },
+    { top: '30%', left: '9.5%' },
+    { top: '20%', left:  '64%' },
   ][index];
 };
 
 const background = (index: number) => {
   return [
-    'linear-gradient(to right, #4286f4, #4e5360)',
-    'linear-gradient(to right, #BE5869, #4e5360)',
-    'linear-gradient(to right, #e0e6e3, #ffffff)',
+    'linear-gradient(to right, #2980B9, #6DD5FA)',
+    'linear-gradient(to right, #d1d9d5, #fef3f3)',
   ][index];
 };
 
 export default function ClipPathAnimator() {
   const [isOpen, toggleOpen] = useState<number | null>(null);
 
-  console.log(isOpen);
-
   return (
     <div className={css['slider']}>
-      {Array.from({ length: 3 }, (_, index) => (
+      {Array.from({ length: 2 }, (_, index) => (
         <motion.div
           key={index}
           className={css['clippath']}
@@ -49,6 +46,7 @@ export default function ClipPathAnimator() {
             open: {
               clipPath: clipPath(index, true),
               zIndex: 2,
+              borderColor: index === 1 ? '#000' : '#0000000',
               transition: {
                 type: 'spring',
                 stiffness: 20,
@@ -67,15 +65,15 @@ export default function ClipPathAnimator() {
             },
           }}
         >
-          <span style={offSet(index)}>CLICK</span>
-          <motion.img
-            src={man2}
-            alt='man with laptop'
-            animate={{ opacity: index === 2 ? 1 : 0 }}
-          />
+          <span style={{ ...offSet(index), color: index === 0 ? '#ffffff' : '#000' }}>
+            {index === 0 ? 'Click 1' : "Click 2"}
+          </span>
+          <motion.img src={woman2} alt='woman celebrating' animate={{ opacity: index === 0 ? 1 : 0 }} />
+          <motion.img src=  {man2} alt=  'man celebrating' animate={{ opacity: index === 1 ? 1 : 0 }} />
         </motion.div>
       ))}
-      <img src={man1} alt='man with laptop' />
+      <img src={woman1} alt='woman thinking' />
+      <img src={man1}   alt=  'man thinking' />
     </div>
   );
 }

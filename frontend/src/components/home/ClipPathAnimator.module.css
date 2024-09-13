@@ -9,26 +9,42 @@
     right: 0;
     bottom: 0;
     cursor: pointer;
+    border: 1px solid transparent;
     border-radius: 2px 0 0 2px;
 
     span {
-      color: rgb(223, 139, 54);
       position: absolute;
     }
 
     img {
-      width: 200px;
       position: absolute;
       bottom: 0;
-      right: 20%;
+
+      &:first-of-type {
+        width: 125px;
+        left: 25%;
+      }
+
+      &:last-of-type {
+        width: 200px;
+        right: 20%;
+      }
     }
   }
 
   > img {
-    width: 150px;
     position: absolute;
     bottom: 0;
-    right: 0;
+
+    &:first-of-type {
+      width: 125px;
+      left: 25%;
+    }
+
+    &:last-of-type {
+      width: 150px;
+      right: 0;
+    }
   }
 }
 
@@ -40,12 +56,24 @@
       }
 
       img {
-        width: 100px;
+        &:first-of-type {
+          width: 75px;
+        }
+
+        &:last-of-type {
+          width: 100px;
+        }
       }
     }
 
     > img {
-      width: 75px;
+      &:first-of-type {
+        width: 75px;
+      }
+
+      &:last-of-type {
+        width: 100px;
+      }
     }
   }
 }
