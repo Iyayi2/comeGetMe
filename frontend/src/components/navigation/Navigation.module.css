@@ -20,8 +20,10 @@
     padding: 0.5rem;
 
     li {
+      display: flex;
+      flex-direction: column;
       transition: 0.4s ease-in-out;
- 
+
       &:hover {
         transform: scale(1.05);
       }
@@ -53,7 +55,7 @@
   .nav {
     h2 {
       margin: 0 1rem;
-      font-size: 1rem;
+      font-size: 0.5rem;
     }
     ul {
       margin: 0 0.5rem 0 0;
@@ -61,7 +63,7 @@
 
       li {
         button {
-          font-size: 0.8rem;
+          font-size: 0.4rem;
         }
       }
     }

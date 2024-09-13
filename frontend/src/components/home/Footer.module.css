@@ -1,0 +1,43 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  font-size: 0.5rem;
+  color: #ffffff;
+  background: linear-gradient(to right, #232526, #414345);
+
+  h2 {
+    margin-top: 0;
+  }
+
+  > div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.5s ease-in-out;
+
+      &:hover {
+        color: #dfa11a;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 440px) and (orientation: landscape) {
+  .footer {
+    padding: 0.2rem;
+
+    h2 {
+      font-size: 0.3rem;
+    }
+
+    a {
+      font-size: 0.2rem;
+    }
+  }
+}
