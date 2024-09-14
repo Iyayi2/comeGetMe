@@ -53,7 +53,7 @@ export default function SlideOutMenu() {
         }}
       >
         <ListItem icon='user'         text='Create your profile' />
-        <ListItem icon='rectangle-ad' text='List your products' />
+        <ListItem icon='rectangle-ad' text='List your listings' />
         <ListItem icon='shop'         text='Explore the market' />
         <ListItem icon='people-group' text='Connect with others' />
       </motion.ul>

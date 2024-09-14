@@ -1,20 +1,20 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import Product from '@/models/Product';
-import ProductItem from './Product';
+import Listing from '@/models/Listing';
+import ListingItem from './Listing';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Fallback from './Fallback';
 import ErrorPage from '../error/Error';
-import css from './Products.module.css';
+import css from './Listings.module.css';
 
-export default function Products({
-  products,
+export default function Listings({
+  listings,
   isLoggedIn,
   hasItems,
   onUserPage,
   isLoading,
 }: {
-     products: Product[];
+     listings: Listing[];
   isLoggedIn?: boolean | null;
     hasItems?: boolean | null;
   onUserPage?: boolean | null;
@@ -23,8 +23,8 @@ export default function Products({
   const [searchTerm, setSearchTerm] = useState('');
   const timerRef = useRef<number | null>(null);
 
-  const filteredProducts = products?.filter((product) =>
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredListings = listings?.filter((listing) =>
+    listing.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +56,7 @@ export default function Products({
         <motion.input
                layout
             className={css['search']}
-             disabled={products.length === 0}
+             disabled={listings.length === 0}
              onChange={changeHandler}
           placeholder='Search...'
           transition={{ layout: { ease: 'easeInOut', duration: 0.5 }}}
@@ -64,7 +64,7 @@ export default function Products({
         <AnimatePresence>
           {isLoading ? (
             <LoadingIndicator key='loading' />
-          ) : products.length === 0 ? (
+          ) : listings.length === 0 ? (
             onUserPage ? (
               <Fallback key='noAds' noAds />
             ) : (
@@ -72,16 +72,16 @@ export default function Products({
             )
           ) : (
             <motion.ul
-               className={css['products']}
-                     key='products'
+               className={css['listings']}
+                     key='listings'
                  initial='hidden'
                  animate='visible'
               transition={{ staggerChildren: 0.15, delayChildren: 0.5 }}
             >
               <AnimatePresence>
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product) => (
-                    <ProductItem key={product._id} product={product} isLoggedIn={isLoggedIn} />
+                {filteredListings.length > 0 ? (
+                  filteredListings.map((listing) => (
+                    <ListingItem key={listing._id} listing={listing} isLoggedIn={isLoggedIn} />
                   ))
                 ) : (
                   <Fallback key='noSearches' />

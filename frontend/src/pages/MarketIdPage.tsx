@@ -3,21 +3,21 @@ import { useContext, useState } from 'react';
 import { Context } from '@/store/Context';
 import { useFetch } from '@/hooks/useFetch';
 import { useHTTP } from '@/hooks/useHTTP';
-import ProductIdDetails from '@/components/details/ProductIdDetails';
+import ListingIdDetails from '@/components/details/ListingIdDetails';
 import ErrorPage from '@/components/error/Error';
 import LoadingIndicator from '@/components/loading/LoadingIndicator';
 
 export default function MarketIdPage() {
-  const { productId } = useParams();
-  const { data: product, setData, sendRequest, isLoading, error, setError } = useHTTP();
-  const { isLoading: isFetching } = useFetch('product/' + productId, setData);
+  const { listingId } = useParams();
+  const { data: listing, setData, sendRequest, isLoading, error, setError } = useHTTP();
+  const { isLoading: isFetching } = useFetch('listing/' + listingId, setData);
   const { data: user } = useFetch('login');
   const [expanded, setExpanded] = useState(false);
   const { navTo, isAnimating, setIsAnimating } = useContext(Context);
 
   const updateItem = async (data: object) => {
     setIsAnimating(true)
-    const didUpdate = await sendRequest({ params: 'edit-product/' + productId, method: 'PUT', data });
+    const didUpdate = await sendRequest({ params: 'edit-listing/' + listingId, method: 'PUT', data });
     didUpdate && setExpanded(false);
     setTimeout(() => {
       setIsAnimating(false);
@@ -25,7 +25,7 @@ export default function MarketIdPage() {
   };
 
   const deleteItem = async () => {
-    const hasError = await sendRequest({ params: 'delete-product/' + productId, method: 'DELETE' });
+    const hasError = await sendRequest({ params: 'delete-listing/' + listingId, method: 'DELETE' });
     if (!hasError) {
       navTo('/account');
     }
@@ -47,10 +47,10 @@ export default function MarketIdPage() {
 
   return isFetching ? (
     <LoadingIndicator />
-  ) : product ? (
-    <ProductIdDetails
+  ) : listing ? (
+    <ListingIdDetails
             user={user}
-         product={product}
+         listing={listing}
           onEdit={updateItem}
         onDelete={deleteItem}
        isLoading={isLoading}
@@ -59,6 +59,6 @@ export default function MarketIdPage() {
       toggleForm={toggleForm}
     />
   ) : (
-    <ErrorPage type='product' />
+    <ErrorPage type='listing' />
   );
 }

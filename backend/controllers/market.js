@@ -1,20 +1,20 @@
-const Product = require('../models/product');
+const Listing = require('../models/listing');
 
-exports.getProducts = (req, res, next) => {
-  Product.find()
-    .then((products) => {
-      res.status(200).json(products);
+exports.getListings = (req, res, next) => {
+  Listing.find()
+    .then((listings) => {
+      res.status(200).json(listings);
     })
     .catch((err) => {
       res.status(500).json(err);
     });
 };
 
-exports.getPopulatedProducts = (req, res, next) => {
-  Product.find()
+exports.getPopulatedListings = (req, res, next) => {
+  Listing.find()
     .populate('userId', 'username')
-    .then((products) => {
-      res.status(200).json(products);
+    .then((listings) => {
+      res.status(200).json(listings);
     })
     .catch((err) => {
       res.status(500).json(err);
@@ -23,9 +23,9 @@ exports.getPopulatedProducts = (req, res, next) => {
 
 // view json on http://localhost:3000/
 exports.getIndex = (req, res, next) => {
-  Product.find()
-    .then((products) => {
-      res.status(200).json(products);
+  Listing.find()
+    .then((listings) => {
+      res.status(200).json(listings);
     })
     .catch((err) => {
       res.status(500).json(err);

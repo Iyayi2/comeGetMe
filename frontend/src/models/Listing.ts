@@ -1,4 +1,4 @@
-export default class Product {
+export default class Listing {
   description: string;
      imageUrl: string;
         price: number;

@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Box } from './ProductIdDetails';
-import Product from '@/models/Product';
+import { Box } from './ListingIdDetails';
+import Listing from '@/models/Listing';
 import css from './Article.module.css';
 
-const Article = forwardRef(({ product}: {product: Product}, ref: React.Ref<HTMLDivElement>) => {
-  const { title, description, price, imageUrl } = product;
+const Article = forwardRef(({ listing}: {listing: Listing}, ref: React.Ref<HTMLDivElement>) => {
+  const { title, description, price, imageUrl } = listing;
 
   const animationProps = {
     initial: { opacity: 0, y: -10 },
@@ -20,7 +20,7 @@ const Article = forwardRef(({ product}: {product: Product}, ref: React.Ref<HTMLD
               layout
                  key={imageUrl}
                  src={`http://localhost:3000/${imageUrl}`}
-                 alt='product'
+                 alt='listing'
              initial={{ opacity: 0, height: 0,      maxWidth: 0      }}
              animate={{ opacity: 1, height: 'auto', maxWidth: '100%' }}
                 exit={{ opacity: 0, height: 0,      maxWidth: 0      }}

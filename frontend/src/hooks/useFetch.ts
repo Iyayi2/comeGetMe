@@ -9,16 +9,16 @@ export const useFetch = <T = null>(
 ) => {
   const { data, setData, isLoading, error, setError, sendRequest } = useHTTP<T>();
   const { setMetadata } = useContext(Context);
-  const {  productId  } = useParams();
+  const {  listingId  } = useParams();
 
   const getData = useCallback(async () => {
     const response = await sendRequest({ params, method: 'GET' });
     setExternalData && setExternalData(response); // allows to update another state with this data
-    if (productId && response?.title && response?.description) {
+    if (listingId && response?.title && response?.description) {
         const { title, description } = response;
-        setMetadata({ title, description }); // update dynamic product path metadata
+        setMetadata({ title, description }); // update dynamic listing path metadata
     }
-  }, [params, productId, sendRequest, setExternalData, setMetadata]);
+  }, [params, listingId, sendRequest, setExternalData, setMetadata]);
 
   useEffect(() => {
     getData();

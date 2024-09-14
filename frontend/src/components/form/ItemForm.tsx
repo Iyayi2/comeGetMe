@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Input from './Input';
 import ImagePicker from './ImagePicker';
 import Button from '../button/Button';
-import Product from '@/models/Product';
+import Listing from '@/models/Listing';
 import css from './ItemForm.module.css';
 
 export default function ItemForm({
@@ -10,15 +10,15 @@ export default function ItemForm({
   dataFn,
   isLoading,
   error,
-  product,
+  listing,
 }: {
    expanded: boolean;
      dataFn: (data: object) => void;
   isLoading: boolean;
       error: object | null;
-   product?: Product;
+   listing?: Listing;
 }) {
-  const { title = '', price = '', description = '' } = product || {};
+  const { title = '', price = '', description = '' } = listing || {};
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,7 +45,7 @@ export default function ItemForm({
           </div>
           <div className={css['controls']}>
             <ImagePicker error={error} />
-            <Button text={product ? 'Update' : 'Add +'} style={{ background: '#538392' }} isLoading={isLoading} />
+            <Button text={listing ? 'Update' : 'Add +'} style={{ background: '#538392' }} isLoading={isLoading} />
           </div>
         </motion.form>
       )}

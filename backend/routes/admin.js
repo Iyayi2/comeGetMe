@@ -4,11 +4,11 @@ const adminController = require('../controllers/admin');
 
 const router = express.Router();
 
-router.post('/add-product', adminController.postAddProduct);
-router.get('/product/:productId', adminController.getProductById);
-router.get('/my-products', adminController.getProducts);
-router.put('/edit-product/:productId', adminController.putEditProduct);
-router.delete('/delete-product/:productId', adminController.deleteProduct);
+router.post('/add-listing', adminController.postAddListing);
+router.get('/listing/:listingId', adminController.getListingById);
+router.get('/my-listings', adminController.getListings);
+router.put('/edit-listing/:listingId', adminController.putEditListing);
+router.delete('/delete-listing/:listingId', adminController.deleteListing);
 
 
 
