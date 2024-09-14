@@ -7,14 +7,14 @@ import css from './Error.module.css';
 export default function ErrorPage({ type = 'default' }: { type?: string }) {
   const message = {
     default: 'Unable to find the page you\'re looking for...',
-    product: 'Looks like this item cannot be found...',
+    listing: 'Looks like this item cannot be found...',
      market: 'Looks like slim pickings, come back another day',
       inbox: 'Access Denied. Please Log In',
   }[type]
 
   const image = {
     default: ghost,
-    product: man,
+    listing: man,
      market: yardsale,
       inbox: denied,
   }[type]

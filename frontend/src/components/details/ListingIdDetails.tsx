@@ -6,9 +6,9 @@ import { Context } from '@/store/Context';
 import ItemForm from '../form/ItemForm';
 import Article from './Article';
 import DeletePrompt from './DeletePrompt';
-import Product from '@/models/Product';
+import Listing from '@/models/Listing';
 import User from '@/models/User';
-import css from './ProductIdDetails.module.css';
+import css from './ListingIdDetails.module.css';
 
 export const Box = forwardRef(
   ({ children }: { children: React.ReactNode }, ref: React.Ref<HTMLDivElement>) => (
@@ -31,9 +31,9 @@ const GitLink = ({ link, name }: { link: string; name: string }) => (
   </p>
 );
 
-export default function ProductIdDetails({
+export default function ListingIdDetails({
   user,
-  product,
+  listing,
   onEdit,
   onDelete,
   isLoading,
@@ -42,7 +42,7 @@ export default function ProductIdDetails({
   toggleForm,
 }: {
         user: User | null;
-     product: Product;
+     listing: Listing;
       onEdit: (data: object) => void;
     onDelete: () => void;
    isLoading: boolean;
@@ -50,7 +50,7 @@ export default function ProductIdDetails({
     expanded: boolean;
   toggleForm: (ref: React.RefObject<HTMLElement>) => void;
 }) {
-  const { _id, title, price, imageUrl, userId } = product;
+  const { _id, title, price, imageUrl, userId } = listing;
   const myAd = user?._id === userId._id;
   const {    navTo    } = useContext(Context);
   const { sendRequest } = useHTTP();
@@ -77,7 +77,7 @@ export default function ProductIdDetails({
              seller: {
                     _id: userId._id,
                username: userId.username,
-                product: { _id, title, price, imageUrl },
+                listing: { _id, title, price, imageUrl },
             },
           },
         });
@@ -92,7 +92,7 @@ export default function ProductIdDetails({
     <LayoutGroup>
       <section className={css['container']}>
         <LayoutGroup>
-          <Article product={product} ref={scrollUpRef} />
+          <Article listing={listing} ref={scrollUpRef} />
         </LayoutGroup>
         <LayoutGroup>
           <aside className={css['aside']}>
@@ -110,7 +110,7 @@ export default function ProductIdDetails({
                  dataFn={onEdit}
               isLoading={isLoading}
                   error={error}
-                product={product}
+                listing={listing}
             />
             <Box ref={scrollDownRef}>
               <GitLink name='Iyayi Roland'   link='Iyayi2'        />

@@ -4,10 +4,10 @@ import { LayoutGroup,
 import { useFetch } from '@/hooks/useFetch';
 import {  useHTTP } from '@/hooks/useHTTP';
 import       User   from '@/models/User';
-import    Product   from '@/models/Product';
+import    Listing    from '@/models/Listing';
 import   UserInfo   from './UserInfo';
 import   ItemForm   from '../form/ItemForm';
-import   Products   from '../products/Products';
+import   Listings    from '../listings/Listings';
 import        css   from './Portal.module.css';
 
 export default function Portal({
@@ -20,14 +20,14 @@ export default function Portal({
   isLoading: boolean;
 }) {
   const { sendRequest, isLoading: sendingData, error, setError } = useHTTP();
-  const { data, setData, isLoading: isFetching } = useFetch<Product[]>('my-products');
+  const { data, setData, isLoading: isFetching } = useFetch<Listing[]>('my-listings');
   const [expanded, setExpanded] = useState(false);
 
-  const products = data || [];
-  const hasItems = products.length > 0;
+  const listings = data || [];
+  const hasItems = listings.length > 0;
 
   const submitHandler = async (data: object) => {
-    const newItem = await sendRequest({ params: 'add-product', method: 'POST', data });
+    const newItem = await sendRequest({ params: 'add-listing', method: 'POST', data });
     if (newItem) {
       setExpanded(false);
       setTimeout(() => {
@@ -36,9 +36,9 @@ export default function Portal({
     }
   };
 
-  const userInfoProps = { expanded, setExpanded, isLoading, user, onLogout, setError, adsOnline: products.length };
+  const userInfoProps = { expanded, setExpanded, isLoading, user, onLogout, setError, adsOnline: listings.length };
   const itemFormProps = { expanded,       error, isLoading: sendingData,                 dataFn:   submitHandler };
-  const productsProps = { hasItems,    products, isLoading:  isFetching                                          };
+  const listingsProps = { hasItems,    listings, isLoading:  isFetching                                          };
 
   return (
     <LayoutGroup>
@@ -50,7 +50,7 @@ export default function Portal({
       >
         <UserInfo  {...userInfoProps} />
         <ItemForm  {...itemFormProps} />
-        <Products  {...productsProps} onUserPage />
+        <Listings   {...listingsProps} onUserPage />
       </motion.div>
     </LayoutGroup>
   );

@@ -11,7 +11,7 @@ export default function Navigation() {
 
   return (
     <nav className={css.nav}>
-      <h2>▢▢▢ Come Get Me ▫◻</h2>
+      <h2>▢▢▢ DailyVault ▫◻</h2>
       <motion.ul
         initial='hidden'
         animate='visible'

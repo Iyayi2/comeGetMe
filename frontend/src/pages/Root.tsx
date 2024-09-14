@@ -7,11 +7,11 @@ import Navigation from '../components/navigation/Navigation';
 import Footer from '@/components/home/Footer';
 
 const metadata = {
-         '/': { title: 'Come Get Me',  description: 'Home Page'      },
+         '/': { title: 'DailyVault',   description: 'Home Page'      },
   '/account': { title: 'My Account',   description: 'User Account'   },
    '/market': { title: 'Marketplace',  description: 'Market Place'   },
     '/inbox': { title: 'My Messages',  description: 'Mail Inbox'     },
-         "*": { title: 'Come Get Me',  description: 'Page Not Found' },
+         "*": { title: 'DailyVault',   description: 'Page Not Found' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

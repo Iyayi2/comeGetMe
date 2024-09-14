@@ -1,17 +1,17 @@
 import { motion } from 'framer-motion';
 import { useContext } from 'react';
 import { Context } from '@/store/Context';
-import Product from '@/models/Product';
-import css from './Product.module.css';
+import Listing from '@/models/Listing';
+import css from './Listing.module.css';
 
-export default function ProductItem({
-  product,
+export default function ListingItem({
+  listing,
   isLoggedIn,
 }: {
-      product: Product;
+      listing: Listing;
   isLoggedIn?: boolean | null;
 }) {
-  const { _id, title, price, description, imageUrl, userId } = product;
+  const { _id, title, price, description, imageUrl, userId } = listing;
   const { navTo, isAnimating, setMetadata } = useContext(Context);
 
   function clickHandler() {
@@ -22,7 +22,7 @@ export default function ProductItem({
   return (
     <motion.li
           layout
-       className={css['product']}
+       className={css['listing']}
         variants={{
           hidden: { opacity: 0, y: -50 },
          visible: { opacity: 1, y:   0 },
