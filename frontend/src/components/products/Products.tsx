@@ -40,8 +40,7 @@ export default function Products({
 
   return (
     <LayoutGroup>
-      {/* keep container size consistent during absolute element transitions */}
-      <motion.div layout className={css['container']} style={{ minHeight: onUserPage ? 435 : '' }}>
+      <motion.div layout className={css['container']}>
         {onUserPage && (
           <motion.h3
                  layout
