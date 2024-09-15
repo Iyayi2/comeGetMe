@@ -46,6 +46,7 @@
         border-radius: 20px;
         font-weight: bold;
         transition: 0.5s ease;
+        cursor: pointer;
       }
 
       > button:last-of-type {
