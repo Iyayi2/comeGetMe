@@ -19,7 +19,7 @@ const Article = forwardRef(({ product}: {product: Product}, ref: React.Ref<HTMLD
         <motion.img
               layout
                  key={imageUrl}
-                 src={`http://localhost:3000/${imageUrl}`}
+                 src={import.meta.env.VITE_SERVER_URL + imageUrl}
                  alt='product'
              initial={{ opacity: 0, height: 0,      maxWidth: 0      }}
              animate={{ opacity: 1, height: 'auto', maxWidth: '100%' }}

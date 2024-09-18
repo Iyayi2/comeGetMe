@@ -6,13 +6,14 @@
   text-align: center;
 
   > img {
-    width: 125px;
+    width: 150px;
   }
 
   p {
     position: relative;
     z-index: 0;
     margin: 0;
+    width: 100px;
     font-weight: 700;
     color: #d57530;
     text-shadow: 0.5px 0.5px 2px #000000;
@@ -35,8 +36,8 @@
       margin-bottom: 10%;
 
       > img {
-        width: 75px;
-        margin-top: -85%;
+        width: 100px;
+        margin-bottom: 0;
       }
     }
 
@@ -44,8 +45,7 @@
       margin-top: 5%;
 
       > img {
-        margin-top: -40%;
-        width: 50px;
+        width: 75px;
       }
     }
   }
@@ -54,21 +54,21 @@
 @media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
   .image-focus {
     img {
-      width: 50px;
+      width: 80px;
     }
 
     p {
-      font-size: 0.5rem;
+      font-size: 0.6rem;
 
       &:first-of-type {
         > img {
-          width: 38px;
+          width: 50px;
         }
       }
 
       &:last-of-type {
         > img {
-          width: 25px;
+          width: 40px;
         }
       }
     }
