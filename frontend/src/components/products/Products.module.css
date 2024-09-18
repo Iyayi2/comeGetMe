@@ -34,3 +34,9 @@
     list-style: none;
   }
 }
+
+@media screen and (min-width: 320px) and (max-width: 896px) and (min-resolution: 2dppx) and (orientation: portrait) {
+  .container {
+    min-height: 272px;
+  }
+}
