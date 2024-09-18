@@ -32,7 +32,7 @@ export default function ProductItem({
       transition={{ ease: 'easeInOut', duration: 0.45, layout: { duration: 0.65 } }}
          onClick={clickHandler}
     >
-      <img src={`http://localhost:3000/${imageUrl}`} alt={title} />
+      <img src={import.meta.env.VITE_SERVER_URL + imageUrl} alt={title} />
       {isLoggedIn && <p className={css['username']}>Posted by {userId.username}</p>}
       <div className={css['details']}>
         <p>

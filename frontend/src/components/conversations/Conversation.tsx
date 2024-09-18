@@ -20,7 +20,7 @@ export default function ConversationItem({
 }) {
   const { _id, recipient, product } = destructureConversation(conversation);
   const { isAnimating, navTo, setMetadata } = useContext(Context);
-  const [    imageSrc,        setImageSrc ] = useState(`http://localhost:3000/${product.imageUrl}`);
+  const [    imageSrc,        setImageSrc ] = useState(import.meta.env.VITE_SERVER_URL + product.imageUrl);
   const isMobile = mediaQuery();
 
   function expand() {

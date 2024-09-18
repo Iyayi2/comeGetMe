@@ -98,7 +98,7 @@ const user = require('../backend/models/user');
 
 app.use(
   cors({
-         origin: 'http://localhost:5173', // configured to accept credentials from front end for session cookies to work
+         origin: process.env.CLIENT_URL, // configured to accept credentials from front end for session cookies to work
     credentials: true,
   })
 );

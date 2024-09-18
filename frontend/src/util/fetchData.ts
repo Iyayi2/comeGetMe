@@ -8,7 +8,7 @@ export const fetchData = async ({ params, method, data }: Fetch) => {
   const isFormData = data instanceof FormData;
   const body = data ? (isFormData ? data : JSON.stringify(data)) : null;
 
-  const response = await fetch(`http://localhost:3000/${params}`, {
+  const response = await fetch(import.meta.env.VITE_SERVER_URL + params, {
     method,
     headers: isFormData ? undefined : { 'Content-Type': 'application/json' },
     credentials: 'include', // send cookies to backend
