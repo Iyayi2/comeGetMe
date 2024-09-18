@@ -20,14 +20,14 @@
         color: #ffffff;
         width: 54px;
         font-size: 0.8rem;
-        top: 23%;
-        left: 9.2%;
+        top: 24%;
+        left: 9.6%;
       }
 
       &:last-of-type {
         width: 80px;
-        top: 16%;
-        left: 61.2%;
+        top: 17%;
+        left: 61.5%;
       }
     }
 
@@ -43,7 +43,8 @@
       }
 
       &:last-of-type {
-        left: 50%;
+        color: #414345;
+        left: 48%;
       }
     }
 
@@ -52,12 +53,12 @@
       bottom: 0;
 
       &:first-of-type {
-        width: 125px;
+        width: 150px;
         left: 25%;
       }
 
       &:last-of-type {
-        width: 200px;
+        width: 240px;
         right: 20%;
       }
     }
@@ -68,12 +69,12 @@
     bottom: 0;
 
     &:first-of-type {
-      width: 125px;
+      width: 150px;
       left: 25%;
     }
 
     &:last-of-type {
-      width: 150px;
+      width: 180px;
       right: 0;
     }
   }
@@ -84,38 +85,38 @@
     .clippath {
       span {
         &:first-of-type {
-          width: 29px;
-          font-size: 0.4rem;
+          width: 32px;
+          font-size: 0.46rem;
         }
 
         &:last-of-type {
-          width: 42px;
-          font-size: 0.5rem;
+          width: 50px;
+          font-size: 0.54rem;
         }
       }
 
       h2 {
-        font-size: small;
+        font-size: 0.9rem;
       }
 
       img {
         &:first-of-type {
-          width: 75px;
+          width: 80px;
         }
 
         &:last-of-type {
-          width: 100px;
+          width: 128px;
         }
       }
     }
 
     > img {
       &:first-of-type {
-        width: 75px;
+        width: 80px;
       }
 
       &:last-of-type {
-        width: 80px;
+        width: 96px;
       }
     }
   }
