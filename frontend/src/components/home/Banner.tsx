@@ -6,7 +6,6 @@ import ImageFocus from './ImageFocus';
 import ClipPathAnimator from './ClipPathAnimator';
 import css from './Banner.module.css';
 
-// prettier-ignore
 const variants = {
     left: (direction: number) => ({ opacity: 0, x: direction > 0 ? 100 : -100 }),
   center: { opacity: 1, x: 0 },
@@ -49,7 +48,6 @@ export default function Banner() {
         }}
       >
         <AnimatePresence mode='popLayout' custom={direction}>
-          {/* prettier-ignore */}
           <motion.div
                    key={index}
               variants={variants}
