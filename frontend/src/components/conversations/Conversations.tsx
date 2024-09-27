@@ -1,18 +1,27 @@
+import { useHTTP } from '@/hooks/useHTTP';
 import { Context } from '@/store/Context';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, Dispatch, SetStateAction } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { destructureConversation } from '@/util/destructureConversation';
+import { compareArrays } from '@/util/compareArrays';
 import Conversation from '@/models/Conversation';
 import ConversationItem from './Conversation';
 import Fallback from './Fallback';
 import ErrorPage from '../error/Error';
 import css from './Conversations.module.css';
 
-export default function Conversations({ conversations }: { conversations: Conversation[] }) {
+export default function Conversations({
+  conversations,
+  setConversations,
+}: {
+  conversations: Conversation[];
+  setConversations: Dispatch<SetStateAction<Conversation[] | null>>;
+}) {
   const [isActive, setIsActive] = useState<Conversation[] | null>(null);
   const [   error,    setError] = useState(false);
   const {   conversationId    } = useParams();
+  const {     sendRequest     } = useHTTP<Conversation[]>();
   const {     setMetadata     } = useContext(Context);
 
   useEffect(() => {
@@ -27,6 +36,24 @@ export default function Conversations({ conversations }: { conversations: Conver
         setError(true);
       }
     }
+
+    const checkForNewConvos = async () => {
+      const response = await sendRequest({ params: 'conversations', method: 'GET' });
+      if (response) {
+        const newConvos = compareArrays(conversations || [], response);
+        if (newConvos.length > 0) {
+          setConversations((prevData) => (prevData ? [...newConvos, ...prevData] : [...newConvos]))
+        }
+      }
+    }
+
+    const interval = setInterval(() => {
+      checkForNewConvos();
+    }, 6000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [conversations, conversationId, setMetadata]);
 
   if (error) {

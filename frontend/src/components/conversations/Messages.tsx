@@ -7,11 +7,11 @@ import Conversation from '@/models/Conversation';
 import LoadingIndicator from '../loading/LoadingIndicator';
 import Message from '@/models/Message';
 import MessageItem from './Message';
-import { returnNewMessages } from '@/util/returnNewMessages';
+import { compareArrays } from '@/util/compareArrays';
 import css from './Messages.module.css';
 
 export default function Messages({ conversation }: { conversation: Conversation }) {
-  const { _id, sessionId } = conversation;
+  const {         _id, sessionId             } = conversation;
   const {              navTo                 } = useContext(Context);
   const {           sendRequest              } = useHTTP();
   const { data: messages, isLoading, setData } = useFetch<Message[]>('message/' + _id);
@@ -21,7 +21,6 @@ export default function Messages({ conversation }: { conversation: Conversation 
 
   async function sendMessage(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // prettier-ignore
     if (value.trim()) {
       const message = await sendRequest({
         params: 'message',
@@ -42,7 +41,7 @@ export default function Messages({ conversation }: { conversation: Conversation 
     const checkForMsgs = async () => {
       const response = await sendRequest({ params: 'message/' + _id, method: 'GET' });
       if (response) {
-        const newMsgs = returnNewMessages(messages || [], response);
+        const newMsgs = compareArrays(messages || [], response);
         if (newMsgs.length > 0) {
           setData((prevData) => (prevData ? [...prevData, ...newMsgs] : [...newMsgs]))
         }
